@@ -15,6 +15,66 @@
 import UIKit
 import CoreData
 
-class PictureGridViewController: UIViewController {
+class PictureGridViewController: UIViewController
+/*, UICollectionViewDataSource, UICollectionViewDelegate */ {
     
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        /*
+         if pin.pictures.isEmpty {
+            let resource =
+            let parameters =
+            Flickr.sharedInstance().taskForResource(resource, parameters: parameters) { JSONResult, error in
+                if let error = error {
+                    print(error)
+                } else {
+                    ....
+                }
+         */
+        
+        // Note: Instead of 
+        // movie.actor we'll have
+        // picture.pin
+        // Instead of 
+        // movie.actor = nil
+        // We'll
+    }
+    
+    /*
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        let CellIdentifier = "PictureCell"
+        
+        // TODO:
+        
+        // let movie = fetchedResultsController.objectAtIndexPath(indexPath) as! Picture
+        
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CellIdentifier, forIndexPath: indexPath) as! Picture
+        
+        // TODO
+        // configureCell
+ 
+        return cell
+    }
+    */
+    
+    /*
+    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        // TODO: Add code for insert and delete
+    }
+    
+    */
+    // MARK: - Core Data Convenience
+    var sharedContext: NSManagedObjectContext {
+        return CoreDataStackManager.sharedInstance().managedObjectContext
+    }
 }
