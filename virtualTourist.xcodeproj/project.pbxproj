@@ -14,6 +14,12 @@
 		3C483D211C7CBE29006A8291 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C483D1F1C7CBE29006A8291 /* LaunchScreen.storyboard */; };
 		3C483D2C1C7CBE2C006A8291 /* virtualTouristTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D2B1C7CBE2C006A8291 /* virtualTouristTests.swift */; };
 		3C483D371C7CBE2C006A8291 /* virtualTouristUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D361C7CBE2C006A8291 /* virtualTouristUITests.swift */; };
+		3C483D451C7CE498006A8291 /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D441C7CE498006A8291 /* Pin.swift */; };
+		3C483D471C7CE569006A8291 /* Picture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D461C7CE569006A8291 /* Picture.swift */; };
+		3C483D491C7CE719006A8291 /* PictureGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D481C7CE719006A8291 /* PictureGridViewController.swift */; };
+		3C483D4B1C7CE7ED006A8291 /* Flickr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D4A1C7CE7ED006A8291 /* Flickr.swift */; };
+		3C483D4D1C7CE830006A8291 /* Flickr-Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D4C1C7CE830006A8291 /* Flickr-Constants.swift */; };
+		3C483D4F1C7CE8A3006A8291 /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D4E1C7CE8A2006A8291 /* CoreDataStackManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +53,12 @@
 		3C483D321C7CBE2C006A8291 /* virtualTouristUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = virtualTouristUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C483D361C7CBE2C006A8291 /* virtualTouristUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = virtualTouristUITests.swift; sourceTree = "<group>"; };
 		3C483D381C7CBE2C006A8291 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3C483D441C7CE498006A8291 /* Pin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
+		3C483D461C7CE569006A8291 /* Picture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Picture.swift; sourceTree = "<group>"; };
+		3C483D481C7CE719006A8291 /* PictureGridViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PictureGridViewController.swift; sourceTree = "<group>"; };
+		3C483D4A1C7CE7ED006A8291 /* Flickr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Flickr.swift; sourceTree = "<group>"; };
+		3C483D4C1C7CE830006A8291 /* Flickr-Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Flickr-Constants.swift"; sourceTree = "<group>"; };
+		3C483D4E1C7CE8A2006A8291 /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +110,13 @@
 			isa = PBXGroup;
 			children = (
 				3C483D161C7CBE28006A8291 /* AppDelegate.swift */,
+				3C483D441C7CE498006A8291 /* Pin.swift */,
+				3C483D461C7CE569006A8291 /* Picture.swift */,
 				3C483D181C7CBE28006A8291 /* ViewController.swift */,
+				3C483D481C7CE719006A8291 /* PictureGridViewController.swift */,
+				3C483D4A1C7CE7ED006A8291 /* Flickr.swift */,
+				3C483D4C1C7CE830006A8291 /* Flickr-Constants.swift */,
+				3C483D4E1C7CE8A2006A8291 /* CoreDataStackManager.swift */,
 				3C483D1A1C7CBE29006A8291 /* Main.storyboard */,
 				3C483D1D1C7CBE29006A8291 /* Assets.xcassets */,
 				3C483D1F1C7CBE29006A8291 /* LaunchScreen.storyboard */,
@@ -256,7 +274,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C483D491C7CE719006A8291 /* PictureGridViewController.swift in Sources */,
+				3C483D4F1C7CE8A3006A8291 /* CoreDataStackManager.swift in Sources */,
+				3C483D471C7CE569006A8291 /* Picture.swift in Sources */,
+				3C483D4D1C7CE830006A8291 /* Flickr-Constants.swift in Sources */,
+				3C483D451C7CE498006A8291 /* Pin.swift in Sources */,
 				3C483D191C7CBE28006A8291 /* ViewController.swift in Sources */,
+				3C483D4B1C7CE7ED006A8291 /* Flickr.swift in Sources */,
 				3C483D171C7CBE28006A8291 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
