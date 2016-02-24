@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3C483D171C7CBE28006A8291 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D161C7CBE28006A8291 /* AppDelegate.swift */; };
-		3C483D191C7CBE28006A8291 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D181C7CBE28006A8291 /* ViewController.swift */; };
+		3C483D191C7CBE28006A8291 /* VirtualTouristViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D181C7CBE28006A8291 /* VirtualTouristViewController.swift */; };
 		3C483D1C1C7CBE29006A8291 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C483D1A1C7CBE29006A8291 /* Main.storyboard */; };
 		3C483D1E1C7CBE29006A8291 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C483D1D1C7CBE29006A8291 /* Assets.xcassets */; };
 		3C483D211C7CBE29006A8291 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C483D1F1C7CBE29006A8291 /* LaunchScreen.storyboard */; };
@@ -43,7 +43,7 @@
 /* Begin PBXFileReference section */
 		3C483D131C7CBE28006A8291 /* virtualTourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = virtualTourist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C483D161C7CBE28006A8291 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3C483D181C7CBE28006A8291 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		3C483D181C7CBE28006A8291 /* VirtualTouristViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualTouristViewController.swift; sourceTree = "<group>"; };
 		3C483D1B1C7CBE29006A8291 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3C483D1D1C7CBE29006A8291 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3C483D201C7CBE29006A8291 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -114,7 +114,7 @@
 				3C483D161C7CBE28006A8291 /* AppDelegate.swift */,
 				3C483D441C7CE498006A8291 /* Pin.swift */,
 				3C483D461C7CE569006A8291 /* Picture.swift */,
-				3C483D181C7CBE28006A8291 /* ViewController.swift */,
+				3C483D181C7CBE28006A8291 /* VirtualTouristViewController.swift */,
 				3C483D501C7CFB29006A8291 /* Model.xcdatamodeld */,
 				3C483D481C7CE719006A8291 /* PictureGridViewController.swift */,
 				3C483D4A1C7CE7ED006A8291 /* Flickr.swift */,
@@ -283,7 +283,7 @@
 				3C483D4D1C7CE830006A8291 /* Flickr-Constants.swift in Sources */,
 				3C483D451C7CE498006A8291 /* Pin.swift in Sources */,
 				3C483D521C7CFB29006A8291 /* Model.xcdatamodeld in Sources */,
-				3C483D191C7CBE28006A8291 /* ViewController.swift in Sources */,
+				3C483D191C7CBE28006A8291 /* VirtualTouristViewController.swift in Sources */,
 				3C483D4B1C7CE7ED006A8291 /* Flickr.swift in Sources */,
 				3C483D171C7CBE28006A8291 /* AppDelegate.swift in Sources */,
 			);
