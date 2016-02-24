@@ -6,13 +6,20 @@
 //  Copyright © 2016 Manson Jones. All rights reserved.
 //
 
+import MapKit
 import UIKit
 
-class VirtualTouristViewController: UIViewController {
+class VirtualTouristViewController: UIViewController, MKMapViewDelegate {
 
+    
+    let regionRadius: CLLocationDistance = 1000
+    
+    @IBOutlet weak var mapView: MKMapView!
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editPins")
+        let initialLocation = CLLocation(latitude: 21.282778, longitude: -157.82944)
+        centerMapOnLocation(initialLocation)
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,5 +39,10 @@ class VirtualTouristViewController: UIViewController {
         // and delete the pins that were selected
     }
 
+    func centerMapOnLocation(location: CLLocation) {
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
+        regionRadius * 2.0, regionRadius * 2.0)
+        mapView.setRegion(coordinateRegion, animated: true)
+    }
 }
 
