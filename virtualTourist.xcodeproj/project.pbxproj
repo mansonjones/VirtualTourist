@@ -21,6 +21,8 @@
 		3C483D4D1C7CE830006A8291 /* Flickr-Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D4C1C7CE830006A8291 /* Flickr-Constants.swift */; };
 		3C483D4F1C7CE8A3006A8291 /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D4E1C7CE8A2006A8291 /* CoreDataStackManager.swift */; };
 		3C483D521C7CFB29006A8291 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D501C7CFB29006A8291 /* Model.xcdatamodeld */; };
+		3C483D9C1C7F5829006A8291 /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D9B1C7F5829006A8291 /* GCDBlackBox.swift */; };
+		3C483DA51C7F5A0C006A8291 /* FlickrConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483DA41C7F5A0C006A8291 /* FlickrConvenience.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,8 @@
 		3C483D4C1C7CE830006A8291 /* Flickr-Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Flickr-Constants.swift"; sourceTree = "<group>"; };
 		3C483D4E1C7CE8A2006A8291 /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
 		3C483D511C7CFB29006A8291 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		3C483D9B1C7F5829006A8291 /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
+		3C483DA41C7F5A0C006A8291 /* FlickrConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrConvenience.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,8 +121,8 @@
 				3C483D181C7CBE28006A8291 /* VirtualTouristViewController.swift */,
 				3C483D501C7CFB29006A8291 /* Model.xcdatamodeld */,
 				3C483D481C7CE719006A8291 /* PictureGridViewController.swift */,
-				3C483D4A1C7CE7ED006A8291 /* FlickrClient.swift */,
-				3C483D4C1C7CE830006A8291 /* Flickr-Constants.swift */,
+				3C483DA11C7F59BB006A8291 /* Model */,
+				3C483D9B1C7F5829006A8291 /* GCDBlackBox.swift */,
 				3C483D4E1C7CE8A2006A8291 /* CoreDataStackManager.swift */,
 				3C483D1A1C7CBE29006A8291 /* Main.storyboard */,
 				3C483D1D1C7CBE29006A8291 /* Assets.xcassets */,
@@ -144,6 +148,32 @@
 				3C483D381C7CBE2C006A8291 /* Info.plist */,
 			);
 			path = virtualTouristUITests;
+			sourceTree = "<group>";
+		};
+		3C483DA11C7F59BB006A8291 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3C483DA21C7F59C2006A8291 /* Clients */,
+				3C483DA41C7F5A0C006A8291 /* FlickrConvenience.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		3C483DA21C7F59C2006A8291 /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				3C483DA31C7F59DB006A8291 /* Flickr */,
+			);
+			name = Clients;
+			sourceTree = "<group>";
+		};
+		3C483DA31C7F59DB006A8291 /* Flickr */ = {
+			isa = PBXGroup;
+			children = (
+				3C483D4C1C7CE830006A8291 /* Flickr-Constants.swift */,
+				3C483D4A1C7CE7ED006A8291 /* FlickrClient.swift */,
+			);
+			name = Flickr;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,10 +311,12 @@
 				3C483D4F1C7CE8A3006A8291 /* CoreDataStackManager.swift in Sources */,
 				3C483D471C7CE569006A8291 /* Picture.swift in Sources */,
 				3C483D4D1C7CE830006A8291 /* Flickr-Constants.swift in Sources */,
+				3C483D9C1C7F5829006A8291 /* GCDBlackBox.swift in Sources */,
 				3C483D451C7CE498006A8291 /* Pin.swift in Sources */,
 				3C483D521C7CFB29006A8291 /* Model.xcdatamodeld in Sources */,
 				3C483D191C7CBE28006A8291 /* VirtualTouristViewController.swift in Sources */,
 				3C483D4B1C7CE7ED006A8291 /* FlickrClient.swift in Sources */,
+				3C483DA51C7F5A0C006A8291 /* FlickrConvenience.swift in Sources */,
 				3C483D171C7CBE28006A8291 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -510,6 +542,7 @@
 				3C483D3D1C7CBE2C006A8291 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3C483D3E1C7CBE2C006A8291 /* Build configuration list for PBXNativeTarget "virtualTouristTests" */ = {
 			isa = XCConfigurationList;
@@ -518,6 +551,7 @@
 				3C483D401C7CBE2C006A8291 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3C483D411C7CBE2C006A8291 /* Build configuration list for PBXNativeTarget "virtualTouristUITests" */ = {
 			isa = XCConfigurationList;
@@ -526,6 +560,7 @@
 				3C483D431C7CBE2C006A8291 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
