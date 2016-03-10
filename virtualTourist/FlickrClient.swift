@@ -76,9 +76,10 @@ class FlickrClient : NSObject {
     private func flickrURLFromParameters(parameters: [String:AnyObject]) -> NSURL {
         
         let components = NSURLComponents()
-        components.scheme = "a" /* Constants.Flickr.APIScheme */
-        components.host = "b" /* Constants.Flickr.APIHost */
-        components.path = "c" /* Constants.Flickr.APIPath */
+        components.scheme = FlickrClient.Constants.ApiScheme
+        components.host = FlickrClient.Constants.ApiHost
+        components.path = FlickrClient.Constants.ApiPath
+        
         components.queryItems = [NSURLQueryItem]()
         
         for (key, value) in parameters {

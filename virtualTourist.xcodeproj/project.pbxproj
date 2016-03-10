@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C2CA1461C92203000B2C351 /* FlickrPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2CA1451C92203000B2C351 /* FlickrPhoto.swift */; };
 		3C483D171C7CBE28006A8291 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D161C7CBE28006A8291 /* AppDelegate.swift */; };
 		3C483D191C7CBE28006A8291 /* VirtualTouristViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D181C7CBE28006A8291 /* VirtualTouristViewController.swift */; };
 		3C483D1C1C7CBE29006A8291 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C483D1A1C7CBE29006A8291 /* Main.storyboard */; };
@@ -18,7 +19,7 @@
 		3C483D471C7CE569006A8291 /* Picture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D461C7CE569006A8291 /* Picture.swift */; };
 		3C483D491C7CE719006A8291 /* PictureGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D481C7CE719006A8291 /* PictureGridViewController.swift */; };
 		3C483D4B1C7CE7ED006A8291 /* FlickrClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D4A1C7CE7ED006A8291 /* FlickrClient.swift */; };
-		3C483D4D1C7CE830006A8291 /* Flickr-Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D4C1C7CE830006A8291 /* Flickr-Constants.swift */; };
+		3C483D4D1C7CE830006A8291 /* FlickrConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D4C1C7CE830006A8291 /* FlickrConstants.swift */; };
 		3C483D4F1C7CE8A3006A8291 /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D4E1C7CE8A2006A8291 /* CoreDataStackManager.swift */; };
 		3C483D521C7CFB29006A8291 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D501C7CFB29006A8291 /* Model.xcdatamodeld */; };
 		3C483D9C1C7F5829006A8291 /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D9B1C7F5829006A8291 /* GCDBlackBox.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3C2CA1451C92203000B2C351 /* FlickrPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrPhoto.swift; sourceTree = "<group>"; };
 		3C483D131C7CBE28006A8291 /* virtualTourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = virtualTourist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C483D161C7CBE28006A8291 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3C483D181C7CBE28006A8291 /* VirtualTouristViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualTouristViewController.swift; sourceTree = "<group>"; };
@@ -60,7 +62,7 @@
 		3C483D461C7CE569006A8291 /* Picture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Picture.swift; sourceTree = "<group>"; };
 		3C483D481C7CE719006A8291 /* PictureGridViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PictureGridViewController.swift; sourceTree = "<group>"; };
 		3C483D4A1C7CE7ED006A8291 /* FlickrClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrClient.swift; sourceTree = "<group>"; };
-		3C483D4C1C7CE830006A8291 /* Flickr-Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Flickr-Constants.swift"; sourceTree = "<group>"; };
+		3C483D4C1C7CE830006A8291 /* FlickrConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrConstants.swift; sourceTree = "<group>"; };
 		3C483D4E1C7CE8A2006A8291 /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
 		3C483D511C7CFB29006A8291 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		3C483D9B1C7F5829006A8291 /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
@@ -154,7 +156,6 @@
 			isa = PBXGroup;
 			children = (
 				3C483DA21C7F59C2006A8291 /* Clients */,
-				3C483DA41C7F5A0C006A8291 /* FlickrConvenience.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -170,8 +171,10 @@
 		3C483DA31C7F59DB006A8291 /* Flickr */ = {
 			isa = PBXGroup;
 			children = (
-				3C483D4C1C7CE830006A8291 /* Flickr-Constants.swift */,
+				3C483DA41C7F5A0C006A8291 /* FlickrConvenience.swift */,
+				3C483D4C1C7CE830006A8291 /* FlickrConstants.swift */,
 				3C483D4A1C7CE7ED006A8291 /* FlickrClient.swift */,
+				3C2CA1451C92203000B2C351 /* FlickrPhoto.swift */,
 			);
 			name = Flickr;
 			sourceTree = "<group>";
@@ -307,10 +310,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C2CA1461C92203000B2C351 /* FlickrPhoto.swift in Sources */,
 				3C483D491C7CE719006A8291 /* PictureGridViewController.swift in Sources */,
 				3C483D4F1C7CE8A3006A8291 /* CoreDataStackManager.swift in Sources */,
 				3C483D471C7CE569006A8291 /* Picture.swift in Sources */,
-				3C483D4D1C7CE830006A8291 /* Flickr-Constants.swift in Sources */,
+				3C483D4D1C7CE830006A8291 /* FlickrConstants.swift in Sources */,
 				3C483D9C1C7F5829006A8291 /* GCDBlackBox.swift in Sources */,
 				3C483D451C7CE498006A8291 /* Pin.swift in Sources */,
 				3C483D521C7CFB29006A8291 /* Model.xcdatamodeld in Sources */,
