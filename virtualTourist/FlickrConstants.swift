@@ -16,6 +16,7 @@ extension FlickrClient {
         static let ApiScheme = "https"
         static let ApiHost = "api.flickr.com"
         static let ApiPath = "/services/rest"
+        
         static let SearchBBoxHalfWidth = 1.0
         static let SearchBBoxHalfHeight = 1.0
         static let SearchLatRange = (-90.0, 90.0)
@@ -28,6 +29,7 @@ extension FlickrClient {
         static let GalleriesGetPhotos = "flickr.galleries.getPhotos"
     }
     
+    //
     struct ParameterKeys {
         static let Method = "method"
         static let APIKey = "api_key"
@@ -40,7 +42,8 @@ extension FlickrClient {
     }
     
 
-    // MARK: Flick Parmeter Values
+    // MARK: Flick Parameter Values
+
     struct ParameterValues {
         static let SearchMethod = "flickr.photos.search"
         static let APIKey = "167e6d205a8f3675b36eedb81c76e447"

@@ -21,6 +21,9 @@ class VirtualTouristViewController: UIViewController, MKMapViewDelegate {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editPins")
         let initialLocation = CLLocation(latitude: 21.282778, longitude: -157.82944)
         centerMapOnLocation(initialLocation)
+        FlickrClient.sharedInstance().getPhotosFromLatLonSearch(1.23, longitude: 4.56)
+       // FlickClient.sharedgetPhotosFromLatLonSearch(latitude : 1.23, longitude : 4.56)
+
       //  let annotation = MKAnnotation(CLLocation(latitude: 21.282778, longitude: -157.82944))
       //  mapView.addAnnotation(annotation)
     }

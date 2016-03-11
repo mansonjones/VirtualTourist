@@ -34,7 +34,8 @@ class FlickrClient : NSObject {
         completionHandlerForGET: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
-        parameters["a" /* ParameterKeys.ApiKey */] = "b" /* Constants.ApiKey */
+
+       parameters[FlickrClient.ParameterKeys.APIKey] = FlickrClient.ParameterValues.APIKey
         
         /* 2/3. Build the URL, Configure the request */
         let request = NSMutableURLRequest(URL: flickrURLFromParameters(parameters))
@@ -73,6 +74,7 @@ class FlickrClient : NSObject {
     }
     
     // Create a URL from parameters
+
     private func flickrURLFromParameters(parameters: [String:AnyObject]) -> NSURL {
         
         let components = NSURLComponents()
@@ -87,7 +89,20 @@ class FlickrClient : NSObject {
             components.queryItems!.append(queryItem)
         }
         
+        print("\(components.URL!)")
         return components.URL!
+    }
+    
+    
+
+    
+    // MARK: Shared Instance
+    
+    class func sharedInstance() -> FlickrClient {
+        struct Singleton {
+            static var sharedInstance = FlickrClient()
+        }
+        return Singleton.sharedInstance
     }
 
 }
