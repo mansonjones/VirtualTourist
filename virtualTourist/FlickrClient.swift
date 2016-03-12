@@ -30,7 +30,8 @@ class FlickrClient : NSObject {
     
     // MARK: GET
     
-    func taskForGETMethod(method: String, var parameters: [String:AnyObject],
+    func taskForGETMethod(method: String,
+        var parameters: [String : AnyObject],
         completionHandlerForGET: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
@@ -42,6 +43,7 @@ class FlickrClient : NSObject {
         
         /* 4. Make the request */
             let task = session.dataTaskWithRequest(request) { (data, response, error) in
+
                 func sendError(error: String) {
                     print(error)
                     let userInfo = [NSLocalizedDescriptionKey : error]
@@ -56,32 +58,52 @@ class FlickrClient : NSObject {
         
         /* Guard Did we get a successful 2XX response? */
                 guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 &&
-            statusCode <= 299 else {
-                sendError("Your request returned a status code other than 2xx!")
-                return
+            statusCode <= 299 else
+                {
+                    sendError("Your request returned a status code other than 2xx!")
+                    return
                 }
                 /* Guard: Was there any data returned? */
-                /* TODO: fix the warning from the next block
+                /* TODO: fix the warning from the next block */
                 guard let data = data else {
                     sendError("No data was returned by the request!")
                     return
                 }
-                */
+                
+                self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForGET)
             }
                 /* 7. Start the request */
             task.resume()
             return task
     }
     
+    // given raw JSON, return a usable Foundation object
+    private func convertDataWithCompletionHandler(data: NSData, completionHandlerForConvertData: (result: AnyObject!, error: NSError?) -> Void) {
+        
+        var parsedResult: AnyObject!
+        do {
+            parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+           // print(" *** parsed result ***")
+           // print("\(parsedResult)")
+        } catch {
+            let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
+            completionHandlerForConvertData(result: nil, error: NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
+        }
+        
+        completionHandlerForConvertData(result: parsedResult, error: nil)
+    }
+    
+    
+    
     // Create a URL from parameters
 
-    private func flickrURLFromParameters(parameters: [String:AnyObject]) -> NSURL {
+    private func flickrURLFromParameters(parameters: [String : AnyObject],
+        withPathExtension: String? = nil) -> NSURL {
         
         let components = NSURLComponents()
         components.scheme = FlickrClient.Constants.ApiScheme
         components.host = FlickrClient.Constants.ApiHost
-        components.path = FlickrClient.Constants.ApiPath
-        
+        components.path = FlickrClient.Constants.ApiPath + (withPathExtension ?? "")
         components.queryItems = [NSURLQueryItem]()
         
         for (key, value) in parameters {

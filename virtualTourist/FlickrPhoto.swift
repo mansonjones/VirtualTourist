@@ -7,11 +7,27 @@
 //
 
 struct FlickrPhoto {
-    let url: String
+    let farm : Int64!
+    let id : String!
+    let isfamily : Int64!
+    let isfriend : Int64!
+    let ispublic : Int64!
+    let owner: String!
+    let secret : String!
+    let server : String!
+    let title : String!
     
     // construct a Flickr Photo from a dictionary
     init(dictionary : [String : AnyObject]) {
-        url = dictionary[FlickrClient.JSONResponseKeys.Url] as! String
+        farm = dictionary[FlickrClient.JSONResponseKeys.Farm] as! Int64
+        id = dictionary[FlickrClient.JSONResponseKeys.Id] as! String
+        isfamily = dictionary[FlickrClient.JSONResponseKeys.IsFamily] as! Int64
+        isfriend = dictionary[FlickrClient.JSONResponseKeys.IsFriend] as! Int64
+        ispublic = dictionary[FlickrClient.JSONResponseKeys.IsPublic] as! Int64
+        owner = dictionary[FlickrClient.JSONResponseKeys.Owner] as! String
+        secret = dictionary[FlickrClient.JSONResponseKeys.Secret] as! String
+        server = dictionary[FlickrClient.JSONResponseKeys.Server] as! String
+        title = dictionary[FlickrClient.JSONResponseKeys.Title] as! String
     }
     
     static func photosFromResults(results: [[String : AnyObject]]) -> [FlickrPhoto] {
@@ -19,6 +35,8 @@ struct FlickrPhoto {
         
         // iterate through array of dictionaries, each Photo is a dictionary
         for result in results {
+            print("RESULT")
+            print("\(result)")
             photos.append(FlickrPhoto(dictionary: result))
         }
         

@@ -27,6 +27,7 @@ extension FlickrClient {
         // MARK: galleries.getPhoto
         // TODO: complete this section
         static let GalleriesGetPhotos = "flickr.galleries.getPhotos"
+        static let PhotosSearch = "flickr.photos.search"
     }
     
     //
@@ -61,12 +62,23 @@ extension FlickrClient {
         static let Status = "stat"
         static let Photos = "photos"
         static let Photo = "photo"
-        static let Title = "title"
+        
         static let MediumURL = "url_m"
+        static let Farm = "farm"
+        static let Id = "id"
+        static let IsFamily = "isfamily"
+        static let IsFriend = "isfriend"
+        static let IsPublic = "ispublic"
+        static let Owner = "owner"
+        static let Secret = "secret"
+        static let Server = "server"
+        static let Title = "title"
     }
     
     // MARK: Flickr Response Values
     struct FlickrResponseValues {
         static let OKStatus = "ok"
     }
+    
+    
 }
