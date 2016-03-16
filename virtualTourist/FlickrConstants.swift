@@ -40,6 +40,7 @@ extension FlickrClient {
         static let Format = "format"
         static let NoJSONCallback = "nojsoncallback"
         static let BoundingBox = "bbox"
+        static let Page = "page"       // This is required 
     }
     
 

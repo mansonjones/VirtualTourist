@@ -73,6 +73,15 @@ class PictureGridViewController: UIViewController
     }
     
     */
+    
+    /*
+    lazy var scratchContext: NSManagedObjectContext {
+        var context = NSManagedObjectContext()
+        context.persistentStoreCoordinator = CoreDataStackManager.sharedInstance().persistentStoreCoordinator
+        return context
+    }
+    */
+    
     // MARK: - Core Data Convenience
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext

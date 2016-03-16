@@ -17,9 +17,10 @@ extension FlickrClient {
             FlickrClient.ParameterKeys.Method: FlickrClient.ParameterValues.SearchMethod,
             FlickrClient.ParameterKeys.BoundingBox: bboxString(latitude, longitude: longitude),
             FlickrClient.ParameterKeys.SafeSearch: "1",
-            FlickrClient.ParameterKeys.Extras: "url_m:",
+            FlickrClient.ParameterKeys.Extras: "url_m",
             FlickrClient.ParameterKeys.Format: "json",
             FlickrClient.ParameterKeys.NoJSONCallback: "1"
+            /* FlickrClient.ParameterKeys.Page : "1" */
         ]
         
         print(parameters)

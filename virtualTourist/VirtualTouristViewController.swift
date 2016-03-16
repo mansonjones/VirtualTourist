@@ -9,11 +9,15 @@
 
 import MapKit
 import UIKit
+import CoreData
 
 class VirtualTouristViewController: UIViewController,
     MKMapViewDelegate {
 
     var photos: [FlickrPhoto] = [FlickrPhoto]()
+    
+    var pins = [MKAnnotation]()
+    
     let regionRadius: CLLocationDistance = 1000
     
     @IBOutlet weak var mapView: MKMapView!
@@ -23,6 +27,10 @@ class VirtualTouristViewController: UIViewController,
         self.navigationItem.rightBarButtonItem =
             UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editPins")
         let initialLocation = CLLocation(latitude: 34.0481, longitude: -118.5256)
+        
+        // Core Data Step ?
+        // pins = fetchAllPins()
+        
         centerMapOnLocation(initialLocation)
         FlickrClient.sharedInstance().getPhotosFromLatLonSearch(34.0481, longitude: -118.5256)
             { (photos, error) -> Void in
@@ -59,7 +67,33 @@ class VirtualTouristViewController: UIViewController,
         super.didReceiveMemoryWarning()
         
     }
+    
+    var sharedContext: NSManagedObjectContext {
+        return CoreDataStackManager.sharedInstance().managedObjectContext
+    }
 
+    func fetchAllLocations() -> [Location] {
+
+        // Create the Fetch Request
+        let fetchRequest = NSFetchRequest(entityName: "Pin")
+        
+        // Create the Fetch Request
+        do {
+            return try sharedContext.executeFetchRequest(fetchRequest) as! [Location]
+        } catch let error as NSError {
+            print("Error in fetchAllPins(): \(error)")
+            return [Location]()
+        }
+    
+    }
+    
+    func insertNewPin(pin: MKAnnotation) {
+        pins.insert(pin, atIndex: 0)
+        
+        // add the equivalent of getting the index path and inserting the
+        // row in the table view, except for a map
+    }
+    
     private func buildAnnotation(latitude: Double, longitude: Double) -> MKPointAnnotation {
 
         let annotation = MKPointAnnotation()
