@@ -28,35 +28,28 @@ UICollectionViewDataSource, UICollectionViewDelegate {
     }
     
     override func viewWillAppear(animated: Bool) {
-    
-        /*
-        let photo = Photo(url: "https://farm2.staticflickr.com/1696/25739821011_8cab1a1ab7.jpg", title: "airplane")
-        for (var i = 0; i < 20; i++) {
-            photos.append(photo)
-        }
-        */
-        /*
-         if pin.pictures.isEmpty {
-            let resource =
-            let parameters =
-            Flickr.sharedInstance().taskForResource(resource, parameters: parameters) { JSONResult, error in
-                if let error = error {
-                    print(error)
+        super.viewWillAppear(animated)
+        FlickrClient.sharedInstance().getPhotosFromLatLonSearch(34.0481, longitude: -118.5256)
+            { (photos, error) -> Void in
+                if let photos = photos {
+                    self.photos = photos
+                    print("The number of Photos is:", self.photos.count)
+                    // Update the collection view on the main thread
+                    for photo in photos {
+                        print(photo.url)
+                    }
+                    performUIUpdatesOnMain {
+                        self.collectionView.reloadData()
+                    }
                 } else {
-                    ....
+                    print("Download of Flickr Photo failed")
                 }
-         */
-        
-        // Note: Instead of 
-        // movie.actor we'll have
-        // picture.pin
-        // Instead of 
-        // movie.actor = nil
-        // We'll
+        }
+
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return photos.count
     }
 
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -69,7 +62,10 @@ UICollectionViewDataSource, UICollectionViewDelegate {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CellIdentifier, forIndexPath: indexPath) as! VTCollectionViewCell
         
-        let url = NSURL(string: "https://farm2.staticflickr.com/1696/25739821011_8cab1a1ab7.jpg")
+        
+        let foo = photos[indexPath.row].url
+        let url = NSURL(string: foo)
+//        let url = NSURL(string: "https://farm2.staticflickr.com/1696/25739821011_8cab1a1ab7.jpg")
         
         let data = NSData(contentsOfURL: url!)
         if data != nil {

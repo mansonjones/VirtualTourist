@@ -11,8 +11,12 @@ import Foundation
 extension FlickrClient {
     
     func getPhotosFromLatLonSearch(latitude : Double, longitude : Double,
-        completionHandlerForLatLonSearch: (result: [FlickrPhoto]?, error: NSError?) -> Void) -> NSURLSessionDataTask?
+        completionHandlerForLatLonSearch: (result: [Photo]?, error: NSError?) -> Void) -> NSURLSessionDataTask?
     {
+        
+        // TODO: move the parameter value definitions into a 
+        // constants file
+        
         let parameters: [String : String!] = [
             FlickrClient.ParameterKeys.Method: FlickrClient.ParameterValues.SearchMethod,
             FlickrClient.ParameterKeys.BoundingBox: bboxString(latitude, longitude: longitude),
@@ -27,56 +31,30 @@ extension FlickrClient {
         
         let task = taskForGETMethod(FlickrClient.Methods.PhotosSearch,
             parameters: parameters) { (results, error) -> Void in
-            print("getPhotosFromLatLonSearch")
+                print("getPhotosFromLatLonSearch")
                 if let error = error {
                     completionHandlerForLatLonSearch(result: nil, error: error)
                 } else {
-                  //  print("Here is the raw result")
-                    // print("\(results)")
-                    guard let foo = results[FlickrClient.JSONResponseKeys.Photos] as? [String : AnyObject] else {
+                    print(" ****************** Start Raw *******************")
+                   // print(results)
+                    print(" ****************** End Raw *********************")
+                    guard let jsonPhotoDictionary = results[FlickrClient.JSONResponseKeys.Photos] as? [String : AnyObject] else {
                         completionHandlerForLatLonSearch(result: nil, error: nil)
                         return
                     }
-                    // print(" *** FOO ***")
-                    // print(foo)
-                    // print(" *** END OF FOO ***")
-                    guard let bar = foo[FlickrClient.JSONResponseKeys.Photo] as? [[String: AnyObject]] else {
-                        completionHandlerForLatLonSearch(result: nil, error: nil)
-                        return
-                    }
-                    // At this point we have an array of dictionaries, where
-                    // each element in the arrar represents a FlickrPhoto
-                    print("\(bar)")
-                    print("The number of elements in bar is:", bar.count)
+                    print(" ****************** Start Dict *******************")
+                    print(jsonPhotoDictionary)
+                    print(" ****************** End Dict *********************")
                     
-                    print("the First element of the array is")
-                    print("\(bar[0])")
-                   // let photos = FlickrPhoto.photosFromResults(bar)
-                    // completionHandlerForLatLonSearch(result: photos, error: nil)
-                    
-                    // let photos = FlickrPhoto.photosFromResults(bar)
-                    // completionHandlerForLatLonSearch(result: photos, error: nil)
-                    
-                    
-                    // print(" Number of photos  ***")
-                    // print(photos.count)
-                    
-                    if (error != nil) {
-                       completionHandlerForLatLonSearch(result: nil, error: nil)
-                    
-                    /*
-                    if let results = results[FlickrClient.JSONResponseKeys.Photos] as? [[String : AnyObject]] {
-                        completionHandlerForLatLonSearch(result: nil, error: nil)
-                    
-                        if let results = results[FlickrClient.JSONResponseKeys.Photo] as? [[String :AnyObject]] {
-                            let photos = FlickrPhoto.photosFromResults(stuff)
-                            completionHandlerForLatLonSearch(result: photos, error: nil)
-                        }
-                        */
+                    if let results = jsonPhotoDictionary[FlickrClient.JSONResponseKeys.Photo] as? [[String:AnyObject]] {
+                        let photos = Photo.photosFromResults(results)
+                        print(" **** Start photos ***")
+                        print(photos)
+                        print(" **** End photos ***")
+                        
+                        completionHandlerForLatLonSearch(result: photos, error: nil)
                     } else {
-                        completionHandlerForLatLonSearch(result: nil,
-                            error: NSError(domain: "getPhotosFromLatLonSearch parsing", code: 0,
-                                userInfo: [NSLocalizedDescriptionKey: "Could not parse getPhotosFromLatLonSearch"]))
+                        completionHandlerForLatLonSearch(result: nil, error: NSError(domain: "getPhotosFromLatLonSearch", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getPhotosFromLatLonSearch"]))
                     }
                 }
         }

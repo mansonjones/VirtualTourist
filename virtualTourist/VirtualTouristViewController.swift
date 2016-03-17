@@ -34,23 +34,9 @@ class VirtualTouristViewController: UIViewController,
         // pins = fetchAllPins()
         
         centerMapOnLocation(initialLocation)
-        FlickrClient.sharedInstance().getPhotosFromLatLonSearch(34.0481, longitude: -118.5256)
-            { (photos, error) -> Void in
-            if let photos = photos {
-                self.photos = photos
-                print("The number of Photos is:", self.photos.count)
-            } else {
-                print("Download of Flickr Photo failed")
-                }
-        }
-        
-        
-       // FlickClient.sharedgetPhotosFromLatLonSearch(latitude : 1.23, longitude : 4.56)
-
-      //  let annotation = MKAnnotation(CLLocation(latitude: 21.282778, longitude: -157.82944))
-      //  mapView.addAnnotation(annotation)
     }
 
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         // The placement of this pin is temporay.
@@ -65,9 +51,15 @@ class VirtualTouristViewController: UIViewController,
         */
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
+        if segue.identifier == "ShowVTCollectionView" {
+          _ = segue.destinationViewController
+        }
+    }
+    
+    func launchCollectionView() {
+        performSegueWithIdentifier("ShowVTCollectionView", sender: self)
     }
     
     var sharedContext: NSManagedObjectContext {
