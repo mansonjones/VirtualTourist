@@ -10,6 +10,8 @@
 		3C2CA1461C92203000B2C351 /* FlickrPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2CA1451C92203000B2C351 /* FlickrPhoto.swift */; };
 		3C2CA1871C95193500B2C351 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2CA1861C95193400B2C351 /* Location.swift */; };
 		3C2CA1891C95194B00B2C351 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2CA1881C95194B00B2C351 /* Photo.swift */; };
+		3C2CA18B1C9A0D5500B2C351 /* VTCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2CA18A1C9A0D5500B2C351 /* VTCollectionViewCell.swift */; };
+		3C2CA18D1C9A295900B2C351 /* VTCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2CA18C1C9A295900B2C351 /* VTCollectionViewController.swift */; };
 		3C483D171C7CBE28006A8291 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D161C7CBE28006A8291 /* AppDelegate.swift */; };
 		3C483D191C7CBE28006A8291 /* VirtualTouristViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D181C7CBE28006A8291 /* VirtualTouristViewController.swift */; };
 		3C483D1C1C7CBE29006A8291 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C483D1A1C7CBE29006A8291 /* Main.storyboard */; };
@@ -49,6 +51,8 @@
 		3C2CA1451C92203000B2C351 /* FlickrPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrPhoto.swift; sourceTree = "<group>"; };
 		3C2CA1861C95193400B2C351 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		3C2CA1881C95194B00B2C351 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		3C2CA18A1C9A0D5500B2C351 /* VTCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VTCollectionViewCell.swift; sourceTree = "<group>"; };
+		3C2CA18C1C9A295900B2C351 /* VTCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VTCollectionViewController.swift; sourceTree = "<group>"; };
 		3C483D131C7CBE28006A8291 /* virtualTourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = virtualTourist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C483D161C7CBE28006A8291 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3C483D181C7CBE28006A8291 /* VirtualTouristViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualTouristViewController.swift; sourceTree = "<group>"; };
@@ -127,10 +131,12 @@
 				3C483D181C7CBE28006A8291 /* VirtualTouristViewController.swift */,
 				3C483D501C7CFB29006A8291 /* Model.xcdatamodeld */,
 				3C483D481C7CE719006A8291 /* PictureGridViewController.swift */,
+				3C2CA18A1C9A0D5500B2C351 /* VTCollectionViewCell.swift */,
 				3C483DA11C7F59BB006A8291 /* Model */,
 				3C483D9B1C7F5829006A8291 /* GCDBlackBox.swift */,
 				3C483D4E1C7CE8A2006A8291 /* CoreDataStackManager.swift */,
 				3C483D1A1C7CBE29006A8291 /* Main.storyboard */,
+				3C2CA18C1C9A295900B2C351 /* VTCollectionViewController.swift */,
 				3C483D1D1C7CBE29006A8291 /* Assets.xcassets */,
 				3C483D1F1C7CBE29006A8291 /* LaunchScreen.storyboard */,
 				3C483D221C7CBE29006A8291 /* Info.plist */,
@@ -316,6 +322,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C2CA18D1C9A295900B2C351 /* VTCollectionViewController.swift in Sources */,
 				3C2CA1891C95194B00B2C351 /* Photo.swift in Sources */,
 				3C2CA1461C92203000B2C351 /* FlickrPhoto.swift in Sources */,
 				3C483D491C7CE719006A8291 /* PictureGridViewController.swift in Sources */,
@@ -329,6 +336,7 @@
 				3C483D191C7CBE28006A8291 /* VirtualTouristViewController.swift in Sources */,
 				3C483D4B1C7CE7ED006A8291 /* FlickrClient.swift in Sources */,
 				3C483DA51C7F5A0C006A8291 /* FlickrConvenience.swift in Sources */,
+				3C2CA18B1C9A0D5500B2C351 /* VTCollectionViewCell.swift in Sources */,
 				3C483D171C7CBE28006A8291 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

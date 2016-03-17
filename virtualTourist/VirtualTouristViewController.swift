@@ -18,6 +18,8 @@ class VirtualTouristViewController: UIViewController,
     
     var pins = [MKAnnotation]()
     
+    var pinLocations = [Location]()
+    
     let regionRadius: CLLocationDistance = 1000
     
     @IBOutlet weak var mapView: MKMapView!
@@ -94,6 +96,7 @@ class VirtualTouristViewController: UIViewController,
         // row in the table view, except for a map
     }
     
+    /*
     private func buildAnnotation(latitude: Double, longitude: Double) -> MKPointAnnotation {
 
         let annotation = MKPointAnnotation()
@@ -104,9 +107,28 @@ class VirtualTouristViewController: UIViewController,
         annotation.subtitle = "sub-title"
         return annotation
     }
-    
+    */    
+
     // MARK : MapKit Delegate Functions
-    // This delegate method is implemented to respond to taps.
+    
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        let reuseId = "pin"
+        
+        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
+        
+        if pinView == nil {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            pinView!.canShowCallout = true
+            pinView!.pinTintColor = UIColor.cyanColor()
+            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+        } else {
+            pinView!.annotation = annotation
+            pinView!.pinTintColor = UIColor.greenColor()
+        }
+        return pinView
+    }
+    
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if (control == view.rightCalloutAccessoryView) {
             print(" go to the Collection View Controller")
@@ -139,13 +161,20 @@ class VirtualTouristViewController: UIViewController,
         print("Long Press Gesture Recognizer")
         
         
-        var touchPoint = sender.locationInView(mapView)
-        var newCoordinates = mapView.convertPoint(touchPoint, toCoordinateFromView: mapView)
+        let touchPoint = sender.locationInView(mapView)
+        let newCoordinates = mapView.convertPoint(touchPoint, toCoordinateFromView: mapView)
+        
+        let newPin = Location(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude)
+    
+        pinLocations.append(newPin)
         
         let annotation = MKPointAnnotation()
         annotation.coordinate = newCoordinates
         
-        self.mapView.addAnnotation(annotation)
+        print(" size of pins array is:", pinLocations.count)
+        
+        let testAnnotation = newPin.pin!
+        self.mapView.addAnnotation(testAnnotation)
 
     }
     

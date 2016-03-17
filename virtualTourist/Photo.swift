@@ -11,6 +11,18 @@ import CoreData
 
 // 2. Make Photo a subclass of NSManagedObject
 
+
+class Photo {
+    var url : String
+    var title: String
+    
+    init(url: String, title: String) {
+        self.url = url
+        self.title = title
+    }
+}
+
+/*
 class Photo : NSManagedObject {
     
     struct Keys {
@@ -57,4 +69,4 @@ class Photo : NSManagedObject {
     
     // TODO: This is the place where computed properties can be added.
 }
-
+*/

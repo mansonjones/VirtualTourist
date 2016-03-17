@@ -15,15 +15,26 @@
 import UIKit
 import CoreData
 
-class PictureGridViewController: UIViewController
-/*, UICollectionViewDataSource, UICollectionViewDelegate */ {
+class PictureGridViewController: UIViewController,
+UICollectionViewDataSource, UICollectionViewDelegate {
     
+    var photos = [Photo]()
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        //collectionView.delegate = self
+    }
     
     override func viewWillAppear(animated: Bool) {
-        
+    
+        /*
+        let photo = Photo(url: "https://farm2.staticflickr.com/1696/25739821011_8cab1a1ab7.jpg", title: "airplane")
+        for (var i = 0; i < 20; i++) {
+            photos.append(photo)
+        }
+        */
         /*
          if pin.pictures.isEmpty {
             let resource =
@@ -44,35 +55,38 @@ class PictureGridViewController: UIViewController
         // We'll
     }
     
-    /*
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 10
     }
 
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let CellIdentifier = "PictureCell"
+        let CellIdentifier = "VTCollectionViewCell"
         
         // TODO:
         
         // let movie = fetchedResultsController.objectAtIndexPath(indexPath) as! Picture
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CellIdentifier, forIndexPath: indexPath) as! Picture
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CellIdentifier, forIndexPath: indexPath) as! VTCollectionViewCell
+        
+        let url = NSURL(string: "https://farm2.staticflickr.com/1696/25739821011_8cab1a1ab7.jpg")
+        
+        let data = NSData(contentsOfURL: url!)
+        if data != nil {
+            cell.imageView.image = UIImage(data: data!)
+        }
         
         // TODO
         // configureCell
  
         return cell
     }
-    */
     
-    /*
+
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
-        
-        // TODO: Add code for insert and delete
+        print(" cell selected")
     }
     
-    */
     
     /*
     lazy var scratchContext: NSManagedObjectContext {

@@ -7,11 +7,35 @@
 //
 
 import Foundation
+import MapKit
 
 // 1. Import CoreData
 import CoreData
 
+class Location {
+    var latitude: Double
+    var longitude: Double
+    
+    init(latitude: Double, longitude: Double) {
+        self.latitude = latitude
+        self.longitude = longitude
+    }
+    
+    var pin: MKPointAnnotation? {
+        get {
+            let annotation = MKPointAnnotation()
+            let lat = CLLocationDegrees(latitude)
+            let lon = CLLocationDegrees(longitude)
+            annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+            annotation.title = "title"
+            annotation.subtitle = "sub-title"
+            return annotation
+        }
+    }
+    
+}
 // 2. Make Location a subclass of NSManagedObject
+/*
 class Location : NSManagedObject {
     
     struct Keys {
@@ -58,7 +82,7 @@ class Location : NSManagedObject {
         
     }
     
-    /* TODO: Define the MKAnnotation (or maybe call it a pin) as a
+    TODO: Define the MKAnnotation (or maybe call it a pin) as a
     var annotation: MKAnnotation? {
         get {
             return
@@ -67,6 +91,7 @@ class Location : NSManagedObject {
             
         }
     }
-    */
+
 }
 
+*/
