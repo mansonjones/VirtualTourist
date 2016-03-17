@@ -33,11 +33,6 @@ UICollectionViewDataSource, UICollectionViewDelegate {
             { (photos, error) -> Void in
                 if let photos = photos {
                     self.photos = photos
-                    print("The number of Photos is:", self.photos.count)
-                    // Update the collection view on the main thread
-                    for photo in photos {
-                        print(photo.url)
-                    }
                     performUIUpdatesOnMain {
                         self.collectionView.reloadData()
                     }
@@ -62,18 +57,7 @@ UICollectionViewDataSource, UICollectionViewDelegate {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CellIdentifier, forIndexPath: indexPath) as! VTCollectionViewCell
         
-        
-        let foo = photos[indexPath.row].url
-        let url = NSURL(string: foo)
-//        let url = NSURL(string: "https://farm2.staticflickr.com/1696/25739821011_8cab1a1ab7.jpg")
-        
-        let data = NSData(contentsOfURL: url!)
-        if data != nil {
-            cell.imageView.image = UIImage(data: data!)
-        }
-        
-        // TODO
-        // configureCell
+        cell.imageView.image = photos[indexPath.row].flickrImage!
  
         return cell
     }

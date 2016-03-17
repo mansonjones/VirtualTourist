@@ -59,7 +59,6 @@ class Photo {
         
         // iterate through the array of dictionaries, each Photo is a dictionary
         for result in results {
-            print(result)
             photos.append(Photo(dictionary: result))
         }
         

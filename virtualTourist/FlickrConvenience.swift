@@ -27,32 +27,18 @@ extension FlickrClient {
             /* FlickrClient.ParameterKeys.Page : "1" */
         ]
         
-        print(parameters)
-        
         let task = taskForGETMethod(FlickrClient.Methods.PhotosSearch,
             parameters: parameters) { (results, error) -> Void in
-                print("getPhotosFromLatLonSearch")
                 if let error = error {
                     completionHandlerForLatLonSearch(result: nil, error: error)
                 } else {
-                    print(" ****************** Start Raw *******************")
-                   // print(results)
-                    print(" ****************** End Raw *********************")
                     guard let jsonPhotoDictionary = results[FlickrClient.JSONResponseKeys.Photos] as? [String : AnyObject] else {
                         completionHandlerForLatLonSearch(result: nil, error: nil)
                         return
                     }
-                    print(" ****************** Start Dict *******************")
-                    print(jsonPhotoDictionary)
-                    print(" ****************** End Dict *********************")
-                    
-                    if let results = jsonPhotoDictionary[FlickrClient.JSONResponseKeys.Photo] as? [[String:AnyObject]] {
+                   if let results = jsonPhotoDictionary[FlickrClient.JSONResponseKeys.Photo] as? [[String:AnyObject]] {
                         let photos = Photo.photosFromResults(results)
-                        print(" **** Start photos ***")
-                        print(photos)
-                        print(" **** End photos ***")
-                        
-                        completionHandlerForLatLonSearch(result: photos, error: nil)
+                       completionHandlerForLatLonSearch(result: photos, error: nil)
                     } else {
                         completionHandlerForLatLonSearch(result: nil, error: NSError(domain: "getPhotosFromLatLonSearch", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getPhotosFromLatLonSearch"]))
                     }

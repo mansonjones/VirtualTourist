@@ -45,7 +45,6 @@ class FlickrClient : NSObject {
             let task = session.dataTaskWithRequest(request) { (data, response, error) in
 
                 func sendError(error: String) {
-                    print(error)
                     let userInfo = [NSLocalizedDescriptionKey : error]
                     completionHandlerForGET(result: nil, error: NSError(domain: "taskForGetMethod", code: 1, userInfo: userInfo))
                 }
@@ -83,8 +82,6 @@ class FlickrClient : NSObject {
         var parsedResult: AnyObject!
         do {
             parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
-           // print(" *** parsed result ***")
-           // print("\(parsedResult)")
         } catch {
             let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
             completionHandlerForConvertData(result: nil, error: NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
@@ -111,7 +108,7 @@ class FlickrClient : NSObject {
             components.queryItems!.append(queryItem)
         }
         
-        print("\(components.URL!)")
+        // print("\(components.URL!)")
         return components.URL!
     }
     

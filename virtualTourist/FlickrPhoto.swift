@@ -35,8 +35,6 @@ struct FlickrPhoto {
         
         // iterate through array of dictionaries, each Photo is a dictionary
         for result in results {
-            print("RESULT")
-            print("\(result)")
             photos.append(FlickrPhoto(dictionary: result))
         }
         
