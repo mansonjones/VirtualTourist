@@ -13,8 +13,6 @@ import CoreData
 
 class VirtualTouristViewController: UIViewController,
     MKMapViewDelegate {
-
-    var photos: [FlickrPhoto] = [FlickrPhoto]()
     
     var pins = [MKAnnotation]()
     

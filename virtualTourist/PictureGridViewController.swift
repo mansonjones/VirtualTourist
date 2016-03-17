@@ -64,7 +64,7 @@ UICollectionViewDataSource, UICollectionViewDelegate {
     
 
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
-        print(" cell selected")
+        print(" cell selected at: ", indexPath.row)
     }
     
     
