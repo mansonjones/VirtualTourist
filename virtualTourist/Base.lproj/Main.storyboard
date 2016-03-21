@@ -34,7 +34,9 @@
                             <constraint firstItem="eK6-Zx-6Be" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="puG-xG-Ffh"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Virtual Tourist" id="HcR-xN-1nX"/>
+                    <navigationItem key="navigationItem" title="Virtual Tourist" id="HcR-xN-1nX">
+                        <barButtonItem key="backBarButtonItem" title="OK" id="GgJ-MS-Wf1"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="eK6-Zx-6Be" id="qHU-WN-8yC"/>
                         <segue destination="Xoj-86-YSI" kind="show" identifier="ShowVTCollectionView" id="XLt-bm-Stz"/>
