@@ -63,8 +63,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="64S-DX-rk5">
-                                <rect key="frame" x="20" y="28" width="560" height="507"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="64S-DX-rk5">
+                                <rect key="frame" x="20" y="198" width="560" height="337"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="jdd-e9-w73">
                                     <size key="itemSize" width="158" height="147"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -105,27 +105,37 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M0S-19-mmD">
                                 <rect key="frame" x="20" y="543" width="560" height="37"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="37" id="E2F-UX-w3i"/>
+                                    <constraint firstAttribute="height" constant="37" id="d9r-v1-N5b"/>
                                 </constraints>
                                 <state key="normal" title="New Collection"/>
                                 <connections>
                                     <action selector="removeSelectedPictures:" destination="Xoj-86-YSI" eventType="touchUpInside" id="e1m-Xd-8kU"/>
                                 </connections>
                             </button>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="5NL-qS-QNj">
+                                <rect key="frame" x="20" y="72" width="560" height="118"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="118" id="6Jf-VJ-nXx"/>
+                                </constraints>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="M0S-19-mmD" secondAttribute="bottom" constant="20" symbolic="YES" id="6TZ-mz-MsC"/>
-                            <constraint firstItem="64S-DX-rk5" firstAttribute="trailing" secondItem="M0S-19-mmD" secondAttribute="trailing" id="J3E-eY-Y8v"/>
-                            <constraint firstItem="M0S-19-mmD" firstAttribute="top" secondItem="64S-DX-rk5" secondAttribute="bottom" constant="8" symbolic="YES" id="ZVb-GA-IgN"/>
-                            <constraint firstItem="M0S-19-mmD" firstAttribute="leading" secondItem="yLv-J6-Lj8" secondAttribute="leadingMargin" id="ci8-rK-ZDf"/>
-                            <constraint firstItem="64S-DX-rk5" firstAttribute="top" secondItem="weG-sa-Rrp" secondAttribute="bottom" constant="8" symbolic="YES" id="gAO-rd-UFC"/>
-                            <constraint firstItem="M0S-19-mmD" firstAttribute="trailing" secondItem="yLv-J6-Lj8" secondAttribute="trailingMargin" id="oJR-Cg-yhA"/>
-                            <constraint firstItem="64S-DX-rk5" firstAttribute="leading" secondItem="M0S-19-mmD" secondAttribute="leading" id="zLv-R7-sew"/>
+                            <constraint firstItem="M0S-19-mmD" firstAttribute="trailing" secondItem="yLv-J6-Lj8" secondAttribute="trailingMargin" id="6c4-JZ-TTa"/>
+                            <constraint firstItem="M0S-19-mmD" firstAttribute="top" secondItem="64S-DX-rk5" secondAttribute="bottom" constant="8" symbolic="YES" id="J27-F4-1o8"/>
+                            <constraint firstAttribute="bottom" secondItem="M0S-19-mmD" secondAttribute="bottom" constant="20" symbolic="YES" id="L4T-u9-cxK"/>
+                            <constraint firstItem="64S-DX-rk5" firstAttribute="leading" secondItem="yLv-J6-Lj8" secondAttribute="leadingMargin" id="Mdc-YA-XdM"/>
+                            <constraint firstItem="64S-DX-rk5" firstAttribute="top" secondItem="5NL-qS-QNj" secondAttribute="bottom" constant="8" symbolic="YES" id="Puy-oP-6uD"/>
+                            <constraint firstItem="64S-DX-rk5" firstAttribute="trailing" secondItem="5NL-qS-QNj" secondAttribute="trailing" id="Ssu-aU-apv"/>
+                            <constraint firstItem="5NL-qS-QNj" firstAttribute="leading" secondItem="64S-DX-rk5" secondAttribute="leading" id="WWm-aw-72c"/>
+                            <constraint firstItem="64S-DX-rk5" firstAttribute="trailing" secondItem="M0S-19-mmD" secondAttribute="trailing" id="kKq-k5-PzG"/>
+                            <constraint firstItem="5NL-qS-QNj" firstAttribute="top" secondItem="weG-sa-Rrp" secondAttribute="bottom" constant="8" symbolic="YES" id="w9h-K1-IBF"/>
+                            <constraint firstItem="M0S-19-mmD" firstAttribute="leading" secondItem="64S-DX-rk5" secondAttribute="leading" id="wAD-xI-DyP"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="64S-DX-rk5" id="ImO-h1-7US"/>
+                        <outlet property="mapView" destination="5NL-qS-QNj" id="ehd-JE-vg5"/>
                         <outlet property="removeSelectedPicturesButton" destination="M0S-19-mmD" id="h0U-ls-GM0"/>
                     </connections>
                 </viewController>

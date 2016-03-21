@@ -18,7 +18,9 @@ class VirtualTouristViewController: UIViewController,
     
     var pinLocations = [Location]()
     
-    let regionRadius: CLLocationDistance = 1000
+    let regionRadius: CLLocationDistance = 1000 
+    
+    let initialLocation = CLLocation(latitude: 34.0481, longitude: -118.5256)
     
     @IBOutlet weak var mapView: MKMapView!
     

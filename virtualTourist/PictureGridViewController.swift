@@ -14,23 +14,28 @@
 
 import UIKit
 import CoreData
+import MapKit
 
 class PictureGridViewController: UIViewController,
-UICollectionViewDataSource, UICollectionViewDelegate {
+UICollectionViewDataSource, UICollectionViewDelegate,
+MKMapViewDelegate {
     
     var photos = [Photo]()
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var removeSelectedPicturesButton: UIButton!
     
     var latitude : Double?
     var longitude : Double?
     
+    let regionRadius: CLLocationDistance = 5000
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //collectionView.delegate = self
-        print("latitude, longitude", self.latitude!, self.longitude!)
+        setupMapView()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -49,10 +54,31 @@ UICollectionViewDataSource, UICollectionViewDelegate {
 
     }
     
+    func setupMapView() {
+        let annotation = MKPointAnnotation()
+        let coordinate = CLLocationCoordinate2DMake(CLLocationDegrees(latitude!), CLLocationDegrees(longitude!))
+        annotation.coordinate = coordinate
+        mapView.addAnnotation(annotation)
+        
+        let initialLocation = CLLocation(latitude: latitude!, longitude: longitude!)
+        
+        centerMapOnLocation(initialLocation)
+        mapView.zoomEnabled = false
+        mapView.scrollEnabled = false
+    }
+    
+    func centerMapOnLocation(location: CLLocation) {
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
+            regionRadius * 2.0, regionRadius * 2.0)
+        mapView.setRegion(coordinateRegion, animated: true)
+    }
+    
+    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photos.count
     }
 
+    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let CellIdentifier = "VTCollectionViewCell"
@@ -68,11 +94,28 @@ UICollectionViewDataSource, UICollectionViewDelegate {
         return cell
     }
     
+    
 
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
         print(" cell selected at: ", indexPath.row)
         removeSelectedPicturesButton?.titleLabel?.text = "Remove Selected Pictures"
     }
+    
+    /*
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        let reuseId = "staticPin"
+        
+        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
+        
+        if pinView == nil {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            pinView!.pinTintColor = UIColor.blueColor()
+        } else {
+            pinView!.annotation = annotation
+        }
+        return pinView
+    }
+    */
     
     
     /*
