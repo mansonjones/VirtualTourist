@@ -9,7 +9,7 @@
         <!--Virtual Tourist-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="VirtualTouristViewController" customModule="virtualTourist" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="TravelLocationsViewController" customModule="virtualTourist" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -39,7 +39,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="eK6-Zx-6Be" id="qHU-WN-8yC"/>
-                        <segue destination="Xoj-86-YSI" kind="show" identifier="ShowVTCollectionView" id="XLt-bm-Stz"/>
+                        <segue destination="Xoj-86-YSI" kind="show" identifier="ShowPhotoAlbum" id="XLt-bm-Stz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -51,10 +51,10 @@
             </objects>
             <point key="canvasLocation" x="1051" y="386"/>
         </scene>
-        <!--Picture Grid View Controller-->
+        <!--Photo Album View Controller-->
         <scene sceneID="c77-dA-HWC">
             <objects>
-                <viewController id="Xoj-86-YSI" customClass="PictureGridViewController" customModule="virtualTourist" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Xoj-86-YSI" customClass="PhotoAlbumViewController" customModule="virtualTourist" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="weG-sa-Rrp"/>
                         <viewControllerLayoutGuide type="bottom" id="TNy-Wt-tIi"/>

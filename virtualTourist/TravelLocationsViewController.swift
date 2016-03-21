@@ -11,7 +11,7 @@ import MapKit
 import UIKit
 import CoreData
 
-class VirtualTouristViewController: UIViewController,
+class TravelLocationsViewController: UIViewController,
     MKMapViewDelegate {
     
     var annotations = [MKPointAnnotation]()
@@ -59,8 +59,8 @@ class VirtualTouristViewController: UIViewController,
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        if segue.identifier == "ShowVTCollectionView" {
-            let controller = segue.destinationViewController as! PictureGridViewController
+        if segue.identifier == "ShowPhotoAlbum" {
+            let controller = segue.destinationViewController as! PhotoAlbumViewController
             // TODO: Set the latitude and longitude for the selected value
             controller.latitude = 34.0481
             controller.longitude = -118.5256
@@ -68,7 +68,7 @@ class VirtualTouristViewController: UIViewController,
     }
     
     func launchCollectionView() {
-        performSegueWithIdentifier("ShowVTCollectionView", sender: self)
+        performSegueWithIdentifier("ShowPhotoAlbum", sender: self)
     }
     
     var sharedContext: NSManagedObjectContext {

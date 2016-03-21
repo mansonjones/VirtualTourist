@@ -16,7 +16,7 @@ import UIKit
 import CoreData
 import MapKit
 
-class PictureGridViewController: UIViewController,
+class PhotoAlbumViewController: UIViewController,
 UICollectionViewDataSource, UICollectionViewDelegate,
 MKMapViewDelegate {
     
@@ -34,7 +34,8 @@ MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //collectionView.delegate = self
+        //collectionView.delegate
+        removeSelectedPicturesButton.enabled = false
         setupMapView()
     }
     
@@ -46,6 +47,8 @@ MKMapViewDelegate {
                     self.photos = photos
                     performUIUpdatesOnMain {
                         self.collectionView.reloadData()
+                        // TODO : enable
+                       self.removeSelectedPicturesButton.enabled = true
                     }
                 } else {
                     print("Download of Flickr Photo failed")
