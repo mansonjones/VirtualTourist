@@ -14,7 +14,7 @@ import CoreData
 class VirtualTouristViewController: UIViewController,
     MKMapViewDelegate {
     
-    var pins = [MKAnnotation]()
+    var annotations = [MKPointAnnotation]()
     
     var pinLocations = [Location]()
     
@@ -24,13 +24,19 @@ class VirtualTouristViewController: UIViewController,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.rightBarButtonItem =
-            UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editPins")
+        let editButton = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editPins")
+        
+        /* self.navigationItem.rightBarButtonItem =
+            UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editPins") */
+        // This is for debugging purposes only
+        let debugButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "debug")
+        navigationItem.rightBarButtonItems = [editButton, debugButton]
         let initialLocation = CLLocation(latitude: 34.0481, longitude: -118.5256)
         
         // Core Data Step ?
-        // pins = fetchAllPins()
-        
+        // annotations = fetchAllPins()
+        // once all the annotations are loaded from coredata,
+        // call annotations.append(annotation)
         centerMapOnLocation(initialLocation)
     }
 
@@ -52,7 +58,10 @@ class VirtualTouristViewController: UIViewController,
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if segue.identifier == "ShowVTCollectionView" {
-          _ = segue.destinationViewController
+            let controller = segue.destinationViewController as! PictureGridViewController
+            // TODO: Set the latitude and longitude for the selected value
+            controller.latitude = 34.0481
+            controller.longitude = -118.5256
         }
     }
     
@@ -79,8 +88,8 @@ class VirtualTouristViewController: UIViewController,
     
     }
     
-    func insertNewPin(pin: MKAnnotation) {
-        pins.insert(pin, atIndex: 0)
+    func insertNewPin(pin: MKPointAnnotation) {
+        annotations.insert(pin, atIndex: 0)
         
         // add the equivalent of getting the index path and inserting the
         // row in the table view, except for a map
@@ -103,15 +112,17 @@ class VirtualTouristViewController: UIViewController,
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
+        
+        print("viewForAnnotation")
         let reuseId = "pin"
         
         var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
         
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView!.canShowCallout = true
-            pinView!.pinTintColor = UIColor.cyanColor()
-            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+            pinView!.canShowCallout = false
+            pinView!.pinTintColor = UIColor.blueColor()
+            // pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
         } else {
             pinView!.annotation = annotation
             pinView!.pinTintColor = UIColor.greenColor()
@@ -119,9 +130,14 @@ class VirtualTouristViewController: UIViewController,
         return pinView
     }
     
+    // This delegate method is implemented to respond to taps.  It opens the collection view
+    // and passes the latitude and longitude information to the collection view.
+    
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        print("calloutAccessoryControlTapped")
         if (control == view.rightCalloutAccessoryView) {
             print(" go to the Collection View Controller")
+            // Here is where you would call launch the collection view
         }
     }
     
@@ -133,6 +149,15 @@ class VirtualTouristViewController: UIViewController,
     func editPins() {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "doneEditingPins")
         // TODO: Add code to slide up the "Tap Pins To Delete" Bar
+    }
+    
+    func debug() {
+        print("Debug")
+                // let initialLocation = CLLocation(latitude: 34.0481, longitude: -118.5256)
+       // let latitude = 34.0481
+       // let longitude = -118.5256
+        
+        launchCollectionView()
     }
     
     func doneEditingPins() {
@@ -149,23 +174,23 @@ class VirtualTouristViewController: UIViewController,
 
     @IBAction func handleLongPressGesture(sender: UILongPressGestureRecognizer) {
         print("Long Press Gesture Recognizer")
-        
-        
-        let touchPoint = sender.locationInView(mapView)
-        let newCoordinates = mapView.convertPoint(touchPoint, toCoordinateFromView: mapView)
-        
-        let newPin = Location(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude)
-    
-        pinLocations.append(newPin)
-        
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = newCoordinates
-        
-        print(" size of pins array is:", pinLocations.count)
-        
-        let testAnnotation = newPin.pin!
-        self.mapView.addAnnotation(testAnnotation)
-
+        if sender.state == .Began {
+            
+            let touchPoint = sender.locationInView(mapView)
+            let newCoordinates = mapView.convertPoint(touchPoint, toCoordinateFromView: mapView)
+            
+            let newPin = Location(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude)
+            
+            pinLocations.append(newPin)
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = newCoordinates
+            
+            print(" size of pins array is:", pinLocations.count)
+            
+            // let testAnnotation = newPin.pin!
+            self.mapView.addAnnotation(annotation)
+        }
     }
     
 }

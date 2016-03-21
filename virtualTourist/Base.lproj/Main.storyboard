@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Xoj-86-YSI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="fLM-gH-9DE">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -37,10 +37,11 @@
                     <navigationItem key="navigationItem" title="Virtual Tourist" id="HcR-xN-1nX"/>
                     <connections>
                         <outlet property="mapView" destination="eK6-Zx-6Be" id="qHU-WN-8yC"/>
+                        <segue destination="Xoj-86-YSI" kind="show" identifier="ShowVTCollectionView" id="XLt-bm-Stz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="BFM-RT-rZX">
+                <pongPressGestureRecognizer cancelsTouchesInView="NO" allowableMovement="10" minimumPressDuration="0.5" id="BFM-RT-rZX">
                     <connections>
                         <action selector="handleLongPressGesture:" destination="BYZ-38-t0r" id="pmp-ci-br7"/>
                     </connections>
@@ -60,8 +61,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="64S-DX-rk5">
-                                <rect key="frame" x="20" y="28" width="560" height="552"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="64S-DX-rk5">
+                                <rect key="frame" x="20" y="28" width="560" height="507"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="jdd-e9-w73">
                                     <size key="itemSize" width="158" height="147"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -70,7 +71,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="VTCollectionViewCell" id="yDc-Xm-AB1" customClass="VTCollectionViewCell" customModule="virtualTourist" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="158" height="147"/>
+                                        <rect key="frame" x="0.0" y="64" width="158" height="147"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="158" height="147"/>
@@ -99,22 +100,36 @@
                                     <outlet property="delegate" destination="Xoj-86-YSI" id="RKZ-iY-R47"/>
                                 </connections>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M0S-19-mmD">
+                                <rect key="frame" x="20" y="543" width="560" height="37"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="37" id="E2F-UX-w3i"/>
+                                </constraints>
+                                <state key="normal" title="New Collection"/>
+                                <connections>
+                                    <action selector="removeSelectedPictures:" destination="Xoj-86-YSI" eventType="touchUpInside" id="e1m-Xd-8kU"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="64S-DX-rk5" firstAttribute="leading" secondItem="yLv-J6-Lj8" secondAttribute="leadingMargin" id="8Dp-il-GCj"/>
-                            <constraint firstItem="64S-DX-rk5" firstAttribute="trailing" secondItem="yLv-J6-Lj8" secondAttribute="trailingMargin" id="Dzy-pk-a5g"/>
-                            <constraint firstItem="64S-DX-rk5" firstAttribute="top" secondItem="weG-sa-Rrp" secondAttribute="bottom" constant="8" id="fuu-NB-4E8"/>
-                            <constraint firstItem="TNy-Wt-tIi" firstAttribute="top" secondItem="64S-DX-rk5" secondAttribute="bottom" constant="20" id="hFa-7R-eCJ"/>
+                            <constraint firstAttribute="bottom" secondItem="M0S-19-mmD" secondAttribute="bottom" constant="20" symbolic="YES" id="6TZ-mz-MsC"/>
+                            <constraint firstItem="64S-DX-rk5" firstAttribute="trailing" secondItem="M0S-19-mmD" secondAttribute="trailing" id="J3E-eY-Y8v"/>
+                            <constraint firstItem="M0S-19-mmD" firstAttribute="top" secondItem="64S-DX-rk5" secondAttribute="bottom" constant="8" symbolic="YES" id="ZVb-GA-IgN"/>
+                            <constraint firstItem="M0S-19-mmD" firstAttribute="leading" secondItem="yLv-J6-Lj8" secondAttribute="leadingMargin" id="ci8-rK-ZDf"/>
+                            <constraint firstItem="64S-DX-rk5" firstAttribute="top" secondItem="weG-sa-Rrp" secondAttribute="bottom" constant="8" symbolic="YES" id="gAO-rd-UFC"/>
+                            <constraint firstItem="M0S-19-mmD" firstAttribute="trailing" secondItem="yLv-J6-Lj8" secondAttribute="trailingMargin" id="oJR-Cg-yhA"/>
+                            <constraint firstItem="64S-DX-rk5" firstAttribute="leading" secondItem="M0S-19-mmD" secondAttribute="leading" id="zLv-R7-sew"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="64S-DX-rk5" id="ImO-h1-7US"/>
+                        <outlet property="removeSelectedPicturesButton" destination="M0S-19-mmD" id="h0U-ls-GM0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Bs-Y8-6CR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1073" y="1060"/>
+            <point key="canvasLocation" x="1866" y="386"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="6Uv-SW-CLk">

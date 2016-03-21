@@ -22,14 +22,20 @@ UICollectionViewDataSource, UICollectionViewDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var removeSelectedPicturesButton: UIButton!
+    
+    var latitude : Double?
+    var longitude : Double?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //collectionView.delegate = self
+        print("latitude, longitude", self.latitude!, self.longitude!)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        FlickrClient.sharedInstance().getPhotosFromLatLonSearch(34.0481, longitude: -118.5256)
+        FlickrClient.sharedInstance().getPhotosFromLatLonSearch(latitude!, longitude: longitude!)
             { (photos, error) -> Void in
                 if let photos = photos {
                     self.photos = photos
@@ -65,6 +71,7 @@ UICollectionViewDataSource, UICollectionViewDelegate {
 
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
         print(" cell selected at: ", indexPath.row)
+        removeSelectedPicturesButton?.titleLabel?.text = "Remove Selected Pictures"
     }
     
     
@@ -76,6 +83,8 @@ UICollectionViewDataSource, UICollectionViewDelegate {
     }
     */
     
+    @IBAction func removeSelectedPictures(sender: UIButton) {
+    }
     // MARK: - Core Data Convenience
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext
