@@ -65,6 +65,7 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="64S-DX-rk5">
                                 <rect key="frame" x="20" y="198" width="560" height="337"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="jdd-e9-w73">
                                     <size key="itemSize" width="158" height="147"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>

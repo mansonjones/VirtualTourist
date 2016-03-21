@@ -93,15 +93,18 @@ MKMapViewDelegate {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CellIdentifier, forIndexPath: indexPath) as! VTCollectionViewCell
         
         cell.imageView.image = photos[indexPath.row].flickrImage!
- 
+      //  cell.imageView.alpha = 0.5
+        
         return cell
     }
     
-    
-
-    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print(" cell selected at: ", indexPath.row)
         removeSelectedPicturesButton?.titleLabel?.text = "Remove Selected Pictures"
+        let CellIdentifier = "VTCollectionViewCell"
+        
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CellIdentifier, forIndexPath: indexPath) as! VTCollectionViewCell
+        cell.imageView.alpha = 0.5
     }
     
     /*

@@ -55,6 +55,14 @@ class TravelLocationsViewController: UIViewController,
         
         self.mapView.addAnnotation(annotation)
         */
+        // TODO: This is where you will load in the zoom settings
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        print(" Map View Attributes to save")
+        // TODO: This is where the region data should be serialized.
+        print("\(mapView.region)")
+        
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
