@@ -16,7 +16,7 @@ class TravelLocationsViewController: UIViewController,
     
     var annotations = [MKPointAnnotation]()
     
-    var pinLocations = [Location]()
+    var pinLocations = [Pin]()
     
     let regionRadius: CLLocationDistance = 1000 
     
@@ -132,17 +132,17 @@ class TravelLocationsViewController: UIViewController,
         return CoreDataStackManager.sharedInstance().managedObjectContext
     }
 
-    func fetchAllLocations() -> [Location] {
+    func fetchAllPins() -> [Pin] {
 
         // Create the Fetch Request
         let fetchRequest = NSFetchRequest(entityName: "Pin")
         
         // Create the Fetch Request
         do {
-            return try sharedContext.executeFetchRequest(fetchRequest) as! [Location]
+            return try sharedContext.executeFetchRequest(fetchRequest) as! [Pin]
         } catch let error as NSError {
             print("Error in fetchAllPins(): \(error)")
-            return [Location]()
+            return [Pin]()
         }
     
     }
@@ -244,7 +244,7 @@ class TravelLocationsViewController: UIViewController,
             let touchPoint = sender.locationInView(mapView)
             let newCoordinates = mapView.convertPoint(touchPoint, toCoordinateFromView: mapView)
             
-            let newPin = Location(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude)
+            let newPin = Pin(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude)
             
             pinLocations.append(newPin)
             
