@@ -124,7 +124,7 @@ class TravelLocationsViewController: UIViewController,
         }
     }
     
-    func launchCollectionView() {
+    func launchPhotoAlbum() {
         performSegueWithIdentifier("ShowPhotoAlbum", sender: self)
     }
     
@@ -180,11 +180,11 @@ class TravelLocationsViewController: UIViewController,
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = false
-            pinView!.pinTintColor = UIColor.blueColor()
+           // pinView!.pinTintColor = UIColor.blueColor()
             // pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
         } else {
             pinView!.annotation = annotation
-            pinView!.pinTintColor = UIColor.greenColor()
+            // pinView!.pinTintColor = UIColor.greenColor()
         }
         return pinView
     }
@@ -202,6 +202,7 @@ class TravelLocationsViewController: UIViewController,
     
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         print("selected annotation view")
+        launchPhotoAlbum()
     }
     
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
@@ -221,7 +222,7 @@ class TravelLocationsViewController: UIViewController,
        // let latitude = 34.0481
        // let longitude = -118.5256
         
-        launchCollectionView()
+        launchPhotoAlbum()
     }
     
     func doneEditingPins() {
