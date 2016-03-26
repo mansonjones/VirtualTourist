@@ -5,11 +5,9 @@
 //  Copyright © 2016 Manson Jones. All rights reserved.
 //
 
+import CoreData
 import Foundation
 import MapKit
-
-// 1. Import CoreData
-import CoreData
 
 class Pin {
     
