@@ -12,12 +12,18 @@ import MapKit
 import CoreData
 
 class Pin {
+    
+    struct Keys {
+        static let Latitude = "latitude"
+        static let Longitude = "longitude"
+    }
+    
     var latitude: NSNumber
     var longitude: NSNumber
     
-    init(latitude: Double, longitude: Double) {
-        self.latitude = NSNumber(double: latitude)
-        self.longitude = NSNumber(double: longitude)
+    init(dictionary: [String : AnyObject]) {
+        self.latitude = dictionary[Keys.Latitude] as! Double
+        self.longitude = dictionary[Keys.Longitude] as! Double
     }
     
     var pin: MKPointAnnotation? {

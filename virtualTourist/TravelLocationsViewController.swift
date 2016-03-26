@@ -244,7 +244,12 @@ class TravelLocationsViewController: UIViewController,
             let touchPoint = sender.locationInView(mapView)
             let newCoordinates = mapView.convertPoint(touchPoint, toCoordinateFromView: mapView)
             
-            let pinToBeAdded = Pin(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude)
+            let dictionary: [String : AnyObject] = [
+                Pin.Keys.Latitude : newCoordinates.latitude,
+                Pin.Keys.Longitude : newCoordinates.longitude
+            ]
+            
+            let pinToBeAdded = Pin(dictionary: dictionary)
             
             pinLocations.append(pinToBeAdded)
             
