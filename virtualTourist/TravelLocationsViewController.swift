@@ -244,9 +244,9 @@ class TravelLocationsViewController: UIViewController,
             let touchPoint = sender.locationInView(mapView)
             let newCoordinates = mapView.convertPoint(touchPoint, toCoordinateFromView: mapView)
             
-            let newPin = Pin(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude)
+            let pinToBeAdded = Pin(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude)
             
-            pinLocations.append(newPin)
+            pinLocations.append(pinToBeAdded)
             
             let annotation = MKPointAnnotation()
             annotation.coordinate = newCoordinates
@@ -254,7 +254,7 @@ class TravelLocationsViewController: UIViewController,
             print(" size of pins array is:", pinLocations.count)
             
             // let testAnnotation = newPin.pin!
-            self.mapView.addAnnotation(annotation)
+            self.mapView.addAnnotation(pinToBeAdded.pin!)
         }
     }
     

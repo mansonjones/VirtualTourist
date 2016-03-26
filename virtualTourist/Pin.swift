@@ -12,19 +12,19 @@ import MapKit
 import CoreData
 
 class Pin {
-    var latitude: Double
-    var longitude: Double
+    var latitude: NSNumber
+    var longitude: NSNumber
     
     init(latitude: Double, longitude: Double) {
-        self.latitude = latitude
-        self.longitude = longitude
+        self.latitude = NSNumber(double: latitude)
+        self.longitude = NSNumber(double: longitude)
     }
     
     var pin: MKPointAnnotation? {
         get {
             let annotation = MKPointAnnotation()
-            let lat = CLLocationDegrees(latitude)
-            let lon = CLLocationDegrees(longitude)
+            let lat = CLLocationDegrees(latitude.doubleValue)
+            let lon = CLLocationDegrees(longitude.doubleValue)
             annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
             annotation.title = "title"
             annotation.subtitle = "sub-title"
