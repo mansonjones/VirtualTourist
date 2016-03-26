@@ -23,11 +23,10 @@ class Pin {
     var pin: MKPointAnnotation? {
         get {
             let annotation = MKPointAnnotation()
-            let lat = CLLocationDegrees(latitude.doubleValue)
-            let lon = CLLocationDegrees(longitude.doubleValue)
-            annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-            annotation.title = "title"
-            annotation.subtitle = "sub-title"
+            annotation.coordinate = CLLocationCoordinate2D(
+                latitude: CLLocationDegrees(latitude.doubleValue),
+                longitude: CLLocationDegrees(longitude.doubleValue)
+            )
             return annotation
         }
     }
