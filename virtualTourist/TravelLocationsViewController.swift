@@ -14,9 +14,9 @@ import CoreData
 class TravelLocationsViewController: UIViewController,
     MKMapViewDelegate {
     
-    var annotations = [MKPointAnnotation]()
-    
     var pinLocations = [Pin]()
+    
+    var selectedPin : Pin!
     
     let regionRadius: CLLocationDistance = 1000 
     
@@ -39,7 +39,7 @@ class TravelLocationsViewController: UIViewController,
        // let initialLocation = CLLocation(latitude: 34.0481, longitude: -118.5256)
         
         // Core Data Step ?
-        // annotations = fetchAllPins()
+        //  = fetchAllPins()
         // once all the annotations are loaded from coredata,
         // call annotations.append(annotation)
         
@@ -114,13 +114,10 @@ class TravelLocationsViewController: UIViewController,
         
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {        
         if segue.identifier == "ShowPhotoAlbum" {
             let controller = segue.destinationViewController as! PhotoAlbumViewController
-            // TODO: Set the latitude and longitude for the selected value
-            controller.latitude = 34.0481
-            controller.longitude = -118.5256
+            controller.location = selectedPin
         }
     }
     
@@ -146,13 +143,14 @@ class TravelLocationsViewController: UIViewController,
         }
     
     }
-    
+    /*
     func insertNewPin(pin: MKPointAnnotation) {
         annotations.insert(pin, atIndex: 0)
         
         // add the equivalent of getting the index path and inserting the
         // row in the table view, except for a map
     }
+    */
     
     /*
     private func buildAnnotation(latitude: Double, longitude: Double) -> MKPointAnnotation {
@@ -202,6 +200,17 @@ class TravelLocationsViewController: UIViewController,
     
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         print("selected annotation view")
+        
+        let latitude = view.annotation?.coordinate.latitude
+        let longitude = view.annotation?.coordinate.longitude
+        
+        let pinDictionary : [String : AnyObject] = [
+            Pin.Keys.Latitude : latitude!,
+            Pin.Keys.Longitude : longitude!
+        ]
+        
+        selectedPin = Pin(dictionary: pinDictionary)
+        
         launchPhotoAlbum()
     }
     
@@ -219,9 +228,15 @@ class TravelLocationsViewController: UIViewController,
     func debug() {
         print("Debug")
                 // let initialLocation = CLLocation(latitude: 34.0481, longitude: -118.5256)
-       // let latitude = 34.0481
-       // let longitude = -118.5256
+       let pinLatitude = 34.0481
+       let pinLongitude = -118.5256
         
+       let pinDictionary : [String : AnyObject] = [
+            Pin.Keys.Latitude : pinLatitude,
+            Pin.Keys.Longitude : pinLongitude
+        ]
+        
+        selectedPin = Pin(dictionary: pinDictionary)
         launchPhotoAlbum()
     }
     

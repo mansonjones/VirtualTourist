@@ -27,9 +27,8 @@ MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var removeSelectedPicturesButton: UIButton!
     
-    var latitude : Double?
-    var longitude : Double?
     
+    var location: Pin!
     let regionRadius: CLLocationDistance = 5000
     
     override func viewDidLoad() {
@@ -41,7 +40,10 @@ MKMapViewDelegate {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        FlickrClient.sharedInstance().getPhotosFromLatLonSearch(latitude!, longitude: longitude!)
+        let latitude = location.latitude.doubleValue
+        let longitude = location.longitude.doubleValue
+        
+        FlickrClient.sharedInstance().getPhotosFromLatLonSearch(latitude, longitude: longitude)
             { (photos, error) -> Void in
                 if let photos = photos {
                     self.photos = photos
@@ -59,11 +61,15 @@ MKMapViewDelegate {
     
     func setupMapView() {
         let annotation = MKPointAnnotation()
-        let coordinate = CLLocationCoordinate2DMake(CLLocationDegrees(latitude!), CLLocationDegrees(longitude!))
+        
+        let latitude = location.latitude.doubleValue
+        let longitude = location.longitude.doubleValue
+        
+        let coordinate = CLLocationCoordinate2DMake(CLLocationDegrees(latitude), CLLocationDegrees(longitude))
         annotation.coordinate = coordinate
         mapView.addAnnotation(annotation)
         
-        let initialLocation = CLLocation(latitude: latitude!, longitude: longitude!)
+        let initialLocation = CLLocation(latitude: latitude, longitude: longitude)
         
         centerMapOnLocation(initialLocation)
         mapView.zoomEnabled = false
