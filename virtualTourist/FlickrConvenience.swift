@@ -10,7 +10,7 @@ import Foundation
 
 extension FlickrClient {
     
-    func getPhotosFromLatLonSearch(latitude : Double, longitude : Double,
+    func getPhotosFromLatLonSearch(location : Pin,
         completionHandlerForLatLonSearch: (result: [Photo]?, error: NSError?) -> Void) -> NSURLSessionDataTask?
     {
         
@@ -19,7 +19,7 @@ extension FlickrClient {
         
         let parameters: [String : String!] = [
             FlickrClient.ParameterKeys.Method: FlickrClient.ParameterValues.SearchMethod,
-            FlickrClient.ParameterKeys.BoundingBox: bboxString(latitude, longitude: longitude),
+            FlickrClient.ParameterKeys.BoundingBox: bboxString(location),
             FlickrClient.ParameterKeys.SafeSearch: "1",
             FlickrClient.ParameterKeys.Extras: "url_m",
             FlickrClient.ParameterKeys.Format: "json",
@@ -47,8 +47,11 @@ extension FlickrClient {
         return task
     }
     
-    private func bboxString(latitude: Double, longitude: Double) -> String {
+    private func bboxString(location: Pin) -> String {
         // ensure bbox is bounded by minimum and maximums
+        
+        let latitude = location.latitude.doubleValue
+        let longitude = location.latitude.doubleValue
         
         let minimumLon = max(longitude - FlickrClient.Constants.SearchBBoxHalfWidth,
             FlickrClient.Constants.SearchLonRange.0)

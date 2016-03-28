@@ -40,10 +40,8 @@ MKMapViewDelegate {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        let latitude = location.latitude.doubleValue
-        let longitude = location.longitude.doubleValue
         
-        FlickrClient.sharedInstance().getPhotosFromLatLonSearch(latitude, longitude: longitude)
+        FlickrClient.sharedInstance().getPhotosFromLatLonSearch(location)
             { (photos, error) -> Void in
                 if let photos = photos {
                     self.photos = photos
