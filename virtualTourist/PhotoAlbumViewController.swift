@@ -20,7 +20,7 @@ class PhotoAlbumViewController: UIViewController,
 UICollectionViewDataSource, UICollectionViewDelegate,
 MKMapViewDelegate {
     
-    var photos = [Photo]()
+//    var photos = [Photo]()
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -42,9 +42,11 @@ MKMapViewDelegate {
         super.viewWillAppear(animated)
         
         FlickrClient.sharedInstance().getPhotosFromLatLonSearch(location)
-            { (photos, error) -> Void in
-                if let photos = photos {
-                    self.photos = photos
+            { (photosArray, error) -> Void in
+                if let photos = photosArray {
+                    _ = photos.map() {
+                        self.location.photos.append($0)
+                    }
                     performUIUpdatesOnMain {
                         self.collectionView.reloadData()
                         // TODO : enable
@@ -82,7 +84,7 @@ MKMapViewDelegate {
     
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
+        return location.photos.count
     }
 
     
@@ -96,7 +98,7 @@ MKMapViewDelegate {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CellIdentifier, forIndexPath: indexPath) as! VTCollectionViewCell
         
-        cell.imageView.image = photos[indexPath.row].flickrImage!
+        cell.imageView.image = location.photos[indexPath.row].flickrImage!
       //  cell.imageView.alpha = 0.5
         
         return cell

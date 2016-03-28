@@ -18,6 +18,7 @@ class Pin {
     
     var latitude: NSNumber
     var longitude: NSNumber
+    var photos: [Photo] = [Photo]()
     
     init(dictionary: [String : AnyObject]) {
         self.latitude = dictionary[Keys.Latitude] as! Double
