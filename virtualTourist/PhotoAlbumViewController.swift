@@ -41,22 +41,24 @@ MKMapViewDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        FlickrClient.sharedInstance().getPhotosFromLatLonSearch(location)
-            { (photosArray, error) -> Void in
-                if let photos = photosArray {
-                    _ = photos.map() {
-                        self.location.photos.append($0)
+        if location.photos.isEmpty {
+            FlickrClient.sharedInstance().getPhotosFromLatLonSearch(location)
+                { (photosArray, error) -> Void in
+                    if let photos = photosArray {
+                        _ = photos.map() {
+                            self.location.photos.append($0)
+                        }
+                        performUIUpdatesOnMain {
+                            self.collectionView.reloadData()
+                            // TODO : enable
+                            self.removeSelectedPicturesButton.enabled = true
+                        }
+                    } else {
+                        print("Download of Flickr Photo failed")
                     }
-                    performUIUpdatesOnMain {
-                        self.collectionView.reloadData()
-                        // TODO : enable
-                       self.removeSelectedPicturesButton.enabled = true
-                    }
-                } else {
-                    print("Download of Flickr Photo failed")
-                }
+            }
         }
-
+        
     }
     
     func setupMapView() {
