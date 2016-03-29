@@ -11,7 +11,7 @@ import Foundation
 extension FlickrClient {
     
     func getPhotosFromLatLonSearch(location : Pin,
-        completionHandlerForLatLonSearch: (result: [Photo]?, error: NSError?) -> Void) -> NSURLSessionDataTask?
+        completionHandlerForLatLonSearch: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask?
     {
         
         // TODO: move the parameter value definitions into a 
@@ -37,8 +37,8 @@ extension FlickrClient {
                         return
                     }
                    if let results = jsonPhotoDictionary[FlickrClient.JSONResponseKeys.Photo] as? [[String:AnyObject]] {
-                        let photos = Photo.photosFromResults(results)
-                       completionHandlerForLatLonSearch(result: photos, error: nil)
+                       // let photos = Photo.photosFromResults(results)
+                       completionHandlerForLatLonSearch(result: results, error: nil)
                     } else {
                         completionHandlerForLatLonSearch(result: nil, error: NSError(domain: "getPhotosFromLatLonSearch", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getPhotosFromLatLonSearch"]))
                     }

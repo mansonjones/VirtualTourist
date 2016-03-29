@@ -43,11 +43,23 @@ MKMapViewDelegate {
         
         if location.photos.isEmpty {
             FlickrClient.sharedInstance().getPhotosFromLatLonSearch(location)
-                { (photosArray, error) -> Void in
-                    if let photos = photosArray {
-                        _ = photos.map() {
-                            self.location.photos.append($0)
+                { (result, error) -> Void in
+                    
+                    
+                    if let photosDictionaries = result as? [[String : AnyObject]] {
+                        
+                        // Parse the array of photos dictionaries
+                        _ = photosDictionaries.map() { (dictionary: [String : AnyObject]) -> Photo in
+                            let photo = Photo(dictionary: dictionary)
+                           //  print(" *** Photo ****")
+                           // print(photo.url)
+                            self.location.photos.append(photo)
+                            return photo
                         }
+                        // _ = photos.map() {
+                        //     self.location.photos.append($0)
+                        // }
+                        // Update the collection view on the main thread
                         performUIUpdatesOnMain {
                             self.collectionView.reloadData()
                             // TODO : enable
