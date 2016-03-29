@@ -27,16 +27,9 @@ class Photo {
     }
     
     var url : String
-    var title : String
-    
-    init(url: String, title: String) {
-        self.url = url
-        self.title = title
-    }
     
     init(dictionary: [String : AnyObject]) {
         url = dictionary[Keys.Url] as! String
-        title = "TITLE"
     }
     
     // TODO: add a computed parameter to return the URL
