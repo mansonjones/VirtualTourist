@@ -6,22 +6,48 @@
 //  Copyright © 2016 Manson Jones. All rights reserved.
 //
 
-// 1. Import CoreData
 import CoreData
 import UIKit
 
-// 2. Make Photo a subclass of NSManagedObject
+// This is the Core Data version
+/*
+class Photo : NSManagedObject {
+    
+    struct Keys {
+        static let Url = "url_m"
+    }
+    
+    @NSManaged var url : String
+    @NSManaged var location: Pin?
+    
+    
+    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    }
+    
+    init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
+        // Core Data
+        let entity =  NSEntityDescription.entityForName("Photo", inManagedObjectContext: context)!
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
 
+        url = dictionary[Keys.Url] as! String
+    }
+    
+    var flickrImage : UIImage? {
+        get {
+            let data = NSData(contentsOfURL: NSURL(string: url)!)
+            if data != nil {
+                return UIImage(data: data!)
+            }
+            return nil
+        }
+    }
+    
+}
+*/
+// The earlier version, before Core Data was implemented.
 
 class Photo {
-    
-    // Note : there are many other key-value pairs
-    // returned by flickr, but url_m is the only
-    // one we need for now.
-    // Maybe add title once it's all working.
-    
-    // TODO: Move this to the constants file.
-    
     struct Keys {
         static let Url = "url_m"
     }
@@ -58,3 +84,4 @@ class Photo {
         return photos
     }
 }
+
