@@ -279,8 +279,10 @@ class TravelLocationsViewController: UIViewController,
             
             print(" size of pins array is:", pinLocations.count)
             
+            self.mapView.addAnnotation(Pin.getMKPointAnnotiation(pinToBeAdded)!)
+            
             // let testAnnotation = newPin.pin!
-            self.mapView.addAnnotation(pinToBeAdded.pin!)
+            // self.mapView.addAnnotation(pinToBeAdded.pin!)
         }
     }
     

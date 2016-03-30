@@ -58,7 +58,21 @@ class Photo {
         url = dictionary[Keys.Url] as! String
     }
     
-    // TODO: add a computed parameter to return the URL
+    // Using this function instead of the computed property to 
+    // avoid problems with core data
+    
+    static func getFlickrImage(myPhoto : Photo) -> UIImage? {
+        let url = myPhoto.url
+        let data = NSData(contentsOfURL: NSURL(string: url)!)
+        if data != nil {
+            return UIImage(data: data!)
+        }
+        return nil
+    }
+    
+    // TODO: Figure out how to get this computed property to work
+    // with core data.
+    
     var flickrImage : UIImage? {
         get {
             // let testUrl = NSURL(string: "https://farm2.staticflickr.com/1696/25739821011_8cab1a1ab7.jpg")!

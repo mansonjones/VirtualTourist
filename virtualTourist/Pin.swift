@@ -69,6 +69,18 @@ class Pin {
         self.longitude = dictionary[Keys.Longitude] as! Double
     }
     
+    
+    static func getMKPointAnnotiation(myPin : Pin) -> MKPointAnnotation? {
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = CLLocationCoordinate2D(
+            latitude: myPin.latitude.doubleValue,
+            longitude: myPin.longitude.doubleValue
+        )
+        return annotation
+    }
+    
+    // TODO: Figure out how to use this computed
+    // property with Core Data
     var pin: MKPointAnnotation? {
         get {
             let annotation = MKPointAnnotation()

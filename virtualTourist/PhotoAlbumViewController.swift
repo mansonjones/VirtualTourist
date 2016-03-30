@@ -112,7 +112,8 @@ MKMapViewDelegate {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CellIdentifier, forIndexPath: indexPath) as! VTCollectionViewCell
         
-        cell.imageView.image = location.photos[indexPath.row].flickrImage!
+        cell.imageView.image = Photo.getFlickrImage(location.photos[indexPath.row])!
+        //cell.imageView.image = location.photos[indexPath.row].flickrImage!
       //  cell.imageView.alpha = 0.5
         
         return cell
