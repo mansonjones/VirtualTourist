@@ -125,8 +125,14 @@ class TravelLocationsViewController: UIViewController,
         performSegueWithIdentifier("ShowPhotoAlbum", sender: self)
     }
     
-    var sharedContext: NSManagedObjectContext {
+    // MARK: - Core Data Convenience
+    
+    lazy var sharedContext: NSManagedObjectContext = {
         return CoreDataStackManager.sharedInstance().managedObjectContext
+    }()
+    
+    func saveContext() {
+        CoreDataStackManager.sharedInstance().saveContext()
     }
 
     func fetchAllPins() -> [Pin] {

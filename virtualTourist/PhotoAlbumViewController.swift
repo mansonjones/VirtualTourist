@@ -154,8 +154,13 @@ MKMapViewDelegate {
     
     @IBAction func removeSelectedPictures(sender: UIButton) {
     }
+    
     // MARK: - Core Data Convenience
-    var sharedContext: NSManagedObjectContext {
+    lazy var sharedContext: NSManagedObjectContext = {
         return CoreDataStackManager.sharedInstance().managedObjectContext
+    }()
+    
+    func saveContext() {
+        CoreDataStackManager.sharedInstance().saveContext()
     }
 }
