@@ -23,7 +23,9 @@ extension FlickrClient {
             FlickrClient.ParameterKeys.SafeSearch: "1",
             FlickrClient.ParameterKeys.Extras: "url_m",
             FlickrClient.ParameterKeys.Format: "json",
-            FlickrClient.ParameterKeys.NoJSONCallback: "1"
+            FlickrClient.ParameterKeys.NoJSONCallback: "1",
+            FlickrClient.ParameterKeys.PerPage: "50"
+            
             /* FlickrClient.ParameterKeys.Page : "1" */
         ]
         

@@ -61,6 +61,21 @@ class PhotoAlbumViewController: UIViewController,
     
     // TODO: Add a viewDidLayoutSubviews that sets the UICollectionViewFlowLayout()
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // Lay out the collection view so that the cells take up 1/3 of the width,
+        // with no space between them.
+        let layout : UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        
+        let width = floor(self.collectionView.frame.size.width/3)
+        layout.itemSize = CGSize(width: width, height: width)
+        collectionView.collectionViewLayout = layout
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -87,6 +102,7 @@ class PhotoAlbumViewController: UIViewController,
                             // photo.location = nil
                             return photo
                         }
+                        CoreDataStackManager.sharedInstance().saveContext()
                         // _ = photos.map() {
                         //     self.location.photos.append($0)
                         // }
@@ -135,7 +151,7 @@ class PhotoAlbumViewController: UIViewController,
         cell.imageView.image = Photo.getFlickrImage(photo)!
         // If the cell is selected then it's it's color is greyed out.
         if let _ = selectedIndexes.indexOf(indexPath) {
-            cell.imageView.alpha = 0.05
+            cell.imageView.alpha = 0.3
         } else {
             cell.imageView.alpha = 1.0
         }
