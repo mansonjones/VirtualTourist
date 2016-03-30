@@ -12,7 +12,6 @@ import MapKit
 
 // This version works with Core Data
 
-/*
 class Pin : NSManagedObject {
     
     struct Keys {
@@ -38,6 +37,15 @@ class Pin : NSManagedObject {
         self.longitude = dictionary[Keys.Longitude] as! Double
     }
     
+    static func getMKPointAnnotiation(myPin : Pin) -> MKPointAnnotation? {
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = CLLocationCoordinate2D(
+            latitude: myPin.latitude.doubleValue,
+            longitude: myPin.longitude.doubleValue
+        )
+        return annotation
+    }
+    
     var pin: MKPointAnnotation? {
         get {
             let annotation = MKPointAnnotation()
@@ -50,9 +58,10 @@ class Pin : NSManagedObject {
     }
     
 }
-*/
+
 // Earlier Version, before Core Data
 
+/*
 class Pin {
     
     struct Keys {
@@ -93,4 +102,4 @@ class Pin {
     }
     
 }
-
+*/

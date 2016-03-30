@@ -10,7 +10,7 @@ import CoreData
 import UIKit
 
 // This is the Core Data version
-/*
+
 class Photo : NSManagedObject {
     
     struct Keys {
@@ -29,8 +29,17 @@ class Photo : NSManagedObject {
         // Core Data
         let entity =  NSEntityDescription.entityForName("Photo", inManagedObjectContext: context)!
         super.init(entity: entity, insertIntoManagedObjectContext: context)
-
+        
         url = dictionary[Keys.Url] as! String
+    }
+    
+    static func getFlickrImage(myPhoto : Photo) -> UIImage? {
+        let url = myPhoto.url
+        let data = NSData(contentsOfURL: NSURL(string: url)!)
+        if data != nil {
+            return UIImage(data: data!)
+        }
+        return nil
     }
     
     var flickrImage : UIImage? {
@@ -44,9 +53,10 @@ class Photo : NSManagedObject {
     }
     
 }
-*/
+
 // The earlier version, before Core Data was implemented.
 
+/*
 class Photo {
     struct Keys {
         static let Url = "url_m"
@@ -98,4 +108,4 @@ class Photo {
         return photos
     }
 }
-
+*/

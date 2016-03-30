@@ -50,10 +50,18 @@ MKMapViewDelegate {
                         
                         // Parse the array of photos dictionaries
                         _ = photosDictionaries.map() { (dictionary: [String : AnyObject]) -> Photo in
-                            let photo = Photo(dictionary: dictionary)
+                            let photo = Photo(dictionary: dictionary, context: self.sharedContext)
                            //  print(" *** Photo ****")
                            // print(photo.url)
-                            self.location.photos.append(photo)
+                            // old code, before core data
+                            // self.location.photos.append(photo)
+                            // new code, with core data
+                            // Add a photo to the array using the inverse relationship.
+                            photo.location = self.location
+                            
+                            // for future reference, you will remove a photo
+                            // like this
+                            // photo.location = nil
                             return photo
                         }
                         // _ = photos.map() {

@@ -215,7 +215,7 @@ class TravelLocationsViewController: UIViewController,
             Pin.Keys.Longitude : longitude!
         ]
         
-        selectedPin = Pin(dictionary: pinDictionary)
+        selectedPin = Pin(dictionary: pinDictionary, context: self.sharedContext)
         
         launchPhotoAlbum()
     }
@@ -242,7 +242,7 @@ class TravelLocationsViewController: UIViewController,
             Pin.Keys.Longitude : pinLongitude
         ]
         
-        selectedPin = Pin(dictionary: pinDictionary)
+        selectedPin = Pin(dictionary: pinDictionary, context: self.sharedContext)
         launchPhotoAlbum()
     }
     
@@ -270,7 +270,7 @@ class TravelLocationsViewController: UIViewController,
                 Pin.Keys.Longitude : newCoordinates.longitude
             ]
             
-            let pinToBeAdded = Pin(dictionary: dictionary)
+            let pinToBeAdded = Pin(dictionary: dictionary, context: self.sharedContext)
             
             pinLocations.append(pinToBeAdded)
             
