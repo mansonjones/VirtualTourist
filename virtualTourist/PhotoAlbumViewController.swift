@@ -123,12 +123,17 @@ MKMapViewDelegate {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CellIdentifier, forIndexPath: indexPath) as! VTCollectionViewCell
         
-        cell.imageView.image = Photo.getFlickrImage(location.photos[indexPath.row])!
+        
+        let photo = location.photos[indexPath.row]
+        configureCell(cell, photo: photo)
+        // cell.imageView.image = Photo.getFlickrImage(photo)!
         //cell.imageView.image = location.photos[indexPath.row].flickrImage!
       //  cell.imageView.alpha = 0.5
         
         return cell
     }
+    
+    
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print(" cell selected at: ", indexPath.row)
@@ -137,6 +142,15 @@ MKMapViewDelegate {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CellIdentifier, forIndexPath: indexPath) as! VTCollectionViewCell
         cell.imageView.alpha = 0.5
+    }
+    
+    func configureCell(cell: VTCollectionViewCell, photo: Photo) {
+        cell.imageView.image = Photo.getFlickrImage(photo)!
+        // TODO: Add code to display a placeholder image before
+        // the photo is displayed.
+        // See Favorite Actors (ios-persistence-2.0, step 5.3,
+        // CoreDataFavoriteActors, MovieListViewController for 
+        // an example.
     }
     
     /*
