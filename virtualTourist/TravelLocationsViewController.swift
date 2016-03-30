@@ -14,7 +14,7 @@ import CoreData
 class TravelLocationsViewController: UIViewController,
     MKMapViewDelegate {
     
-    var pinLocations = [Pin]()
+//     var pinLocations = [Pin]()
     
     var selectedPin : Pin!
     
@@ -38,6 +38,29 @@ class TravelLocationsViewController: UIViewController,
         navigationItem.rightBarButtonItems = [editButton, debugButton]
        // let initialLocation = CLLocation(latitude: 34.0481, longitude: -118.5256)
         
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print("error")
+        }
+        
+        // rewrite as a map
+        
+        let fetchedPin = fetchedResultsController.fetchedObjects as! [Pin]
+        let pointAnnotations: [MKPointAnnotation] = fetchedPin.map {
+            Pin.getMKPointAnnotiation($0)!
+        }
+        self.mapView.addAnnotations(pointAnnotations)
+        
+        /*
+        for fetchedPin : Pin in fetchedResultsController.fetchedObjects as! [Pin] {
+                print("latitude = \(fetchedPin.latitude)")
+                print("longitude = \(fetchedPin.longitude)")
+                self.mapView.addAnnotation(Pin.getMKPointAnnotiation(fetchedPin)!)
+        }
+        */
+        
+        /*
         pinLocations = fetchAllPins()
         print(" *** NUMBER OF PINS", pinLocations.count)
         
@@ -45,6 +68,7 @@ class TravelLocationsViewController: UIViewController,
             Pin.getMKPointAnnotiation($0)!
         }
         self.mapView.addAnnotations(pointAnnotations)
+        */
         // once all the annotations are loaded from coredata,
         // call annotations.append(annotation)
         
@@ -135,11 +159,30 @@ class TravelLocationsViewController: UIViewController,
     lazy var sharedContext: NSManagedObjectContext = {
         return CoreDataStackManager.sharedInstance().managedObjectContext
     }()
+ 
+    // MARK: - Fetched Results Controller
+    
+    lazy var fetchedResultsController: NSFetchedResultsController = {
+        
+        // Create the fetch request
+        let fetchRequest = NSFetchRequest(entityName: "Pin")
+        
+        // Add a sort descriptor. This enforces a sort order on the results that are generated
+        // In this case we want the events sored by their timeStamps.
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "latitude", ascending: false)]
+        
+        // Create the Fetched Results Controller
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
+        
+        // Return the fetched results controller. It will be the value of the lazy variable
+        return fetchedResultsController
+    } ()
     
     func saveContext() {
         CoreDataStackManager.sharedInstance().saveContext()
     }
 
+    /*
     func fetchAllPins() -> [Pin] {
         let fetchRequest = NSFetchRequest(entityName: "Pin")
         do {
@@ -150,6 +193,8 @@ class TravelLocationsViewController: UIViewController,
         }
     
     }
+    */
+    
     /*
     func insertNewPin(pin: MKPointAnnotation) {
         annotations.insert(pin, atIndex: 0)
@@ -273,13 +318,8 @@ class TravelLocationsViewController: UIViewController,
             
             let pinToBeAdded = Pin(dictionary: dictionary, context: self.sharedContext)
             
-            pinLocations.append(pinToBeAdded)
-            
             let annotation = MKPointAnnotation()
             annotation.coordinate = newCoordinates
-            
-            print(" size of pins array is:", pinLocations.count)
-            
             self.mapView.addAnnotation(Pin.getMKPointAnnotiation(pinToBeAdded)!)
             
             self.saveContext()
