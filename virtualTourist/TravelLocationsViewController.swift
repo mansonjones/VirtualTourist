@@ -38,8 +38,13 @@ class TravelLocationsViewController: UIViewController,
         navigationItem.rightBarButtonItems = [editButton, debugButton]
        // let initialLocation = CLLocation(latitude: 34.0481, longitude: -118.5256)
         
-        // Core Data Step ?
-        //  = fetchAllPins()
+        pinLocations = fetchAllPins()
+        print(" *** NUMBER OF PINS", pinLocations.count)
+        
+        let pointAnnotations : [MKPointAnnotation] = pinLocations.map {
+            Pin.getMKPointAnnotiation($0)!
+        }
+        self.mapView.addAnnotations(pointAnnotations)
         // once all the annotations are loaded from coredata,
         // call annotations.append(annotation)
         
@@ -136,11 +141,7 @@ class TravelLocationsViewController: UIViewController,
     }
 
     func fetchAllPins() -> [Pin] {
-
-        // Create the Fetch Request
         let fetchRequest = NSFetchRequest(entityName: "Pin")
-        
-        // Create the Fetch Request
         do {
             return try sharedContext.executeFetchRequest(fetchRequest) as! [Pin]
         } catch let error as NSError {
@@ -281,7 +282,9 @@ class TravelLocationsViewController: UIViewController,
             
             self.mapView.addAnnotation(Pin.getMKPointAnnotiation(pinToBeAdded)!)
             
-            // let testAnnotation = newPin.pin!
+            self.saveContext()
+            
+            // TODO: Get the computed variable working using Core Data
             // self.mapView.addAnnotation(pinToBeAdded.pin!)
         }
     }

@@ -73,6 +73,9 @@ MKMapViewDelegate {
                             // TODO : enable
                             self.removeSelectedPicturesButton.enabled = true
                         }
+                        
+                        // Save the context
+                        self.saveContext()
                     } else {
                         print("Download of Flickr Photo failed")
                     }
