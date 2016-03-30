@@ -12,9 +12,7 @@ import UIKit
 import CoreData
 
 class TravelLocationsViewController: UIViewController,
-    MKMapViewDelegate {
-    
-//     var pinLocations = [Pin]()
+    MKMapViewDelegate, NSFetchedResultsControllerDelegate {
     
     var selectedPin : Pin!
     
@@ -44,35 +42,51 @@ class TravelLocationsViewController: UIViewController,
             print("error")
         }
         
-        // rewrite as a map
-        
         let fetchedPin = fetchedResultsController.fetchedObjects as! [Pin]
         let pointAnnotations: [MKPointAnnotation] = fetchedPin.map {
             Pin.getMKPointAnnotiation($0)!
         }
         self.mapView.addAnnotations(pointAnnotations)
+        fetchedResultsController.delegate = self
+    }
+    
+    // MARK: - Fetched Results Controller Delegate
+    // These are the four methods that the Fetched Results Controller invokes on this
+    // view controller
+    
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
         
-        /*
-        for fetchedPin : Pin in fetchedResultsController.fetchedObjects as! [Pin] {
-                print("latitude = \(fetchedPin.latitude)")
-                print("longitude = \(fetchedPin.longitude)")
-                self.mapView.addAnnotation(Pin.getMKPointAnnotiation(fetchedPin)!)
+        print(" controllerWillChangeContent")
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+        print("didChangeSection")
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        
+        print(" didChangeObject")
+        
+        switch type {
+        case .Insert:
+            print("Insert")
+            let pinObject = anObject as! Pin
+            print("*** BEGIN ***")
+            print("\(pinObject.latitude)")
+            print("\(pinObject.longitude)")
+            self.mapView.addAnnotation(Pin.getMKPointAnnotiation(pinObject)!)
+            print(" **** END ****")
+            
+            print("\(anObject)")
+        case .Delete:
+            print("Delete")
+        default:
+            return
         }
-        */
-        
-        /*
-        pinLocations = fetchAllPins()
-        print(" *** NUMBER OF PINS", pinLocations.count)
-        
-        let pointAnnotations : [MKPointAnnotation] = pinLocations.map {
-            Pin.getMKPointAnnotiation($0)!
-        }
-        self.mapView.addAnnotations(pointAnnotations)
-        */
-        // once all the annotations are loaded from coredata,
-        // call annotations.append(annotation)
-        
-        // centerMapOnLocation(initialLocation)
+    }
+    
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        print("didChangeContent")
     }
     
     var filePath : String {
@@ -123,17 +137,6 @@ class TravelLocationsViewController: UIViewController,
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        // The placement of this pin is temporay.
-        // It allows a way to set up the code for responding to the pin tap
-        // until I create a way to create a pin on the map by holding
-        /*
-        let latitude = 34.0481
-        let longitude = -118.5256
-        let annotation = buildAnnotation(latitude, longitude: longitude)
-        
-        self.mapView.addAnnotation(annotation)
-        */
-        // TODO: This is where you will load in the zoom settings
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -181,41 +184,6 @@ class TravelLocationsViewController: UIViewController,
     func saveContext() {
         CoreDataStackManager.sharedInstance().saveContext()
     }
-
-    /*
-    func fetchAllPins() -> [Pin] {
-        let fetchRequest = NSFetchRequest(entityName: "Pin")
-        do {
-            return try sharedContext.executeFetchRequest(fetchRequest) as! [Pin]
-        } catch let error as NSError {
-            print("Error in fetchAllPins(): \(error)")
-            return [Pin]()
-        }
-    
-    }
-    */
-    
-    /*
-    func insertNewPin(pin: MKPointAnnotation) {
-        annotations.insert(pin, atIndex: 0)
-        
-        // add the equivalent of getting the index path and inserting the
-        // row in the table view, except for a map
-    }
-    */
-    
-    /*
-    private func buildAnnotation(latitude: Double, longitude: Double) -> MKPointAnnotation {
-
-        let annotation = MKPointAnnotation()
-        let lat = CLLocationDegrees(latitude)
-        let lon = CLLocationDegrees(longitude)
-        annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-        annotation.title = "title"
-        annotation.subtitle = "sub-title"
-        return annotation
-    }
-    */    
 
     // MARK : MapKit Delegate Functions
     
@@ -316,13 +284,13 @@ class TravelLocationsViewController: UIViewController,
                 Pin.Keys.Longitude : newCoordinates.longitude
             ]
             
-            let pinToBeAdded = Pin(dictionary: dictionary, context: self.sharedContext)
+            let _ = Pin(dictionary: dictionary, context: self.sharedContext)
             
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = newCoordinates
-            self.mapView.addAnnotation(Pin.getMKPointAnnotiation(pinToBeAdded)!)
+            // let annotation = MKPointAnnotation()
+            // annotation.coordinate = newCoordinates
+            // self.mapView.addAnnotation(Pin.getMKPointAnnotiation(pinToBeAdded)!)
             
-            self.saveContext()
+            // self.saveContext()
             
             // TODO: Get the computed variable working using Core Data
             // self.mapView.addAnnotation(pinToBeAdded.pin!)
