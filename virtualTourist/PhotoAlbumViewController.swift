@@ -12,9 +12,9 @@
 // from the Favorite Actors app.
 // (factor actors is step-5.5 of ios-persistence-2.0
 
-import UIKit
 import CoreData
 import MapKit
+import UIKit
 
 class PhotoAlbumViewController: UIViewController,
     UICollectionViewDataSource, UICollectionViewDelegate,
@@ -40,6 +40,8 @@ class PhotoAlbumViewController: UIViewController,
     var location: Pin!
     let regionRadius: CLLocationDistance = 5000
     
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,12 +56,11 @@ class PhotoAlbumViewController: UIViewController,
            print("Error performing initial fetch: \(error)")
         }
         
-        removeSelectedPicturesButton.enabled = false
+        fetchedResultsController.delegate = self
+        // removeSelectedPicturesButton.enabled = false
         updateBottomButton()
         setupMapView()
     }
-    
-    // TODO: Add a viewDidLayoutSubviews that sets the UICollectionViewFlowLayout()
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -89,28 +90,15 @@ class PhotoAlbumViewController: UIViewController,
                         // Parse the array of photos dictionaries
                         _ = photosDictionaries.map() { (dictionary: [String : AnyObject]) -> Photo in
                             let photo = Photo(dictionary: dictionary, context: self.sharedContext)
-                           //  print(" *** Photo ****")
-                           // print(photo.url)
-                            // old code, before core data
-                            // self.location.photos.append(photo)
-                            // new code, with core data
-                            // Add a photo to the array using the inverse relationship.
-                           // photo.location = self.location
-                            
-                            // for future reference, you will remove a photo
-                            // like this
-                            // photo.location = nil
+                            photo.location = self.location
                             return photo
                         }
                         CoreDataStackManager.sharedInstance().saveContext()
-                        // _ = photos.map() {
-                        //     self.location.photos.append($0)
-                        // }
                         // Update the collection view on the main thread
                         performUIUpdatesOnMain {
                             self.collectionView.reloadData()
-                            // TODO : enable
-                            self.removeSelectedPicturesButton.enabled = true
+                            //self.removeSelectedPicturesButton.enabled = true
+                            self.updateBottomButton()
                         }
                         
                         // Save the context
@@ -122,45 +110,39 @@ class PhotoAlbumViewController: UIViewController,
         }
         
     }
+
+    // MARK: - Core Data Convenience
+    lazy var sharedContext: NSManagedObjectContext = {
+        return CoreDataStackManager.sharedInstance().managedObjectContext
+    }()
     
-    func setupMapView() {
-        let annotation = MKPointAnnotation()
-        
-        let latitude = location.latitude.doubleValue
-        let longitude = location.longitude.doubleValue
-        
-        let coordinate = CLLocationCoordinate2DMake(CLLocationDegrees(latitude), CLLocationDegrees(longitude))
-        annotation.coordinate = coordinate
-        mapView.addAnnotation(annotation)
-        
-        let initialLocation = CLLocation(latitude: latitude, longitude: longitude)
-        
-        centerMapOnLocation(initialLocation)
-        mapView.zoomEnabled = false
-        mapView.scrollEnabled = false
+    func saveContext() {
+        CoreDataStackManager.sharedInstance().saveContext()
     }
     
-    func centerMapOnLocation(location: CLLocation) {
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
-            regionRadius * 2.0, regionRadius * 2.0)
-        mapView.setRegion(coordinateRegion, animated: true)
-    }
+    // MARK: - Fetched Results Controller
     
-    func configureCell(cell: VTCollectionViewCell, atIndexPath indexPath: NSIndexPath) {
-        let photo = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
-        cell.imageView.image = Photo.getFlickrImage(photo)!
-        // If the cell is selected then it's it's color is greyed out.
-        if let _ = selectedIndexes.indexOf(indexPath) {
-            cell.imageView.alpha = 0.3
-        } else {
-            cell.imageView.alpha = 1.0
-        }
-        // TODO: Add code to display a placeholder image before
-        // the photo is displayed.
-        // See Favorite Actors (ios-persistence-2.0, step 5.3,
-        // CoreDataFavoriteActors, MovieListViewController for
-        // an example.
-    }
+    lazy var fetchedResultsController: NSFetchedResultsController = {
+        
+        // Create the fetch request
+        let fetchRequest = NSFetchRequest(entityName: "Photo")
+        // fetchRequest.predicate = NSPredicate(format: "pin == %@", self.location)
+        
+        // Add a sort descriptor. This enforces a sort order on the results that are generated
+        // In this case we want the events sored by their timeStamps.
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "url", ascending: false)]
+        
+        // Create the Fetched Results Controller
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
+        
+        
+        // This next line is a copied from the ColorCollection app.  It should probably
+        // be in viewDidLoad instead.
+        // fetchedResultsController.delegate = self
+        
+        // Return the fetched results controller. It will be the value of the lazy variable
+        return fetchedResultsController
+    } ()
     
     // MARK: - UICollectionView
     
@@ -174,27 +156,17 @@ class PhotoAlbumViewController: UIViewController,
         print(" number of Cells: \(sectionInfo.numberOfObjects)")
         return sectionInfo.numberOfObjects
     }
-
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let CellIdentifier = "VTCollectionViewCell"
         
-        // TODO:
-        
-        // let movie = fetchedResultsController.objectAtIndexPath(indexPath) as! Picture
-        
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CellIdentifier, forIndexPath: indexPath) as! VTCollectionViewCell
         
         self.configureCell(cell, atIndexPath: indexPath)
-        // cell.imageView.image = Photo.getFlickrImage(photo)!
-        //cell.imageView.image = location.photos[indexPath.row].flickrImage!
-      //  cell.imageView.alpha = 0.5
         
         return cell
     }
-    
-    
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print(" cell selected at: ", indexPath.row)
@@ -222,87 +194,7 @@ class PhotoAlbumViewController: UIViewController,
         // let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CellIdentifier, forIndexPath: indexPath) as! VTCollectionViewCell
         // cell.imageView.alpha = 0.5
     }
-    
-    
-    /*
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        let reuseId = "staticPin"
-        
-        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
-        
-        if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView!.pinTintColor = UIColor.blueColor()
-        } else {
-            pinView!.annotation = annotation
-        }
-        return pinView
-    }
-    */
-    
-    
-    /*
-    lazy var scratchContext: NSManagedObjectContext {
-        var context = NSManagedObjectContext()
-        context.persistentStoreCoordinator = CoreDataStackManager.sharedInstance().persistentStoreCoordinator
-        return context
-    }
-    */
-    
-    @IBAction func removeSelectedPictures(sender: UIButton) {
-        print(" Remove Selected Photos")
-        if selectedIndexes.isEmpty {
-            print(" update the collection view")
-        } else {
-            deleteSelectedPhotos()
-        }
-    }
-    
-    func deleteSelectedPhotos() {
-        var photosToDelete = [Photo]()
-        
-        for indexPath in selectedIndexes {
-            photosToDelete.append(fetchedResultsController.objectAtIndexPath(indexPath) as! Photo)
-        }
-        
-        for photo in photosToDelete {
-            sharedContext.deleteObject(photo)
-        }
-        
-        selectedIndexes = [NSIndexPath]()
-    }
-    // MARK: - Core Data Convenience
-    lazy var sharedContext: NSManagedObjectContext = {
-        return CoreDataStackManager.sharedInstance().managedObjectContext
-    }()
-    
-    func saveContext() {
-        CoreDataStackManager.sharedInstance().saveContext()
-    }
-    
-    // MARK: - Fetched Results Controller
-    
-    lazy var fetchedResultsController: NSFetchedResultsController = {
-        
-        // Create the fetch request
-        let fetchRequest = NSFetchRequest(entityName: "Photo")
-        
-        // Add a sort descriptor. This enforces a sort order on the results that are generated
-        // In this case we want the events sored by their timeStamps.
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "url", ascending: false)]
-        
-        // Create the Fetched Results Controller
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
-        
-        
-        // This next line is a copied from the ColorCollection app.  It should probably
-        // be in viewDidLoad instead.
-        fetchedResultsController.delegate = self
-        
-        // Return the fetched results controller. It will be the value of the lazy variable
-        return fetchedResultsController
-    } ()
-    
+
     // MARK: - Fetched Results Controller Delegate
     // Whenever changes are made to Core Data the following three methods are invoked.  This
     // first method is used to create three fresh arrays to record the index paths
@@ -316,7 +208,7 @@ class PhotoAlbumViewController: UIViewController,
         
         print(" in controllerWillChangeContent")
     }
-
+    
     // The second method may be called multiple times, once for each Photo that is
     //added, deleted, or changed.
     // We store the index paths into the three arrays.
@@ -365,9 +257,73 @@ class PhotoAlbumViewController: UIViewController,
             }
             
             }, completion: nil)
-     }
+    }
     
     // MARK: - Actions and Helpers
+    
+    @IBAction func removeSelectedPictures(sender: UIButton) {
+        print(" Remove Selected Photos")
+        if selectedIndexes.isEmpty {
+            print(" update the collection view")
+        } else {
+            deleteSelectedPhotos()
+        }
+    }
+    
+    func deleteSelectedPhotos() {
+        var photosToDelete = [Photo]()
+        
+        for indexPath in selectedIndexes {
+            photosToDelete.append(fetchedResultsController.objectAtIndexPath(indexPath) as! Photo)
+        }
+        
+        for photo in photosToDelete {
+            sharedContext.deleteObject(photo)
+        }
+        
+        selectedIndexes = [NSIndexPath]()
+    }
+    
+    
+    func setupMapView() {
+        let annotation = MKPointAnnotation()
+        
+        let latitude = location.latitude.doubleValue
+        let longitude = location.longitude.doubleValue
+        
+        let coordinate = CLLocationCoordinate2DMake(CLLocationDegrees(latitude), CLLocationDegrees(longitude))
+        annotation.coordinate = coordinate
+        mapView.addAnnotation(annotation)
+        
+        let initialLocation = CLLocation(latitude: latitude, longitude: longitude)
+        
+        centerMapOnLocation(initialLocation)
+        mapView.zoomEnabled = false
+        mapView.scrollEnabled = false
+    }
+    
+    func centerMapOnLocation(location: CLLocation) {
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
+            regionRadius * 2.0, regionRadius * 2.0)
+        mapView.setRegion(coordinateRegion, animated: true)
+    }
+    
+    func configureCell(cell: VTCollectionViewCell, atIndexPath indexPath: NSIndexPath) {
+        let photo = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
+        cell.imageView.image = Photo.getFlickrImage(photo)!
+        // If the cell is selected then it's it's color is greyed out.
+        if let _ = selectedIndexes.indexOf(indexPath) {
+            cell.imageView.alpha = 0.3
+        } else {
+            cell.imageView.alpha = 1.0
+        }
+        // TODO: Add code to display a placeholder image before
+        // the photo is displayed.
+        // See Favorite Actors (ios-persistence-2.0, step 5.3,
+        // CoreDataFavoriteActors, MovieListViewController for
+        // an example.
+    }
+    
     func updateBottomButton() {
         if selectedIndexes.count > 0 {
             removeSelectedPicturesButton.titleLabel?.text = " - ABC - Remove Selected Photos"
