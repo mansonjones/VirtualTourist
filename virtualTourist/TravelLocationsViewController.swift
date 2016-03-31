@@ -149,6 +149,9 @@ class TravelLocationsViewController: UIViewController,
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {        
         if segue.identifier == "ShowPhotoAlbum" {
             let controller = segue.destinationViewController as! PhotoAlbumViewController
+            
+            // TODO: use fetchResultsController to get the selected pin
+            // let location = fetchedResultsController.objectAtIndexPath()
             controller.location = selectedPin
         }
     }
@@ -198,9 +201,11 @@ class TravelLocationsViewController: UIViewController,
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = false
+            pinView!.animatesDrop = true
            // pinView!.pinTintColor = UIColor.blueColor()
             // pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
         } else {
+            pinView?.animatesDrop = true
             pinView!.annotation = annotation
             // pinView!.pinTintColor = UIColor.greenColor()
         }
@@ -228,6 +233,10 @@ class TravelLocationsViewController: UIViewController,
             Pin.Keys.Latitude : latitude!,
             Pin.Keys.Longitude : longitude!
         ]
+        
+        // TODO: find the Pin, something like
+        // let location = fetchedResultsController.objectAtIndexPath(indexPath) as! Pin
+        // except that I don't know the indexPath
         
         selectedPin = Pin(dictionary: pinDictionary, context: self.sharedContext)
         
