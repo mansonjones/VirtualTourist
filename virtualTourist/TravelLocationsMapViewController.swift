@@ -11,7 +11,7 @@ import MapKit
 import UIKit
 import CoreData
 
-class TravelLocationsViewController: UIViewController,
+class TravelLocationsMapViewController: UIViewController,
     MKMapViewDelegate, NSFetchedResultsControllerDelegate {
     
     var selectedPin : Pin!
