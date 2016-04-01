@@ -1,5 +1,5 @@
 //
-//  PhotoAlbumViewController.swift
+//  PhotoAlbumVC.swift
 //  virtualTourist
 //
 //  Created by Manson Jones on 2/23/16.
@@ -16,7 +16,7 @@ import CoreData
 import MapKit
 import UIKit
 
-class PhotoAlbumViewController: UIViewController,
+class PhotoAlbumVC: UIViewController,
     UICollectionViewDataSource, UICollectionViewDelegate,
     MKMapViewDelegate,                                    // TODO: Verify that it's safe to delete the MKMapViewDelegate
     NSFetchedResultsControllerDelegate {

@@ -1,6 +1,6 @@
 
 //
-//  ViewController.swift
+//  TravelLocationsVC.swift
 //  virtualTourist
 //
 //  Created by Manson Jones on 2/23/16.
@@ -11,7 +11,7 @@ import MapKit
 import UIKit
 import CoreData
 
-class TravelLocationsMapViewController: UIViewController,
+class TravelLocationsMapVC: UIViewController,
     MKMapViewDelegate, NSFetchedResultsControllerDelegate {
     
     var selectedPin : Pin!
@@ -148,7 +148,7 @@ class TravelLocationsMapViewController: UIViewController,
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {        
         if segue.identifier == "ShowPhotoAlbum" {
-            let controller = segue.destinationViewController as! PhotoAlbumViewController
+            let controller = segue.destinationViewController as! PhotoAlbumVC
             
             // TODO: use fetchResultsController to get the selected pin
             // let location = fetchedResultsController.objectAtIndexPath()

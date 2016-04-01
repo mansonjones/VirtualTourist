@@ -9,7 +9,7 @@
         <!--Virtual Tourist-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="TravelLocationsMapViewController" customModule="virtualTourist" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="TravelLocationsMapVC" customModule="virtualTourist" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -51,10 +51,10 @@
             </objects>
             <point key="canvasLocation" x="1051" y="386"/>
         </scene>
-        <!--Photo Album View Controller-->
+        <!--Photo AlbumVC-->
         <scene sceneID="c77-dA-HWC">
             <objects>
-                <viewController id="Xoj-86-YSI" customClass="PhotoAlbumViewController" customModule="virtualTourist" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Xoj-86-YSI" customClass="PhotoAlbumVC" customModule="virtualTourist" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="weG-sa-Rrp"/>
                         <viewControllerLayoutGuide type="bottom" id="TNy-Wt-tIi"/>
