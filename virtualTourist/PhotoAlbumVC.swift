@@ -18,7 +18,7 @@ import UIKit
 
 class PhotoAlbumVC: UIViewController,
     UICollectionViewDataSource, UICollectionViewDelegate,
-    MKMapViewDelegate,                                    // TODO: Verify that it's safe to delete the MKMapViewDelegate
+   // MKMapViewDelegate,                                    // TODO: Verify that it's safe to delete the MKMapViewDelegate
     NSFetchedResultsControllerDelegate {
     
     // The selectedIndexes array keeps all of the indexPaths for cells that are selected.
@@ -126,7 +126,7 @@ class PhotoAlbumVC: UIViewController,
         
         // Create the fetch request
         let fetchRequest = NSFetchRequest(entityName: "Photo")
-        // fetchRequest.predicate = NSPredicate(format: "pin == %@", self.location)
+       // fetchRequest.predicate = NSPredicate(format: "pin == %@", self.location)
         
         // Add a sort descriptor. This enforces a sort order on the results that are generated
         // In this case we want the events sored by their timeStamps.
@@ -134,12 +134,7 @@ class PhotoAlbumVC: UIViewController,
         
         // Create the Fetched Results Controller
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
-        
-        
-        // This next line is a copied from the ColorCollection app.  It should probably
-        // be in viewDidLoad instead.
-        // fetchedResultsController.delegate = self
-        
+
         // Return the fetched results controller. It will be the value of the lazy variable
         return fetchedResultsController
     } ()
@@ -310,7 +305,25 @@ class PhotoAlbumVC: UIViewController,
     
     func configureCell(cell: VTCollectionViewCell, atIndexPath indexPath: NSIndexPath) {
         let photo = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
+        
+        var flickrImage = UIImage(named: "foo")
+        
+        cell.imageView!.image = nil
+        
+        if Photo.getFlickrImage(photo) == nil || Photo.getFlickrImage(photo) == "" {
+            flickrImage = UIImage(named: "placeHolder")
+        } else if Photo.getFlickrImage(photo) != nil {
+            flickrImage = Photo.getFlickrImage(photo)!
+        }
+        
         cell.imageView.image = Photo.getFlickrImage(photo)!
+        
+        
+        
+        
+        
+        
+        // cell.imageView.image = Photo.getFlickrImage(photo)!
         // If the cell is selected then it's it's color is greyed out.
         if let _ = selectedIndexes.indexOf(indexPath) {
             cell.imageView.alpha = 0.3
