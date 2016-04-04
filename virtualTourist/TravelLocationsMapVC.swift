@@ -1,4 +1,3 @@
-
 //
 //  TravelLocationsVC.swift
 //  virtualTourist
@@ -12,11 +11,11 @@ import UIKit
 import CoreData
 
 class TravelLocationsMapVC: UIViewController,
-    MKMapViewDelegate, NSFetchedResultsControllerDelegate {
+MKMapViewDelegate, NSFetchedResultsControllerDelegate {
     
     var selectedPin : Pin!
     
-    let regionRadius: CLLocationDistance = 1000 
+    let regionRadius: CLLocationDistance = 1000
     
     let initialLocation = CLLocation(latitude: 34.0481, longitude: -118.5256)
     
@@ -34,7 +33,7 @@ class TravelLocationsMapVC: UIViewController,
         // This is for debugging purposes only
         // let debugButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "debug")
         // navigationItem.rightBarButtonItems = [editButton, debugButton]
-       // let initialLocation = CLLocation(latitude: 34.0481, longitude: -118.5256)
+        // let initialLocation = CLLocation(latitude: 34.0481, longitude: -118.5256)
         
         do {
             try fetchedResultsController.performFetch()
@@ -60,24 +59,14 @@ class TravelLocationsMapVC: UIViewController,
     }
     
     func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
-        print("didChangeSection")
     }
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         
-        print(" didChangeObject")
-        
         switch type {
         case .Insert:
-            print("Insert")
             let pinObject = anObject as! Pin
-            print("*** BEGIN ***")
-            print("\(pinObject.latitude)")
-            print("\(pinObject.longitude)")
             self.mapView.addAnnotation(Pin.getMKPointAnnotiation(pinObject)!)
-            print(" **** END ****")
-            
-            print("\(anObject)")
         case .Delete:
             print("Delete")
         default:
@@ -94,7 +83,7 @@ class TravelLocationsMapVC: UIViewController,
         let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first! as NSURL
         return url.URLByAppendingPathComponent("mapRegionArchive").path!
     }
-
+    
     func saveMapRegion() {
         // Place the "center" and "span" of the map into a dictionary
         // The "span" is the width and height of the map in degrees.
@@ -126,27 +115,13 @@ class TravelLocationsMapVC: UIViewController,
             
             let savedRegion = MKCoordinateRegion(center: center, span: span)
             
-            print("lat: \(latitude), lon: \(longitude), latD: \(latitudeDelta), lonD: \(longitudeDelta)")
-            
             mapView.setRegion(savedRegion, animated: animated)
         }
         
         
     }
     
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        print(" Map View Attributes to save")
-        // TODO: This is where the region data should be serialized.
-        print("\(mapView.region)")
-        
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {        
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ShowPhotoAlbum" {
             let controller = segue.destinationViewController as! PhotoAlbumVC
             
@@ -165,7 +140,7 @@ class TravelLocationsMapVC: UIViewController,
     lazy var sharedContext: NSManagedObjectContext = {
         return CoreDataStackManager.sharedInstance().managedObjectContext
     }()
- 
+    
     // MARK: - Fetched Results Controller
     
     lazy var fetchedResultsController: NSFetchedResultsController = {
@@ -187,13 +162,11 @@ class TravelLocationsMapVC: UIViewController,
     func saveContext() {
         CoreDataStackManager.sharedInstance().saveContext()
     }
-
+    
     // MARK : MapKit Delegate Functions
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
-        
-        print("viewForAnnotation")
         let reuseId = "pin"
         
         var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
@@ -202,7 +175,7 @@ class TravelLocationsMapVC: UIViewController,
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = false
             pinView!.animatesDrop = true
-           // pinView!.pinTintColor = UIColor.blueColor()
+            // pinView!.pinTintColor = UIColor.blueColor()
             // pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
         } else {
             pinView?.animatesDrop = true
@@ -215,16 +188,16 @@ class TravelLocationsMapVC: UIViewController,
     // This delegate method is implemented to respond to taps.  It opens the collection view
     // and passes the latitude and longitude information to the collection view.
     
+    /*
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        print("calloutAccessoryControlTapped")
         if (control == view.rightCalloutAccessoryView) {
-            print(" go to the Collection View Controller")
+    
             // Here is where you would call launch the collection view
         }
     }
+    */
     
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
-        print("selected annotation view")
         
         let latitude = view.annotation?.coordinate.latitude
         let longitude = view.annotation?.coordinate.longitude
@@ -244,7 +217,6 @@ class TravelLocationsMapVC: UIViewController,
     }
     
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        print("regionDidChangeAnimated")
         saveMapRegion()
     }
     
@@ -259,15 +231,14 @@ class TravelLocationsMapVC: UIViewController,
         // TODO: Add code to slide down the "Tap Pins to Delete" Bar
         // and delete the pins that were selected
     }
-
+    
     func centerMapOnLocation(location: CLLocation) {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
-        regionRadius * 2.0, regionRadius * 2.0)
+            regionRadius * 2.0, regionRadius * 2.0)
         mapView.setRegion(coordinateRegion, animated: true)
     }
-
+    
     @IBAction func handleLongPressGesture(sender: UILongPressGestureRecognizer) {
-        print("Long Press Gesture Recognizer")
         if sender.state == .Began {
             
             let touchPoint = sender.locationInView(mapView)

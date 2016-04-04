@@ -18,7 +18,7 @@ import UIKit
 
 class PhotoAlbumVC: UIViewController,
     UICollectionViewDataSource, UICollectionViewDelegate,
-    NSFetchedResultsControllerDelegate {
+NSFetchedResultsControllerDelegate {
     
     // The selectedIndexes array keeps all of the indexPaths for cells that are selected.
     // The array is used inside cellForItemAtIndexPath to modify the alpha.
@@ -28,7 +28,7 @@ class PhotoAlbumVC: UIViewController,
     var insertedIndexPaths: [NSIndexPath]!
     var deletedIndexPaths: [NSIndexPath]!
     var updatedIndexPaths: [NSIndexPath]!
-
+    
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -52,7 +52,7 @@ class PhotoAlbumVC: UIViewController,
             error = error1
         }
         if let error = error {
-           print("Error performing initial fetch: \(error)")
+            print("Error performing initial fetch: \(error)")
         }
         
         fetchedResultsController.delegate = self
@@ -109,7 +109,7 @@ class PhotoAlbumVC: UIViewController,
         }
         
     }
-
+    
     // MARK: - Core Data Convenience
     lazy var sharedContext: NSManagedObjectContext = {
         return CoreDataStackManager.sharedInstance().managedObjectContext
@@ -133,7 +133,7 @@ class PhotoAlbumVC: UIViewController,
         
         // Create the Fetched Results Controller
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
-
+        
         // Return the fetched results controller. It will be the value of the lazy variable
         return fetchedResultsController
     } ()
@@ -188,7 +188,7 @@ class PhotoAlbumVC: UIViewController,
         // let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CellIdentifier, forIndexPath: indexPath) as! VTCollectionViewCell
         // cell.imageView.alpha = 0.5
     }
-
+    
     // MARK: - Fetched Results Controller Delegate
     // Whenever changes are made to Core Data the following three methods are invoked.  This
     // first method is used to create three fresh arrays to record the index paths
