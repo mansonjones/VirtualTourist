@@ -164,7 +164,6 @@ NSFetchedResultsControllerDelegate {
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print(" cell selected at: ", indexPath.row)
-        removeSelectedPicturesButton?.titleLabel?.text = "Remove Selected Pictures"
         
         let cell = collectionView.cellForItemAtIndexPath(indexPath) as! VTCollectionViewCell
         
@@ -179,14 +178,7 @@ NSFetchedResultsControllerDelegate {
         
         configureCell(cell, atIndexPath: indexPath)
         
-        // TODO: Update the bottom button
         updateBottomButton()
-        
-        //let CellIdentifier = "VTCollectionViewCell"
-        
-        
-        // let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CellIdentifier, forIndexPath: indexPath) as! VTCollectionViewCell
-        // cell.imageView.alpha = 0.5
     }
     
     // MARK: - Fetched Results Controller Delegate
@@ -332,10 +324,8 @@ NSFetchedResultsControllerDelegate {
     
     func updateBottomButton() {
         if selectedIndexes.count > 0 {
-            removeSelectedPicturesButton.titleLabel?.text = " - ABC - Remove Selected Photos"
             removeSelectedPicturesButton.enabled = true
         } else {
-            removeSelectedPicturesButton.titleLabel?.text = " - ABC - New Collection"
             removeSelectedPicturesButton.enabled = false
         }
     }
