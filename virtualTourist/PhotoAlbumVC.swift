@@ -126,7 +126,7 @@ class PhotoAlbumVC: UIViewController,
         
         // Create the fetch request
         let fetchRequest = NSFetchRequest(entityName: "Photo")
-       // fetchRequest.predicate = NSPredicate(format: "pin == %@", self.location)
+        fetchRequest.predicate = NSPredicate(format: "location == %@", self.location)
         
         // Add a sort descriptor. This enforces a sort order on the results that are generated
         // In this case we want the events sored by their timeStamps.
