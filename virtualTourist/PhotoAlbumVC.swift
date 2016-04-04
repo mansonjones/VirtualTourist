@@ -316,14 +316,8 @@ class PhotoAlbumVC: UIViewController,
             flickrImage = Photo.getFlickrImage(photo)!
         }
         
-        cell.imageView.image = Photo.getFlickrImage(photo)!
+        cell.imageView.image = flickrImage
         
-        
-        
-        
-        
-        
-        // cell.imageView.image = Photo.getFlickrImage(photo)!
         // If the cell is selected then it's it's color is greyed out.
         if let _ = selectedIndexes.indexOf(indexPath) {
             cell.imageView.alpha = 0.3
