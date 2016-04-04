@@ -80,7 +80,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="158" height="147"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zPs-xm-FjC">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeHolder" translatesAutoresizingMaskIntoConstraints="NO" id="zPs-xm-FjC">
                                                     <rect key="frame" x="8" y="8" width="142" height="131"/>
                                                     <color key="backgroundColor" red="0.99215692280000001" green="0.3803921938" blue="0.094117656349999995" alpha="1" colorSpace="deviceRGB"/>
                                                 </imageView>
@@ -163,4 +163,7 @@
             <point key="canvasLocation" x="305" y="1089"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="placeHolder" width="92" height="138"/>
+    </resources>
 </document>

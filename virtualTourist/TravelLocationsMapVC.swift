@@ -27,13 +27,13 @@ class TravelLocationsMapVC: UIViewController,
         mapView.delegate = self
         
         restoreMapRegion(false)
-        let editButton = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editPins")
+        // let editButton = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editPins")
         
-        /* self.navigationItem.rightBarButtonItem =
-            UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editPins") */
+        self.navigationItem.rightBarButtonItem =
+            UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editPins")
         // This is for debugging purposes only
-        let debugButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "debug")
-        navigationItem.rightBarButtonItems = [editButton, debugButton]
+        // let debugButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "debug")
+        // navigationItem.rightBarButtonItems = [editButton, debugButton]
        // let initialLocation = CLLocation(latitude: 34.0481, longitude: -118.5256)
         
         do {
@@ -254,21 +254,6 @@ class TravelLocationsMapVC: UIViewController,
         // TODO: Add code to slide up the "Tap Pins To Delete" Bar
     }
     
-    func debug() {
-        print("Debug")
-                // let initialLocation = CLLocation(latitude: 34.0481, longitude: -118.5256)
-       let pinLatitude = 34.0481
-       let pinLongitude = -118.5256
-        
-       let pinDictionary : [String : AnyObject] = [
-            Pin.Keys.Latitude : pinLatitude,
-            Pin.Keys.Longitude : pinLongitude
-        ]
-        
-        selectedPin = Pin(dictionary: pinDictionary, context: self.sharedContext)
-        launchPhotoAlbum()
-    }
-    
     func doneEditingPins() {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editPins")
         // TODO: Add code to slide down the "Tap Pins to Delete" Bar
@@ -295,14 +280,6 @@ class TravelLocationsMapVC: UIViewController,
             
             let _ = Pin(dictionary: dictionary, context: self.sharedContext)
             
-            // let annotation = MKPointAnnotation()
-            // annotation.coordinate = newCoordinates
-            // self.mapView.addAnnotation(Pin.getMKPointAnnotiation(pinToBeAdded)!)
-            
-            // self.saveContext()
-            
-            // TODO: Get the computed variable working using Core Data
-            // self.mapView.addAnnotation(pinToBeAdded.pin!)
         }
     }
     

@@ -18,7 +18,6 @@ import UIKit
 
 class PhotoAlbumVC: UIViewController,
     UICollectionViewDataSource, UICollectionViewDelegate,
-   // MKMapViewDelegate,                                    // TODO: Verify that it's safe to delete the MKMapViewDelegate
     NSFetchedResultsControllerDelegate {
     
     // The selectedIndexes array keeps all of the indexPaths for cells that are selected.
