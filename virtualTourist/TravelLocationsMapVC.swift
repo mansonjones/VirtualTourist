@@ -115,27 +115,14 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = false
             pinView!.animatesDrop = true
-            // pinView!.pinTintColor = UIColor.blueColor()
-            // pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
         } else {
             pinView?.animatesDrop = true
             pinView!.annotation = annotation
-            // pinView!.pinTintColor = UIColor.greenColor()
         }
         return pinView
     }
     
-    // This delegate method is implemented to respond to taps.  It opens the collection view
-    // and passes the latitude and longitude information to the collection view.
-    
-    /*
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        if (control == view.rightCalloutAccessoryView) {
-    
-            // Here is where you would call launch the collection view
-        }
-    }
-    */
+    // This delegate method is implemented to respond to taps.
     
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         selectedPin = view.annotation as! Pin
@@ -165,8 +152,6 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
     }
     
     func restoreMapRegion(animated: Bool) {
-        // if we can unarchive the dictionary, we will use it to set the map back to its
-        // previous center and span
         
         if let regionDictionary = NSKeyedUnarchiver.unarchiveObjectWithFile(filePath) as? [String : AnyObject] {
             
@@ -187,11 +172,10 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
         if segue.identifier == "ShowPhotoAlbum" {
             let controller = segue.destinationViewController as! PhotoAlbumVC
             
-            // TODO: use fetchResultsController to get the selected pin
-            // let location = fetchedResultsController.objectAtIndexPath()
             controller.location = selectedPin
         }
     }
