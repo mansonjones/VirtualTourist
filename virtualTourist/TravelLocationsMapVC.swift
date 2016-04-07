@@ -14,31 +14,26 @@ class TravelLocationsMapVC: UIViewController,
 MKMapViewDelegate, NSFetchedResultsControllerDelegate {
     
     var selectedPin : Pin!
+    var isInDeleteMode = false
+    var tapPinsToDeleteLabel: UILabel!
     
     let regionRadius: CLLocationDistance = 1000
+    
     @IBOutlet weak var mapView: MKMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
+        fetchedResultsController.delegate = self
         
         restoreMapRegion(false)
+        createTapPinsToDeleteLabel()
+        tapPinsToDeleteLabel.hidden = true
         
         self.navigationItem.rightBarButtonItem =
             UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editPins")
-
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            print("error")
-        }
         
-        let fetchedPin = fetchedResultsController.fetchedObjects as! [Pin]
-        let pointAnnotations: [MKPointAnnotation] = fetchedPin.map {
-            Pin.getMKPointAnnotiation($0)!
-        }
-        self.mapView.addAnnotations(pointAnnotations)
-        fetchedResultsController.delegate = self
+        self.mapView.addAnnotations(fetchAllPins())
     }
     
     // MARK: - Fetched Results Controller Delegate
@@ -58,9 +53,12 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
         switch type {
         case .Insert:
             let pinObject = anObject as! Pin
-            self.mapView.addAnnotation(Pin.getMKPointAnnotiation(pinObject)!)
+            self.mapView.addAnnotation(pinObject)
         case .Delete:
             print("Delete")
+            let pinObject = anObject as! Pin
+            self.mapView.removeAnnotation(pinObject)
+            // question. Should I save context here?
         default:
             return
         }
@@ -140,22 +138,12 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
     */
     
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
-        
-        let latitude = view.annotation?.coordinate.latitude
-        let longitude = view.annotation?.coordinate.longitude
-        
-        let pinDictionary : [String : AnyObject] = [
-            Pin.Keys.Latitude : latitude!,
-            Pin.Keys.Longitude : longitude!
-        ]
-        
-        // TODO: find the Pin, something like
-        // let location = fetchedResultsController.objectAtIndexPath(indexPath) as! Pin
-        // except that I don't know the indexPath
-        
-        selectedPin = Pin(dictionary: pinDictionary, context: self.sharedContext)
-        
-        launchPhotoAlbum()
+        selectedPin = view.annotation as! Pin
+        if isInDeleteMode {
+            sharedContext.deleteObject(selectedPin)
+        } else {
+            launchPhotoAlbum()
+        }
     }
     
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
@@ -214,12 +202,21 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
     
     // Mark: - Actions
     func editPins() {
+        print(" **** Editing Pins")
+        isInDeleteMode = true
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "doneEditingPins")
         // TODO: Add code to slide up the "Tap Pins To Delete" Bar
+        self.tapPinsToDeleteLabel.hidden = false
+        self.tapPinsToDeleteLabel.frame.origin.y = self.view.frame.height - 50
+
+        
     }
     
     func doneEditingPins() {
+        print(" *** Done Editing Pins")
+        isInDeleteMode = false
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editPins")
+        self.tapPinsToDeleteLabel.hidden = true
         // TODO: Add code to slide down the "Tap Pins to Delete" Bar
         // and delete the pins that were selected
     }
@@ -231,20 +228,39 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
     }
     
     @IBAction func handleLongPressGesture(sender: UILongPressGestureRecognizer) {
+        let pressPoint = sender.locationInView(mapView)
+        let coordinate: CLLocationCoordinate2D = mapView.convertPoint(pressPoint, toCoordinateFromView: mapView)
+        
         if sender.state == .Began {
-            
-            let touchPoint = sender.locationInView(mapView)
-            let newCoordinates = mapView.convertPoint(touchPoint, toCoordinateFromView: mapView)
-            
-            let dictionary: [String : AnyObject] = [
-                Pin.Keys.Latitude : newCoordinates.latitude,
-                Pin.Keys.Longitude : newCoordinates.longitude
-            ]
-            
-            let _ = Pin(dictionary: dictionary, context: self.sharedContext)
-            
+            let pin = MKPointAnnotation()
+            pin.coordinate = coordinate
+            let _ = Pin(pinLatitude: coordinate.latitude, pinLongitude: coordinate.longitude, context: self.sharedContext)
+            // question: Should I save context here?
         }
     }
     
+    func fetchAllPins() -> [Pin] {
+        
+        do {
+        try fetchedResultsController.performFetch()
+        } catch {
+        print("error")
+            
+        }
+        
+        let fetchedPins = fetchedResultsController.fetchedObjects as! [Pin]
+        return fetchedPins
+    }
+    
+    func createTapPinsToDeleteLabel() {
+        tapPinsToDeleteLabel = UILabel(frame: CGRectMake(0,0,200,21))
+        tapPinsToDeleteLabel.center = CGPointMake(160,284)
+        tapPinsToDeleteLabel.textAlignment = .Center
+        tapPinsToDeleteLabel.text = "Tap Pins To Delete"
+        tapPinsToDeleteLabel.textColor = UIColor.whiteColor()
+        tapPinsToDeleteLabel.backgroundColor = UIColor.redColor()
+        tapPinsToDeleteLabel.alpha = 0.5
+        self.view.addSubview(tapPinsToDeleteLabel)
+    }
 }
 

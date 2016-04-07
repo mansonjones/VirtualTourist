@@ -9,15 +9,7 @@ import CoreData
 import Foundation
 import MapKit
 
-
-// This version works with Core Data
-
-class Pin : NSManagedObject {
-    
-    struct Keys {
-        static let Latitude = "latitude"
-        static let Longitude = "longitude"
-    }
+class Pin : NSManagedObject, MKAnnotation {
     
     @NSManaged var latitude: NSNumber
     @NSManaged var longitude: NSNumber
@@ -28,78 +20,19 @@ class Pin : NSManagedObject {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
 
-    init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
-
-        let entity =  NSEntityDescription.entityForName("Pin", inManagedObjectContext: context)!
-        super.init(entity: entity,insertIntoManagedObjectContext: context)
+    init(pinLatitude: Double, pinLongitude: Double, context: NSManagedObjectContext) {
+        let entity = NSEntityDescription.entityForName("Pin", inManagedObjectContext: context)!
         
-        self.latitude = dictionary[Keys.Latitude] as! Double
-        self.longitude = dictionary[Keys.Longitude] as! Double
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+        
+        latitude = NSNumber(double: pinLatitude)
+        longitude = NSNumber(double: pinLongitude)
     }
     
-    static func getMKPointAnnotiation(myPin : Pin) -> MKPointAnnotation? {
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = CLLocationCoordinate2D(
-            latitude: myPin.latitude.doubleValue,
-            longitude: myPin.longitude.doubleValue
-        )
-        return annotation
-    }
-    
-    var pin: MKPointAnnotation? {
-        get {
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = CLLocationCoordinate2D(
-                latitude: CLLocationDegrees(latitude.doubleValue),
-                longitude: CLLocationDegrees(longitude.doubleValue)
-            )
-            return annotation
-        }
+    // MARK: - MKAnnotation protocol
+    var coordinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: latitude as Double, longitude: longitude as Double)
     }
     
 }
 
-// Earlier Version, before Core Data
-
-/*
-class Pin {
-    
-    struct Keys {
-        static let Latitude = "latitude"
-        static let Longitude = "longitude"
-    }
-    
-    var latitude: NSNumber
-    var longitude: NSNumber
-    var photos: [Photo] = [Photo]()
-    
-    init(dictionary: [String : AnyObject]) {
-        self.latitude = dictionary[Keys.Latitude] as! Double
-        self.longitude = dictionary[Keys.Longitude] as! Double
-    }
-    
-    
-    static func getMKPointAnnotiation(myPin : Pin) -> MKPointAnnotation? {
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = CLLocationCoordinate2D(
-            latitude: myPin.latitude.doubleValue,
-            longitude: myPin.longitude.doubleValue
-        )
-        return annotation
-    }
-    
-    // TODO: Figure out how to use this computed
-    // property with Core Data
-    var pin: MKPointAnnotation? {
-        get {
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = CLLocationCoordinate2D(
-                latitude: CLLocationDegrees(latitude.doubleValue),
-                longitude: CLLocationDegrees(longitude.doubleValue)
-            )
-            return annotation
-        }
-    }
-    
-}
-*/

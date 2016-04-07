@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="eK6-Zx-6Be">
-                                <rect key="frame" x="20" y="81" width="560" height="438"/>
+                                <rect key="frame" x="20" y="72" width="560" height="508"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="BFM-RT-rZX" appends="YES" id="iGd-dN-1bb"/>
@@ -28,10 +28,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="eK6-Zx-6Be" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="ecw-Ao-q2K"/>
-                            <constraint firstItem="eK6-Zx-6Be" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="gk3-bz-JjE"/>
-                            <constraint firstItem="eK6-Zx-6Be" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="17" id="jaA-af-rkM"/>
-                            <constraint firstItem="eK6-Zx-6Be" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="puG-xG-Ffh"/>
+                            <constraint firstItem="eK6-Zx-6Be" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="8gk-mO-pOe"/>
+                            <constraint firstItem="eK6-Zx-6Be" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="GOz-0H-5ai"/>
+                            <constraint firstItem="eK6-Zx-6Be" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="VeF-d2-sSy"/>
+                            <constraint firstAttribute="bottom" secondItem="eK6-Zx-6Be" secondAttribute="bottom" constant="20" symbolic="YES" id="nkb-Np-owZ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Virtual Tourist" id="HcR-xN-1nX">
