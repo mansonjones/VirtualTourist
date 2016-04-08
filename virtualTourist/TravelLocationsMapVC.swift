@@ -36,6 +36,11 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
         self.mapView.addAnnotations(fetchAllPins())
     }
     
+    override func viewDidLayoutSubviews() {
+        if isInDeleteMode {
+            self.tapPinsToDeleteLabel.frame.origin.y = self.view.frame.height - 50            
+        }
+    }
     // MARK: - Fetched Results Controller Delegate
     // These are the four methods that the Fetched Results Controller invokes on this
     // view controller
