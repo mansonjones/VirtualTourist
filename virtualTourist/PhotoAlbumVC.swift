@@ -71,7 +71,7 @@ NSFetchedResultsControllerDelegate {
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         
-        let width = floor(self.collectionView.frame.size.width/3)
+        let width = floor(collectionView.frame.size.width/3)
         layout.itemSize = CGSize(width: width, height: width)
         collectionView.collectionViewLayout = layout
     }
@@ -96,7 +96,6 @@ NSFetchedResultsControllerDelegate {
                         // Update the collection view on the main thread
                         performUIUpdatesOnMain {
                             self.collectionView.reloadData()
-                            //self.removeSelectedPicturesButton.enabled = true
                             self.updateBottomButton()
                         }
                         
@@ -141,13 +140,12 @@ NSFetchedResultsControllerDelegate {
     // MARK: - UICollectionView
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return self.fetchedResultsController.sections?.count ?? 0
+        return fetchedResultsController.sections?.count ?? 0
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let sectionInfo = self.fetchedResultsController.sections![section]
+        let sectionInfo = fetchedResultsController.sections![section]
         
-        print(" number of Cells: \(sectionInfo.numberOfObjects)")
         return sectionInfo.numberOfObjects
     }
     
@@ -157,7 +155,7 @@ NSFetchedResultsControllerDelegate {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CellIdentifier, forIndexPath: indexPath) as! VTCollectionViewCell
         
-        self.configureCell(cell, atIndexPath: indexPath)
+        configureCell(cell, atIndexPath: indexPath)
         
         return cell
     }
@@ -304,7 +302,7 @@ NSFetchedResultsControllerDelegate {
         // Set the Flickr Image
         
         
-        let photo = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
+        let photo = fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
         
         
         // TODO: Add another else statement to check for cached images, similar to the
@@ -315,7 +313,7 @@ NSFetchedResultsControllerDelegate {
             flickrImage = UIImage(named: "placeHolder")
         } else {
             let url = NSURL(string: photo.url)!
-         
+            
             let task = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error ) -> Void in
                 
                 if let error = error {
@@ -338,18 +336,18 @@ NSFetchedResultsControllerDelegate {
         
         /*
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            let url = NSURL(string: photo.url)
-            let data = NSData(contentsOfURL: url!)
-            performUIUpdatesOnMain() {
-                flickrImage = UIImage(data: data!)
-            }
+        let url = NSURL(string: photo.url)
+        let data = NSData(contentsOfURL: url!)
+        performUIUpdatesOnMain() {
+        flickrImage = UIImage(data: data!)
+        }
         }
         
         
         if Photo.getFlickrImage(photo) == nil || Photo.getFlickrImage(photo) == "" {
-            flickrImage = UIImage(named: "placeHolder")
+        flickrImage = UIImage(named: "placeHolder")
         } else if Photo.getFlickrImage(photo) != nil {
-            flickrImage = Photo.getFlickrImage(photo)!
+        flickrImage = Photo.getFlickrImage(photo)!
         }
         
         cell.imageView.image = flickrImage

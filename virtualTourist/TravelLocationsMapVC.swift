@@ -30,16 +30,16 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
         createTapPinsToDeleteLabel()
         tapPinsToDeleteLabel.hidden = true
         
-        self.navigationItem.rightBarButtonItem =
+        navigationItem.rightBarButtonItem =
             UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editPins")
         
-        self.mapView.addAnnotations(fetchAllPins())
+        mapView.addAnnotations(fetchAllPins())
     }
     
     
     override func viewWillLayoutSubviews() {
         if isInDeleteMode {
-            self.tapPinsToDeleteLabel.frame.origin.y = self.view.frame.height - 50
+            tapPinsToDeleteLabel.frame.origin.y = view.frame.height - 50
         }
     }
     // MARK: - Fetched Results Controller Delegate
@@ -59,11 +59,11 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
         switch type {
         case .Insert:
             let pinObject = anObject as! Pin
-            self.mapView.addAnnotation(pinObject)
+            mapView.addAnnotation(pinObject)
         case .Delete:
             print("Delete")
             let pinObject = anObject as! Pin
-            self.mapView.removeAnnotation(pinObject)
+            mapView.removeAnnotation(pinObject)
             // question. Should I save context here?
         default:
             return
@@ -192,23 +192,18 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
     
     // Mark: - Actions
     func editPins() {
-        print(" **** Editing Pins")
         isInDeleteMode = true
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "doneEditingPins")
-        // TODO: Add code to slide up the "Tap Pins To Delete" Bar
-        self.tapPinsToDeleteLabel.hidden = false
-        self.tapPinsToDeleteLabel.frame.origin.y = self.view.frame.height - 50
-
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "doneEditingPins")
+        tapPinsToDeleteLabel.hidden = false
+        tapPinsToDeleteLabel.frame.origin.y = view.frame.height - 50
+        
         
     }
     
     func doneEditingPins() {
-        print(" *** Done Editing Pins")
         isInDeleteMode = false
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editPins")
-        self.tapPinsToDeleteLabel.hidden = true
-        // TODO: Add code to slide down the "Tap Pins to Delete" Bar
-        // and delete the pins that were selected
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editPins")
+        tapPinsToDeleteLabel.hidden = true
     }
     
     func centerMapOnLocation(location: CLLocation) {
@@ -232,10 +227,9 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
     func fetchAllPins() -> [Pin] {
         
         do {
-        try fetchedResultsController.performFetch()
+            try fetchedResultsController.performFetch()
         } catch {
-        print("error")
-            
+            print("error")
         }
         
         let fetchedPins = fetchedResultsController.fetchedObjects as! [Pin]
@@ -250,7 +244,7 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
         tapPinsToDeleteLabel.textColor = UIColor.whiteColor()
         tapPinsToDeleteLabel.backgroundColor = UIColor.redColor()
         tapPinsToDeleteLabel.alpha = 0.5
-        self.view.addSubview(tapPinsToDeleteLabel)
+        view.addSubview(tapPinsToDeleteLabel)
     }
 }
 

@@ -19,7 +19,7 @@ class Pin : NSManagedObject, MKAnnotation {
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
-
+    
     init(pinLatitude: Double, pinLongitude: Double, context: NSManagedObjectContext) {
         let entity = NSEntityDescription.entityForName("Pin", inManagedObjectContext: context)!
         
