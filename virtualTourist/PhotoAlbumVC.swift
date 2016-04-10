@@ -229,6 +229,7 @@ NSFetchedResultsControllerDelegate {
         print("in controllerDidChangeContent")
         print("insertion count: \(insertedIndexPaths.count)")
         print("deletion count: \(deletedIndexPaths.count)")
+        
         collectionView.performBatchUpdates({ () -> Void in
             for indexPath in self.insertedIndexPaths {
                 self.collectionView.insertItemsAtIndexPaths([indexPath])
@@ -268,6 +269,7 @@ NSFetchedResultsControllerDelegate {
         }
         
         selectedIndexes = [NSIndexPath]()
+        CoreDataStackManager.sharedInstance().saveContext()
     }
     
     
@@ -295,11 +297,54 @@ NSFetchedResultsControllerDelegate {
     }
     
     func configureCell(cell: VTCollectionViewCell, atIndexPath indexPath: NSIndexPath) {
-        let photo = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
-        
-        var flickrImage = UIImage(named: "foo")
+        var flickrImage = UIImage(named: "placeHolder")
         
         cell.imageView!.image = nil
+        
+        // Set the Flickr Image
+        
+        
+        let photo = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
+        
+        
+        // TODO: Add another else statement to check for cached images, similar to the
+        // favorite actors app.
+        
+        if photo.url == "" {
+            // TODO: replace with "No Image
+            flickrImage = UIImage(named: "placeHolder")
+        } else {
+            let url = NSURL(string: photo.url)!
+         
+            let task = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error ) -> Void in
+                
+                if let error = error {
+                    // Print out more error information than this,
+                    print("Flickr download error: \(error.localizedDescription)")
+                }
+                
+                if let data = data {
+                    // Create the image
+                    let image = UIImage(data: data)
+                    
+                    performUIUpdatesOnMain({ () -> Void in
+                        cell.imageView.image = image
+                    })
+                }
+            })
+            task.resume()
+            cell.imageView!.image = flickrImage
+        }
+        
+        /*
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            let url = NSURL(string: photo.url)
+            let data = NSData(contentsOfURL: url!)
+            performUIUpdatesOnMain() {
+                flickrImage = UIImage(data: data!)
+            }
+        }
+        
         
         if Photo.getFlickrImage(photo) == nil || Photo.getFlickrImage(photo) == "" {
             flickrImage = UIImage(named: "placeHolder")
@@ -308,7 +353,7 @@ NSFetchedResultsControllerDelegate {
         }
         
         cell.imageView.image = flickrImage
-        
+        */
         // If the cell is selected then it's it's color is greyed out.
         if let _ = selectedIndexes.indexOf(indexPath) {
             cell.imageView.alpha = 0.3
@@ -329,4 +374,5 @@ NSFetchedResultsControllerDelegate {
             removeSelectedPicturesButton.enabled = false
         }
     }
+    
 }
