@@ -61,7 +61,6 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
             let pinObject = anObject as! Pin
             mapView.addAnnotation(pinObject)
         case .Delete:
-            print("Delete")
             let pinObject = anObject as! Pin
             mapView.removeAnnotation(pinObject)
             // question. Should I save context here?
@@ -131,18 +130,48 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
     // This delegate method is implemented to respond to taps.
     
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+        
         selectedPin = view.annotation as! Pin
-        if isInDeleteMode {
-            sharedContext.deleteObject(selectedPin)
-        } else {
-            mapView.deselectAnnotation(selectedPin, animated: false)
-            launchPhotoAlbum()
+        if doesPinExistInCoreData(selectedPin) {
+            if isInDeleteMode {
+                sharedContext.deleteObject(selectedPin)
+            } else {
+                mapView.deselectAnnotation(selectedPin, animated: false)
+                launchPhotoAlbum()
+            }
         }
+    }
+    
+    func doesPinExistInCoreData(pin: Pin) -> Bool {
+        // Verify that the selected Pin exists in Core Data using the hashNumber
+        // Create the fetch request
+        let fetchRequest = NSFetchRequest(entityName: "Pin")
+        fetchRequest.predicate = NSPredicate(format: "hashNumber == %@", pin.hashNumber)
+        // Add a sort descriptor. This enforces a sort order on the results that are generated
+        // In this case we want the events sored by their timeStamps.
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "latitude", ascending: false)]
+        
+        // Create the Fetched Results Controller
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
+        
+        // Return the fetched results controller. It will be the value of the lazy variable
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print("error")
+        }
+        let fetchedPins = fetchedResultsController.fetchedObjects as! [Pin]
+        
+        if (fetchedPins.count == 1) {
+            return true
+        }
+        return false
     }
     
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         saveMapRegion()
     }
+    
     func saveMapRegion() {
         // Place the "center" and "span" of the map into a dictionary
         // The "span" is the width and height of the map in degrees.
@@ -220,7 +249,10 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
         if sender.state == .Began {
             let pin = MKPointAnnotation()
             pin.coordinate = coordinate
-            let _ = Pin(pinLatitude: coordinate.latitude, pinLongitude: coordinate.longitude, context: self.sharedContext)
+            let _ = Pin(pinLatitude: coordinate.latitude,
+                pinLongitude: coordinate.longitude,
+                pinHashNumber: pin.hash,
+                context: self.sharedContext)
             // question: Should I save context here?
         }
     }
@@ -234,6 +266,7 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
         }
         
         let fetchedPins = fetchedResultsController.fetchedObjects as! [Pin]
+        
         return fetchedPins
     }
     

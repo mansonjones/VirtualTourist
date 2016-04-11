@@ -13,6 +13,7 @@ class Pin : NSManagedObject, MKAnnotation {
     
     @NSManaged var latitude: NSNumber
     @NSManaged var longitude: NSNumber
+    @NSManaged var hashNumber: NSNumber
     @NSManaged var photos: [Photo]
     
     // Standard Core Data init method.
@@ -20,13 +21,14 @@ class Pin : NSManagedObject, MKAnnotation {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
     
-    init(pinLatitude: Double, pinLongitude: Double, context: NSManagedObjectContext) {
+    init(pinLatitude: Double, pinLongitude: Double, pinHashNumber: Int, context: NSManagedObjectContext) {
         let entity = NSEntityDescription.entityForName("Pin", inManagedObjectContext: context)!
         
         super.init(entity: entity, insertIntoManagedObjectContext: context)
         
         latitude = NSNumber(double: pinLatitude)
         longitude = NSNumber(double: pinLongitude)
+        hashNumber = pinHashNumber
     }
     
     // MARK: - MKAnnotation protocol

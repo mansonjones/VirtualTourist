@@ -78,65 +78,7 @@ NSFetchedResultsControllerDelegate {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if location.photos.isEmpty {
-            FlickrClient.sharedInstance().getPhotosFromLatLonSearch(location)
-                { (result, error) -> Void in
-                    
-                    
-                    if let photosDictionaries = result as? [[String : AnyObject]] {
-                        
-                        // Parse the array of photos dictionaries
-                        _ = photosDictionaries.map() { (dictionary: [String : AnyObject]) -> Photo in
-                            let photo = Photo(dictionary: dictionary, context: self.sharedContext)
-                            photo.location = self.location
-                            return photo
-                        }
-                        CoreDataStackManager.sharedInstance().saveContext()
-                        // Update the collection view on the main thread
-                        performUIUpdatesOnMain {
-                            self.collectionView.reloadData()
-                            self.updateBottomButton()
-                        }
-                        
-                        // Save the context
-                        self.saveContext()
-                    } else {
-                        print("Download of Flickr Photo failed")
-                    }
-            }
-        }
-        
-    }
-    
-    func loadPhotos() {
-        if location.photos.isEmpty {
-            FlickrClient.sharedInstance().getPhotosFromLatLonSearch(location)
-                { (result, error) -> Void in
-                    
-                    
-                    if let photosDictionaries = result as? [[String : AnyObject]] {
-                        
-                        // Parse the array of photos dictionaries
-                        _ = photosDictionaries.map() { (dictionary: [String : AnyObject]) -> Photo in
-                            let photo = Photo(dictionary: dictionary, context: self.sharedContext)
-                            photo.location = self.location
-                            return photo
-                        }
-                        CoreDataStackManager.sharedInstance().saveContext()
-                        // Update the collection view on the main thread
-                        performUIUpdatesOnMain {
-                            self.collectionView.reloadData()
-                            self.updateBottomButton()
-                        }
-                        
-                        // Save the context
-                        self.saveContext()
-                    } else {
-                        print("Download of Flickr Photo failed")
-                    }
-            }
-        }
+        loadPhotos()
     }
     
     // MARK: - Core Data Convenience
@@ -191,7 +133,6 @@ NSFetchedResultsControllerDelegate {
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        print(" cell selected at: ", indexPath.row)
         
         let cell = collectionView.cellForItemAtIndexPath(indexPath) as! VTCollectionViewCell
         
@@ -219,8 +160,6 @@ NSFetchedResultsControllerDelegate {
         insertedIndexPaths = [NSIndexPath]()
         deletedIndexPaths = [NSIndexPath]()
         updatedIndexPaths = [NSIndexPath]()
-        
-        print(" in controllerWillChangeContent")
     }
     
     // The second method may be called multiple times, once for each Photo that is
@@ -230,15 +169,12 @@ NSFetchedResultsControllerDelegate {
         
         switch type {
         case .Insert:
-            print("Insert a photo")
             insertedIndexPaths.append(newIndexPath!)
             break
         case .Delete:
-            print("Delete a photo")
             deletedIndexPaths.append(indexPath!)
             break
         case .Update:
-            print("Update an item.")
             updatedIndexPaths.append(indexPath!)
             break
         case .Move:
@@ -253,10 +189,6 @@ NSFetchedResultsControllerDelegate {
     // method.  Notice that all of the changes are performed inside a closure that is handed to
     // the collection view.
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        
-        print("in controllerDidChangeContent")
-        print("insertion count: \(insertedIndexPaths.count)")
-        print("deletion count: \(deletedIndexPaths.count)")
         
         collectionView.performBatchUpdates({ () -> Void in
             for indexPath in self.insertedIndexPaths {
@@ -277,15 +209,43 @@ NSFetchedResultsControllerDelegate {
     // MARK: - Actions and Helpers
     
     @IBAction func removeSelectedPictures(sender: UIButton) {
-        print(" Remove Selected Photos")
         if selectedIndexes.isEmpty {
-            print(" update the collection view")
             deleteAllPhotos()
             loadPhotos()
         } else {
             deleteSelectedPhotos()
         }
     }
+    func loadPhotos() {
+        if location.photos.isEmpty {
+            FlickrClient.sharedInstance().getPhotosFromLatLonSearch(location)
+                { (result, error) -> Void in
+                    
+                    
+                    if let photosDictionaries = result as? [[String : AnyObject]] {
+                        
+                        // Parse the array of photos dictionaries
+                        _ = photosDictionaries.map() { (dictionary: [String : AnyObject]) -> Photo in
+                            let photo = Photo(dictionary: dictionary, context: self.sharedContext)
+                            photo.location = self.location
+                            return photo
+                        }
+                        CoreDataStackManager.sharedInstance().saveContext()
+                        // Update the collection view on the main thread
+                        performUIUpdatesOnMain {
+                            self.collectionView.reloadData()
+                            self.updateBottomButton()
+                        }
+                        
+                        // Save the context
+                        self.saveContext()
+                    } else {
+                        print("Download of Flickr Photo failed")
+                    }
+            }
+        }
+    }
+    
     
     func deleteAllPhotos() {
         
