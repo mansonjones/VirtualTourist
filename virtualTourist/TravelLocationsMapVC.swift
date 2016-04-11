@@ -135,6 +135,7 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
         if isInDeleteMode {
             sharedContext.deleteObject(selectedPin)
         } else {
+            mapView.deselectAnnotation(selectedPin, animated: false)
             launchPhotoAlbum()
         }
     }

@@ -33,4 +33,14 @@ class Photo : NSManagedObject {
         url = dictionary[Keys.Url] as! String
     }
     
+    var flickrImage: UIImage? {
+        
+        get {
+            return FlickrClient.Caches.imageCache.imageWithIdentifier(url)
+        }
+        
+        set {
+            FlickrClient.Caches.imageCache.storeImage(newValue, withIdentifier: url)
+        }
+    }
 }

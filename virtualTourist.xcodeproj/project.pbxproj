@@ -27,6 +27,7 @@
 		3C483D521C7CFB29006A8291 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D501C7CFB29006A8291 /* Model.xcdatamodeld */; };
 		3C483D9C1C7F5829006A8291 /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D9B1C7F5829006A8291 /* GCDBlackBox.swift */; };
 		3C483DA51C7F5A0C006A8291 /* FlickrConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483DA41C7F5A0C006A8291 /* FlickrConvenience.swift */; };
+		3C8377961CBB16CC00A833C7 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8377951CBB16C900A833C7 /* ImageCache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		3C483D511C7CFB29006A8291 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		3C483D9B1C7F5829006A8291 /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 		3C483DA41C7F5A0C006A8291 /* FlickrConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrConvenience.swift; sourceTree = "<group>"; };
+		3C8377951CBB16C900A833C7 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +185,7 @@
 				3C483DA41C7F5A0C006A8291 /* FlickrConvenience.swift */,
 				3C483D4C1C7CE830006A8291 /* FlickrConstants.swift */,
 				3C483D4A1C7CE7ED006A8291 /* FlickrClient.swift */,
+				3C8377951CBB16C900A833C7 /* ImageCache.swift */,
 				3C483D441C7CE498006A8291 /* Pin.swift */,
 				3C2CA1881C95194B00B2C351 /* Photo.swift */,
 			);
@@ -320,6 +323,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C8377961CBB16CC00A833C7 /* ImageCache.swift in Sources */,
 				3C2CA18D1C9A295900B2C351 /* VTCollectionViewController.swift in Sources */,
 				3C2CA1891C95194B00B2C351 /* Photo.swift in Sources */,
 				3C483D491C7CE719006A8291 /* PhotoAlbumVC.swift in Sources */,

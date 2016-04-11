@@ -56,7 +56,7 @@ NSFetchedResultsControllerDelegate {
         }
         
         fetchedResultsController.delegate = self
-        // removeSelectedPicturesButton.enabled = false
+
         updateBottomButton()
         setupMapView()
     }
@@ -107,6 +107,36 @@ NSFetchedResultsControllerDelegate {
             }
         }
         
+    }
+    
+    func loadPhotos() {
+        if location.photos.isEmpty {
+            FlickrClient.sharedInstance().getPhotosFromLatLonSearch(location)
+                { (result, error) -> Void in
+                    
+                    
+                    if let photosDictionaries = result as? [[String : AnyObject]] {
+                        
+                        // Parse the array of photos dictionaries
+                        _ = photosDictionaries.map() { (dictionary: [String : AnyObject]) -> Photo in
+                            let photo = Photo(dictionary: dictionary, context: self.sharedContext)
+                            photo.location = self.location
+                            return photo
+                        }
+                        CoreDataStackManager.sharedInstance().saveContext()
+                        // Update the collection view on the main thread
+                        performUIUpdatesOnMain {
+                            self.collectionView.reloadData()
+                            self.updateBottomButton()
+                        }
+                        
+                        // Save the context
+                        self.saveContext()
+                    } else {
+                        print("Download of Flickr Photo failed")
+                    }
+            }
+        }
     }
     
     // MARK: - Core Data Convenience
@@ -250,9 +280,20 @@ NSFetchedResultsControllerDelegate {
         print(" Remove Selected Photos")
         if selectedIndexes.isEmpty {
             print(" update the collection view")
+            deleteAllPhotos()
+            loadPhotos()
         } else {
             deleteSelectedPhotos()
         }
+    }
+    
+    func deleteAllPhotos() {
+        
+        for photo in fetchedResultsController.fetchedObjects as! [Photo] {
+            sharedContext.deleteObject(photo)
+        }
+        CoreDataStackManager.sharedInstance().saveContext()
+        collectionView.reloadData()
     }
     
     func deleteSelectedPhotos() {
@@ -268,6 +309,7 @@ NSFetchedResultsControllerDelegate {
         
         selectedIndexes = [NSIndexPath]()
         CoreDataStackManager.sharedInstance().saveContext()
+        updateBottomButton()
     }
     
     
@@ -301,16 +343,18 @@ NSFetchedResultsControllerDelegate {
         
         // Set the Flickr Image
         
-        
         let photo = fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
-        
         
         // TODO: Add another else statement to check for cached images, similar to the
         // favorite actors app.
         
+        // TODO: make url a String? instead of a String, then 
+        //
         if photo.url == "" {
             // TODO: replace with "No Image
             flickrImage = UIImage(named: "placeHolder")
+        } else if photo.flickrImage != nil {
+            flickrImage = photo.flickrImage
         } else {
             let url = NSURL(string: photo.url)!
             
@@ -334,25 +378,7 @@ NSFetchedResultsControllerDelegate {
             cell.imageView!.image = flickrImage
         }
         
-        /*
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-        let url = NSURL(string: photo.url)
-        let data = NSData(contentsOfURL: url!)
-        performUIUpdatesOnMain() {
-        flickrImage = UIImage(data: data!)
-        }
-        }
-        
-        
-        if Photo.getFlickrImage(photo) == nil || Photo.getFlickrImage(photo) == "" {
-        flickrImage = UIImage(named: "placeHolder")
-        } else if Photo.getFlickrImage(photo) != nil {
-        flickrImage = Photo.getFlickrImage(photo)!
-        }
-        
-        cell.imageView.image = flickrImage
-        */
-        // If the cell is selected then it's it's color is greyed out.
+       // If the cell is selected then it's it's color is greyed out.
         if let _ = selectedIndexes.indexOf(indexPath) {
             cell.imageView.alpha = 0.3
         } else {
@@ -366,10 +392,11 @@ NSFetchedResultsControllerDelegate {
     }
     
     func updateBottomButton() {
+
         if selectedIndexes.count > 0 {
-            removeSelectedPicturesButton.enabled = true
+            removeSelectedPicturesButton.setTitle("Remove Selected Pictures", forState: .Normal)
         } else {
-            removeSelectedPicturesButton.enabled = false
+            removeSelectedPicturesButton.setTitle("New Collection", forState: .Normal)
         }
     }
     
