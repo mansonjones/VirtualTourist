@@ -60,10 +60,11 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
         case .Insert:
             let pinObject = anObject as! Pin
             mapView.addAnnotation(pinObject)
+            CoreDataStackManager.sharedInstance().saveContext()
         case .Delete:
             let pinObject = anObject as! Pin
             mapView.removeAnnotation(pinObject)
-            // question. Should I save context here?
+            CoreDataStackManager.sharedInstance().saveContext()
         default:
             return
         }
