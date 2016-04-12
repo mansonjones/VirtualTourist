@@ -24,7 +24,7 @@ extension FlickrClient {
             FlickrClient.ParameterKeys.Extras: "url_m",
             FlickrClient.ParameterKeys.Format: "json",
             FlickrClient.ParameterKeys.NoJSONCallback: "1",
-            FlickrClient.ParameterKeys.PerPage: "50"
+            FlickrClient.ParameterKeys.PerPage: "27"
             
             /* FlickrClient.ParameterKeys.Page : "1" */
         ]
@@ -38,9 +38,56 @@ extension FlickrClient {
                         completionHandlerForLatLonSearch(result: nil, error: nil)
                         return
                     }
-                   if let results = jsonPhotoDictionary[FlickrClient.JSONResponseKeys.Photo] as? [[String:AnyObject]] {
-                       // let photos = Photo.photosFromResults(results)
-                       completionHandlerForLatLonSearch(result: results, error: nil)
+                    // GUARD: Is the "pages" key in the photosDictionary?
+                    
+                    guard let totalPages = jsonPhotoDictionary[FlickrClient.JSONResponseKeys.Pages] as? Int else {
+                        completionHandlerForLatLonSearch(result: nil, error: nil)
+                        return
+                    }
+                    // pick a random page
+                    let pageLimit = min(totalPages, 40)
+                    let randomPage = Int(arc4random_uniform(UInt32(pageLimit))) + 1
+                    print("\(randomPage)")
+                    
+                    self.getPhotosFromLatLonSearch(location, withPageNumber: randomPage, completionHandlerForLatLonSearch: { (result, error) -> Void in
+                        completionHandlerForLatLonSearch(result: result, error: nil)
+                    })
+                    
+                }
+        }
+        return task
+    }
+    func getPhotosFromLatLonSearch(location : Pin, withPageNumber: Int,
+        completionHandlerForLatLonSearch: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask?
+    {
+        
+        // TODO: move the parameter value definitions into a
+        // constants file
+        print(" Running the Second version")
+        
+        let parameters: [String : String!] = [
+            FlickrClient.ParameterKeys.Method: FlickrClient.ParameterValues.SearchMethod,
+            FlickrClient.ParameterKeys.BoundingBox: bboxString(location),
+            FlickrClient.ParameterKeys.SafeSearch: "1",
+            FlickrClient.ParameterKeys.Extras: "url_m",
+            FlickrClient.ParameterKeys.Format: "json",
+            FlickrClient.ParameterKeys.NoJSONCallback: "1",
+            FlickrClient.ParameterKeys.PerPage: "50",
+            FlickrClient.ParameterKeys.Page : "\(withPageNumber)"
+        ]
+        
+        let task = taskForGETMethod(FlickrClient.Methods.PhotosSearch,
+            parameters: parameters) { (results, error) -> Void in
+                if let error = error {
+                    completionHandlerForLatLonSearch(result: nil, error: error)
+                } else {
+                    guard let jsonPhotoDictionary = results[FlickrClient.JSONResponseKeys.Photos] as? [String : AnyObject] else {
+                        completionHandlerForLatLonSearch(result: nil, error: nil)
+                        return
+                    }
+                    if let results = jsonPhotoDictionary[FlickrClient.JSONResponseKeys.Photo] as? [[String:AnyObject]] {
+                        // let photos = Photo.photosFromResults(results)
+                        completionHandlerForLatLonSearch(result: results, error: nil)
                     } else {
                         completionHandlerForLatLonSearch(result: nil, error: NSError(domain: "getPhotosFromLatLonSearch", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getPhotosFromLatLonSearch"]))
                     }
@@ -48,6 +95,7 @@ extension FlickrClient {
         }
         return task
     }
+    
     
     private func bboxString(location: Pin) -> String {
         // ensure bbox is bounded by minimum and maximums
