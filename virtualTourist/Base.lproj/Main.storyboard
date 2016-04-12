@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="eK6-Zx-6Be">
-                                <rect key="frame" x="20" y="72" width="560" height="508"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="BFM-RT-rZX" appends="YES" id="iGd-dN-1bb"/>
@@ -28,10 +28,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="eK6-Zx-6Be" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="8gk-mO-pOe"/>
-                            <constraint firstItem="eK6-Zx-6Be" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="GOz-0H-5ai"/>
-                            <constraint firstItem="eK6-Zx-6Be" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="VeF-d2-sSy"/>
-                            <constraint firstAttribute="bottom" secondItem="eK6-Zx-6Be" secondAttribute="bottom" constant="20" symbolic="YES" id="nkb-Np-owZ"/>
+                            <constraint firstAttribute="trailing" secondItem="eK6-Zx-6Be" secondAttribute="trailing" id="6OP-Id-maO"/>
+                            <constraint firstItem="eK6-Zx-6Be" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Q5J-6A-915"/>
+                            <constraint firstItem="eK6-Zx-6Be" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="qAv-J5-adf"/>
+                            <constraint firstItem="eK6-Zx-6Be" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="ymT-UF-R3E"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Virtual Tourist" id="HcR-xN-1nX">
