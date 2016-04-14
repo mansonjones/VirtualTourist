@@ -15,9 +15,11 @@ class Photo : NSManagedObject {
     
     struct Keys {
         static let Url = "url_m"
+        static let Id = "id"
     }
     
     @NSManaged var url : String
+    @NSManaged var id: String
     @NSManaged var location: Pin?
     
     
@@ -31,6 +33,7 @@ class Photo : NSManagedObject {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
         
         url = dictionary[Keys.Url] as! String
+        id = dictionary[Keys.Id] as! String
     }
     
     var flickrImage: UIImage? {
@@ -40,7 +43,7 @@ class Photo : NSManagedObject {
         }
         
         set {
-            FlickrClient.Caches.imageCache.storeImage(newValue, withIdentifier: url)
+            FlickrClient.Caches.imageCache.storeImage(newValue, withIdentifier: id)
         }
     }
 }
