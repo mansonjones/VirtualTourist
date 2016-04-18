@@ -58,12 +58,29 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
         
         switch type {
         case .Insert:
+            print(" Insert ")
             let pinObject = anObject as! Pin
-            mapView.addAnnotation(pinObject)
+            let pointAnnotation = MKPointAnnotation()
+            let coordinate = CLLocationCoordinate2DMake(
+                CLLocationDegrees(pinObject.latitude),
+                CLLocationDegrees(pinObject.longitude)
+            )
+            pointAnnotation.coordinate = coordinate
+            mapView.addAnnotation(pointAnnotation)
             CoreDataStackManager.sharedInstance().saveContext()
         case .Delete:
+            print(" Delete ")
             let pinObject = anObject as! Pin
-            mapView.removeAnnotation(pinObject)
+            // Given the latitude and longitude, find the annotation
+            var pointAnnotations = mapView.annotations.filter{ (annotation: MKAnnotation) -> Bool in
+                return (annotation.coordinate.latitude == pinObject.latitude ||
+                    annotation.coordinate.longitude == pinObject.longitude)
+            }
+            
+            if pointAnnotations.count == 1 {
+                mapView.removeAnnotation(pointAnnotations[0])
+            }
+            // get the object to delete
             CoreDataStackManager.sharedInstance().saveContext()
         default:
             return
@@ -132,7 +149,25 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
     
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         
-        selectedPin = view.annotation as! Pin
+        let pointAnnotation = view.annotation as! MKPointAnnotation
+        
+        selectedPin = findSelectedPinInCoreData(pointAnnotation)
+        if isInDeleteMode {
+            sharedContext.deleteObject(selectedPin)
+        } else {
+            mapView.deselectAnnotation(pointAnnotation, animated: false)
+            launchPhotoAlbum()
+        }
+        // selectedPin = view.annotation as! MKPointAnnotation
+       // launchPhotoAlbum()
+        /*
+        if let pin = view.annotation as MKAnnotation!
+        {
+            launchPhotoAlbum()
+        }
+        */
+        // selectedPin = view.annotation as Pin!
+        /*
         if doesPinExistInCoreData(selectedPin) {
             if isInDeleteMode {
                 sharedContext.deleteObject(selectedPin)
@@ -141,7 +176,49 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
                 launchPhotoAlbum()
             }
         }
+        */
+       // mapView.deselectAnnotation(selectedPin, animated: false)
+        // launchPhotoAlbum()
     }
+    
+    func findSelectedPinInCoreData(pointAnnotation: MKPointAnnotation) -> Pin? {
+        // Verify that the selected Pin exists in Core Data using the hashNumber
+        // Create the fetch request
+        
+        
+        let latitude = pointAnnotation.coordinate.latitude as NSNumber
+        print(" latitude \(latitude)")
+        let longitude = pointAnnotation.coordinate.longitude as NSNumber
+        
+        let fetchRequest = NSFetchRequest(entityName: "Pin")
+        fetchRequest.predicate =
+            NSPredicate(format: "latitude == %@ && longitude == %@", latitude, longitude)
+        // Add a sort descriptor. This enforces a sort order on the results that are generated
+        // In this case we want the events sored by their timeStamps.
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "latitude", ascending: false)]
+        
+        // Create the Fetched Results Controller
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
+        
+        // Return the fetched results controller. It will be the value of the lazy variable
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print("error")
+        }
+        let fetchedPins = fetchedResultsController.fetchedObjects as! [Pin]
+        
+        
+        print(" The number of fetches pins is:")
+        print(fetchedPins.count)
+        
+        if (fetchedPins.count == 1) {
+            return fetchedPins[0]
+        }
+        
+        return nil
+    }
+    
     
     func doesPinExistInCoreData(pin: Pin) -> Bool {
         // Verify that the selected Pin exists in Core Data using the hashNumber
@@ -254,11 +331,11 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
                 pinLongitude: coordinate.longitude,
                 pinHashNumber: pin.hash,
                 context: self.sharedContext)
-            // question: Should I save context here?
+            CoreDataStackManager.sharedInstance().saveContext()
         }
     }
     
-    func fetchAllPins() -> [Pin] {
+    func fetchAllPins() -> [MKPointAnnotation] {
         
         do {
             try fetchedResultsController.performFetch()
@@ -268,7 +345,19 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
         
         let fetchedPins = fetchedResultsController.fetchedObjects as! [Pin]
         
-        return fetchedPins
+        var newPins = [MKPointAnnotation]()
+        
+        for fetchedPin in fetchedPins {
+            let pointAnnotation = MKPointAnnotation()
+            let coordinate = CLLocationCoordinate2DMake(
+                CLLocationDegrees(fetchedPin.latitude),
+                CLLocationDegrees(fetchedPin.longitude)
+            )
+            pointAnnotation.coordinate = coordinate
+            newPins.append(pointAnnotation)
+        }
+        
+        return newPins
     }
     
     func createTapPinsToDeleteLabel() {
