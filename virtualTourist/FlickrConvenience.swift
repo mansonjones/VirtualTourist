@@ -10,7 +10,7 @@ import Foundation
 
 extension FlickrClient {
     
-    func getPhotosFromLatLonSearch(location : Pin,
+    func getPhotosFromLatLonSearch(latitude: Double, longitude: Double,
         completionHandlerForLatLonSearch: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask?
     {
         
@@ -19,7 +19,7 @@ extension FlickrClient {
         
         let parameters: [String : String!] = [
             FlickrClient.ParameterKeys.Method: FlickrClient.ParameterValues.SearchMethod,
-            FlickrClient.ParameterKeys.BoundingBox: bboxString(location),
+            FlickrClient.ParameterKeys.BoundingBox: bboxString(latitude, longitude: longitude),
             FlickrClient.ParameterKeys.SafeSearch: "1",
             FlickrClient.ParameterKeys.Extras: "url_m",
             FlickrClient.ParameterKeys.Format: "json",
@@ -49,7 +49,7 @@ extension FlickrClient {
                     let randomPage = Int(arc4random_uniform(UInt32(pageLimit))) + 1
                     print("\(randomPage)")
                     
-                    self.getPhotosFromLatLonSearch(location, withPageNumber: randomPage, completionHandlerForLatLonSearch: { (result, error) -> Void in
+                    self.getPhotosFromLatLonSearch(latitude, longitude: longitude, withPageNumber: randomPage, completionHandlerForLatLonSearch: { (result, error) -> Void in
                         completionHandlerForLatLonSearch(result: result, error: nil)
                     })
                     
@@ -57,7 +57,7 @@ extension FlickrClient {
         }
         return task
     }
-    func getPhotosFromLatLonSearch(location : Pin, withPageNumber: Int,
+    func getPhotosFromLatLonSearch(latitude: Double, longitude: Double, withPageNumber: Int,
         completionHandlerForLatLonSearch: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask?
     {
         
@@ -67,7 +67,7 @@ extension FlickrClient {
         
         let parameters: [String : String!] = [
             FlickrClient.ParameterKeys.Method: FlickrClient.ParameterValues.SearchMethod,
-            FlickrClient.ParameterKeys.BoundingBox: bboxString(location),
+            FlickrClient.ParameterKeys.BoundingBox: bboxString(latitude, longitude: longitude),
             FlickrClient.ParameterKeys.SafeSearch: "1",
             FlickrClient.ParameterKeys.Extras: "url_m",
             FlickrClient.ParameterKeys.Format: "json",
@@ -97,11 +97,8 @@ extension FlickrClient {
     }
     
     
-    private func bboxString(location: Pin) -> String {
+    private func bboxString(latitude: Double, longitude: Double) -> String {
         // ensure bbox is bounded by minimum and maximums
-        
-        let latitude = location.latitude.doubleValue
-        let longitude = location.latitude.doubleValue
         
         let minimumLon = max(longitude - FlickrClient.Constants.SearchBBoxHalfWidth,
             FlickrClient.Constants.SearchLonRange.0)

@@ -216,9 +216,10 @@ NSFetchedResultsControllerDelegate {
             deleteSelectedPhotos()
         }
     }
+    
     func loadPhotos() {
         if location.photos.isEmpty {
-            FlickrClient.sharedInstance().getPhotosFromLatLonSearch(location)
+            FlickrClient.sharedInstance().getPhotosFromLatLonSearch(location.latitude.doubleValue, longitude: location.latitude.doubleValue)
                 { (result, error) -> Void in
                     
                     
