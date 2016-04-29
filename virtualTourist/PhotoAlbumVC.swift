@@ -311,12 +311,18 @@ NSFetchedResultsControllerDelegate {
         
         // TODO: make url a String? instead of a String, then 
         //
-        if photo.url == "" {
+        
+        // Set the Photo Flickr Image
+        if photo.id == nil || photo.id == "" {
             // TODO: replace with "No Image
             flickrImage = UIImage(named: "placeHolder")
         } else if photo.flickrImage != nil {
             flickrImage = photo.flickrImage
         } else {
+            
+            // This is the interesting case.  The photo has an flickr url, but it is not
+            // downloaded yet
+            
             let url = NSURL(string: photo.url)!
             
             let task = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error ) -> Void in
@@ -329,6 +335,11 @@ NSFetchedResultsControllerDelegate {
                 if let data = data {
                     // Create the image
                     let image = UIImage(data: data)
+            
+                    // update the model, so that the image gets cached 
+                    // and saved in the Documents directory.
+                    
+                    photo.flickrImage = image
                     
                     performUIUpdatesOnMain({ () -> Void in
                         cell.imageView.image = image
@@ -336,8 +347,9 @@ NSFetchedResultsControllerDelegate {
                 }
             })
             task.resume()
-            cell.imageView!.image = flickrImage
+            // cell.imageView!.image = flickrImage
         }
+        cell.imageView!.image = flickrImage
         
        // If the cell is selected then it's it's color is greyed out.
         if let _ = selectedIndexes.indexOf(indexPath) {

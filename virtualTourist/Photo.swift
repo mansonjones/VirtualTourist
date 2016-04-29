@@ -19,7 +19,7 @@ class Photo : NSManagedObject {
     }
     
     @NSManaged var url : String
-    @NSManaged var id: String
+    @NSManaged var id: String?
     @NSManaged var location: Pin?
     
     
@@ -33,17 +33,19 @@ class Photo : NSManagedObject {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
         
         url = dictionary[Keys.Url] as! String
-        id = dictionary[Keys.Id] as! String
+        id = dictionary[Keys.Id] as? String
     }
     
     var flickrImage: UIImage? {
         
         get {
+            print(" GET flickrImage")
             return FlickrClient.Caches.imageCache.imageWithIdentifier(id)
         }
         
         set {
-            FlickrClient.Caches.imageCache.storeImage(newValue, withIdentifier: id)
+            print(" SET flickrImage")
+            FlickrClient.Caches.imageCache.storeImage(newValue, withIdentifier: id!)
         }
     }
 }
