@@ -39,7 +39,7 @@ class Photo : NSManagedObject {
     var flickrImage: UIImage? {
         
         get {
-            return FlickrClient.Caches.imageCache.imageWithIdentifier(url)
+            return FlickrClient.Caches.imageCache.imageWithIdentifier(id)
         }
         
         set {
