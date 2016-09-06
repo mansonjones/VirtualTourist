@@ -15,9 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    // Change #1
     // New Core Data
-    let stack = CoreDataStack(modelName: "Model")
+    let stack = CoreDataStack(modelName: "Model")!
 
     // More New Core Data
     /*
@@ -31,6 +30,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // Start Autosaving
+        stack.autoSave(60)
+        
         return true
     }
 

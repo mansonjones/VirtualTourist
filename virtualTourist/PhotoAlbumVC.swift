@@ -87,14 +87,14 @@ NSFetchedResultsControllerDelegate {
         // Get the stack
         let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let stack = delegate.stack
-        return stack!.context
+        return stack.context
     }()
     
     func saveContext() {
         // New Core Data
         let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let stack = delegate.stack
-        stack!.save()
+        stack.save()
         
     }
     
@@ -244,7 +244,7 @@ NSFetchedResultsControllerDelegate {
                         
                         let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
                         let stack = delegate.stack
-                        stack!.save()
+                        stack.save()
 
                         
                         
@@ -272,7 +272,7 @@ NSFetchedResultsControllerDelegate {
         // New Core data
         let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let stack = delegate.stack
-        stack!.save()
+        stack.save()
         
         collectionView.reloadData()
     }
@@ -293,7 +293,7 @@ NSFetchedResultsControllerDelegate {
         // New Core Data
         let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let stack = delegate.stack
-        stack!.save()
+        stack.save()
         
         
         

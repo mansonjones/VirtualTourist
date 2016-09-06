@@ -70,7 +70,7 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
             // New Core Data
             let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
             let stack = delegate.stack
-            stack!.save()
+            stack.save()
         case .Delete:
             print(" Delete ")
             let pinObject = anObject as! Pin
@@ -86,7 +86,7 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
             // new Core Data
             let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
             let stack = delegate.stack
-            stack!.save()
+            stack.save()
 
         default:
             return
@@ -110,7 +110,7 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
         // New Core Data
         let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let stack = delegate.stack
-        return stack!.context
+        return stack.context
     }()
     
     // MARK: - Fetched Results Controller
@@ -131,7 +131,7 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
         let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let stack = delegate.stack
         //
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: stack!.context, sectionNameKeyPath: nil, cacheName: nil)
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: stack.context, sectionNameKeyPath: nil, cacheName: nil)
 
         
         // Return the fetched results controller. It will be the value of the lazy variable
@@ -142,7 +142,7 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
         // New Core Data
         let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let stack = delegate.stack
-        stack!.save()
+        stack.save()
 
     }
     
@@ -354,7 +354,7 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
             // New Core Data
             let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
             let stack = delegate.stack
-            stack!.save()
+            stack.save()
 
         }
     }
