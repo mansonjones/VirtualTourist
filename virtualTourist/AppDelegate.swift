@@ -7,13 +7,28 @@
 //
 
 import UIKit
+// import CoreData
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    // Change #1
+    // New Core Data
+    let stack = CoreDataStack(modelName: "Model")
 
+    // More New Core Data
+    /*
+    func backgroundLoad() {
+        stack.performBackgroundOperation{ (workerContext) in
+         
+        // Read the Pins from the database.
+        // Maybe also read photos from the database.
+    }
+    */
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         return true

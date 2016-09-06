@@ -83,11 +83,19 @@ NSFetchedResultsControllerDelegate {
     
     // MARK: - Core Data Convenience
     lazy var sharedContext: NSManagedObjectContext = {
-        return CoreDataStackManager.sharedInstance().managedObjectContext
+        // New Core Data
+        // Get the stack
+        let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let stack = delegate.stack
+        return stack!.context
     }()
     
     func saveContext() {
-        CoreDataStackManager.sharedInstance().saveContext()
+        // New Core Data
+        let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let stack = delegate.stack
+        stack!.save()
+        
     }
     
     // MARK: - Fetched Results Controller
@@ -231,7 +239,15 @@ NSFetchedResultsControllerDelegate {
                             photo.location = self.location
                             return photo
                         }
-                        CoreDataStackManager.sharedInstance().saveContext()
+                        
+                        // New Core Data
+                        
+                        let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                        let stack = delegate.stack
+                        stack!.save()
+
+                        
+                        
                         // Update the collection view on the main thread
                         performUIUpdatesOnMain {
                             self.collectionView.reloadData()
@@ -253,7 +269,11 @@ NSFetchedResultsControllerDelegate {
         for photo in fetchedResultsController.fetchedObjects as! [Photo] {
             sharedContext.deleteObject(photo)
         }
-        CoreDataStackManager.sharedInstance().saveContext()
+        // New Core data
+        let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let stack = delegate.stack
+        stack!.save()
+        
         collectionView.reloadData()
     }
     
@@ -269,7 +289,14 @@ NSFetchedResultsControllerDelegate {
         }
         
         selectedIndexes = [NSIndexPath]()
-        CoreDataStackManager.sharedInstance().saveContext()
+        
+        // New Core Data
+        let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let stack = delegate.stack
+        stack!.save()
+        
+        
+        
         updateBottomButton()
     }
     

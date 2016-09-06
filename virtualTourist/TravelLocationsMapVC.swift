@@ -31,7 +31,7 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
         tapPinsToDeleteLabel.hidden = true
         
         navigationItem.rightBarButtonItem =
-            UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editPins")
+            UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(TravelLocationsMapVC.editPins))
         
         mapView.addAnnotations(fetchAllPins())
     }
@@ -67,7 +67,10 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
             )
             pointAnnotation.coordinate = coordinate
             mapView.addAnnotation(pointAnnotation)
-            CoreDataStackManager.sharedInstance().saveContext()
+            // New Core Data
+            let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            let stack = delegate.stack
+            stack!.save()
         case .Delete:
             print(" Delete ")
             let pinObject = anObject as! Pin
@@ -80,8 +83,11 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
             if pointAnnotations.count == 1 {
                 mapView.removeAnnotation(pointAnnotations[0])
             }
-            // get the object to delete
-            CoreDataStackManager.sharedInstance().saveContext()
+            // new Core Data
+            let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            let stack = delegate.stack
+            stack!.save()
+
         default:
             return
         }
@@ -101,7 +107,10 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
     // MARK: - Core Data Convenience
     
     lazy var sharedContext: NSManagedObjectContext = {
-        return CoreDataStackManager.sharedInstance().managedObjectContext
+        // New Core Data
+        let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let stack = delegate.stack
+        return stack!.context
     }()
     
     // MARK: - Fetched Results Controller
@@ -116,14 +125,25 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "latitude", ascending: false)]
         
         // Create the Fetched Results Controller
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
+        // Old Style Core Data
+        // let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
+        // New Style Core Data
+        let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let stack = delegate.stack
+        //
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: stack!.context, sectionNameKeyPath: nil, cacheName: nil)
+
         
         // Return the fetched results controller. It will be the value of the lazy variable
         return fetchedResultsController
     } ()
     
     func saveContext() {
-        CoreDataStackManager.sharedInstance().saveContext()
+        // New Core Data
+        let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let stack = delegate.stack
+        stack!.save()
+
     }
     
     // MARK : MapKit Delegate Functions
@@ -301,7 +321,7 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
     // Mark: - Actions
     func editPins() {
         isInDeleteMode = true
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "doneEditingPins")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(TravelLocationsMapVC.doneEditingPins))
         tapPinsToDeleteLabel.hidden = false
         tapPinsToDeleteLabel.frame.origin.y = view.frame.height - 50
         
@@ -310,7 +330,7 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
     
     func doneEditingPins() {
         isInDeleteMode = false
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editPins")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(TravelLocationsMapVC.editPins))
         tapPinsToDeleteLabel.hidden = true
     }
     
@@ -331,7 +351,11 @@ MKMapViewDelegate, NSFetchedResultsControllerDelegate {
                 pinLongitude: coordinate.longitude,
                 pinHashNumber: pin.hash,
                 context: self.sharedContext)
-            CoreDataStackManager.sharedInstance().saveContext()
+            // New Core Data
+            let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            let stack = delegate.stack
+            stack!.save()
+
         }
     }
     

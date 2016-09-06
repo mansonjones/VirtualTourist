@@ -27,6 +27,7 @@ class Photo : NSManagedObject {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
     
+    // TODO: Declare as a convenience init.
     init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
         // Core Data
         let entity =  NSEntityDescription.entityForName("Photo", inManagedObjectContext: context)!

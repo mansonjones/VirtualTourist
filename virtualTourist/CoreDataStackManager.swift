@@ -9,6 +9,7 @@
 // This is an exact copy of the same file from the FavoriteActors
 // project
 
+/*
 
 import Foundation
 import CoreData
@@ -127,4 +128,6 @@ class CoreDataStackManager {
         }
     }
 }
+ 
+*/
 

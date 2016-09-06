@@ -12,6 +12,7 @@
 		3C2CA18D1C9A295900B2C351 /* VTCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2CA18C1C9A295900B2C351 /* VTCollectionViewController.swift */; };
 		3C2CA18F1CA09D2600B2C351 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2CA18E1CA09D2600B2C351 /* Config.swift */; };
 		3C2CA1911CA0BA1200B2C351 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C2CA1901CA0BA1200B2C351 /* MapKit.framework */; };
+		3C41782A1D7604650094EC46 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4178291D7604650094EC46 /* CoreDataStack.swift */; };
 		3C483D171C7CBE28006A8291 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D161C7CBE28006A8291 /* AppDelegate.swift */; };
 		3C483D191C7CBE28006A8291 /* TravelLocationsMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C483D181C7CBE28006A8291 /* TravelLocationsMapVC.swift */; };
 		3C483D1C1C7CBE29006A8291 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C483D1A1C7CBE29006A8291 /* Main.storyboard */; };
@@ -53,6 +54,7 @@
 		3C2CA18C1C9A295900B2C351 /* VTCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VTCollectionViewController.swift; sourceTree = "<group>"; };
 		3C2CA18E1CA09D2600B2C351 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		3C2CA1901CA0BA1200B2C351 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		3C4178291D7604650094EC46 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		3C483D131C7CBE28006A8291 /* virtualTourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = virtualTourist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C483D161C7CBE28006A8291 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3C483D181C7CBE28006A8291 /* TravelLocationsMapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelLocationsMapVC.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 			children = (
 				3C483D161C7CBE28006A8291 /* AppDelegate.swift */,
 				3C483D181C7CBE28006A8291 /* TravelLocationsMapVC.swift */,
+				3C4178291D7604650094EC46 /* CoreDataStack.swift */,
 				3C483D501C7CFB29006A8291 /* Model.xcdatamodeld */,
 				3C483D481C7CE719006A8291 /* PhotoAlbumVC.swift */,
 				3C2CA18E1CA09D2600B2C351 /* Config.swift */,
@@ -260,6 +263,7 @@
 				TargetAttributes = {
 					3C483D121C7CBE27006A8291 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = B23MDM8ZJF;
 					};
 					3C483D261C7CBE2C006A8291 = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -330,6 +334,7 @@
 				3C483D4F1C7CE8A3006A8291 /* CoreDataStackManager.swift in Sources */,
 				3C483D4D1C7CE830006A8291 /* FlickrConstants.swift in Sources */,
 				3C483D9C1C7F5829006A8291 /* GCDBlackBox.swift in Sources */,
+				3C41782A1D7604650094EC46 /* CoreDataStack.swift in Sources */,
 				3C483D451C7CE498006A8291 /* Pin.swift in Sources */,
 				3C483D521C7CFB29006A8291 /* Model.xcdatamodeld in Sources */,
 				3C483D191C7CBE28006A8291 /* TravelLocationsMapVC.swift in Sources */,
@@ -477,11 +482,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = virtualTourist/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.manson.project-v1.virtualTourist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -489,11 +497,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = virtualTourist/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.manson.project-v1.virtualTourist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

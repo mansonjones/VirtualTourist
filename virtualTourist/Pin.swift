@@ -20,6 +20,9 @@ class Pin : NSManagedObject {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
     
+    
+    // TO DO: Declare as "convenience init"
+    
     init(pinLatitude: Double, pinLongitude: Double, pinHashNumber: Int, context: NSManagedObjectContext) {
         let entity = NSEntityDescription.entityForName("Pin", inManagedObjectContext: context)!
         
