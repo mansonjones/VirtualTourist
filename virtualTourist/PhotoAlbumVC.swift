@@ -365,8 +365,8 @@ NSFetchedResultsControllerDelegate {
             
                     // update the model, so that the image gets cached 
                     // and saved in the Documents directory.
-                    
-                    photo.flickrImage = image
+                    photo.imageData = data
+                    // photo.flickrImage = image
                     
                     performUIUpdatesOnMain({ () -> Void in
                         cell.imageView.image = image

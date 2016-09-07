@@ -20,6 +20,8 @@ class Photo : NSManagedObject {
     
     @NSManaged var url : String
     @NSManaged var id: String?
+    @NSManaged var imageData: NSData?
+    
     @NSManaged var location: Pin?
     
     
@@ -35,18 +37,49 @@ class Photo : NSManagedObject {
         
         url = dictionary[Keys.Url] as! String
         id = dictionary[Keys.Id] as? String
+        imageData = nil
     }
     
     var flickrImage: UIImage? {
         
         get {
             print(" GET flickrImage")
-            return FlickrClient.Caches.imageCache.imageWithIdentifier(id)
+            // probably need an "if let" here instead of unwrapping
+            // New code
+            // This causes a crash
+            if (imageData != nil) {
+                return UIImage(data: imageData!)
+            } else {
+                return nil 
+            }
+            
+            /*
+            if let foo = UIImage(data: imageData!) {
+                return foo
+            } else {
+                return nil
+            }
+            */
+        
+            // let foo: UIImage = UIImage(data: imageData!)!
+            // return foo
+            // old code
+            // return FlickrClient.Caches.imageCache.imageWithIdentifier(id)
         }
         
         set {
             print(" SET flickrImage")
-            FlickrClient.Caches.imageCache.storeImage(newValue, withIdentifier: id!)
+            // Given the image, set the
+            // New Code
+            
+            if (newValue != nil) {
+               self.imageData = UIImagePNGRepresentation(newValue!)
+            } else {
+                self.imageData = nil
+            }
+            
+            // old code
+            // FlickrClient.Caches.imageCache.storeImage(newValue, withIdentifier: id!)
         }
     }
 }
