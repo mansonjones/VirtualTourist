@@ -52,19 +52,6 @@ class Photo : NSManagedObject {
             } else {
                 return nil 
             }
-            
-            /*
-            if let foo = UIImage(data: imageData!) {
-                return foo
-            } else {
-                return nil
-            }
-            */
-        
-            // let foo: UIImage = UIImage(data: imageData!)!
-            // return foo
-            // old code
-            // return FlickrClient.Caches.imageCache.imageWithIdentifier(id)
         }
         
         set {
@@ -78,8 +65,6 @@ class Photo : NSManagedObject {
                 self.imageData = nil
             }
             
-            // old code
-            // FlickrClient.Caches.imageCache.storeImage(newValue, withIdentifier: id!)
         }
     }
 }
